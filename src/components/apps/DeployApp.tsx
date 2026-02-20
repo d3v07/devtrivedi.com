@@ -60,7 +60,13 @@ const logColor: Record<LogLine["type"], string> = {
   warn: "text-[#f0c05a]",
 };
 
-export default function DeployApp({ onClose }: { onClose: () => void }) {
+interface DeployAppProps {
+  onClose: () => void;
+  onFocus?: () => void;
+  zIndex?: number;
+}
+
+export default function DeployApp({ onClose, onFocus, zIndex }: DeployAppProps) {
   const [status, setStatus] = useState<Status>("idle");
   const [currentStage, setCurrentStage] = useState(-1);
   const [logs, setLogs] = useState<LogLine[]>([]);
@@ -110,6 +116,8 @@ export default function DeployApp({ onClose }: { onClose: () => void }) {
     <MiniWindow
       title="deploy.sh"
       onClose={onClose}
+      onFocus={onFocus}
+      zIndex={zIndex}
       initialX={220}
       initialY={200}
       width={400}

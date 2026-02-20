@@ -83,7 +83,13 @@ const lineColor: Record<Line["type"], string> = {
   error: "text-red-400",
 };
 
-export default function TerminalApp({ onClose }: { onClose: () => void }) {
+interface TerminalAppProps {
+  onClose: () => void;
+  onFocus?: () => void;
+  zIndex?: number;
+}
+
+export default function TerminalApp({ onClose, onFocus, zIndex }: TerminalAppProps) {
   const [lines, setLines] = useState<Line[]>(WELCOME);
   const [input, setInput] = useState("");
   const [history, setHistory] = useState<string[]>([]);
@@ -167,6 +173,8 @@ export default function TerminalApp({ onClose }: { onClose: () => void }) {
     <MiniWindow
       title="terminal -- dev@portfolio:~"
       onClose={onClose}
+      onFocus={onFocus}
+      zIndex={zIndex}
       initialX={80}
       initialY={60}
       width={480}

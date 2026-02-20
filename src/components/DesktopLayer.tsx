@@ -1,10 +1,10 @@
 /**
  * DesktopLayer — always-mounted OS background.
  *
- * Left dock:   nav + apps, frosted glass, one column, large icons.
- * Bottom dock: taskbar strip showing currently open mini-app windows.
- * Mini apps:   timestamp-keyed so closing + reopening always mounts fresh.
- *              z-index 200 (above taskbar at 50, above page content).
+ * Centered bottom dock: nav links + mini apps + exit.
+ * Hover tooltips on each icon.
+ * z-order management: clicking a mini app window brings it to front.
+ * Mini apps: timestamp-keyed so closing + reopening always mounts fresh.
  */
 
 import { useState } from "react";
@@ -12,7 +12,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "react-router-dom";
 import {
   FileText, FolderOpen, BookOpen, Mail, Monitor,
-  Terminal, Scroll, Rocket, X,
+  Terminal, Scroll, Rocket,
 } from "lucide-react";
 import { useApp } from "@/context/AppContext";
 import TerminalApp from "./apps/TerminalApp";
@@ -30,13 +30,7 @@ interface IconDef {
   accent: string;
 }
 
-const APP_META: Record<string, { label: string; color: string }> = {
-  terminal: { label: "Terminal",  color: "bg-zinc-800" },
-  resume:   { label: "Resume",    color: "bg-emerald-700" },
-  deploy:   { label: "Deploy",    color: "bg-violet-700" },
-};
-
-// ─── Left dock icon ───────────────────────────────────────────────────────────
+// ─── Dock icon with hover tooltip ─────────────────────────────────────────────
 
 function DockIcon({
   def,
@@ -47,48 +41,70 @@ function DockIcon({
   isOpen?: boolean;
   onClick?: () => void;
 }) {
+  const [hovered, setHovered] = useState(false);
   const Icon = def.icon;
 
   const inner = (
-    <motion.div
-      className="flex flex-col items-center gap-1.5 w-full py-1"
-      whileHover={{ scale: 1.1, y: -2 }}
-      whileTap={{ scale: 0.92 }}
-      transition={{ type: "spring", stiffness: 420, damping: 26 }}
+    <div
+      className="relative flex flex-col items-center"
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
     >
-      {/* Icon box */}
-      <div
-        className="w-12 h-12 flex items-center justify-center border-2 border-white/30 bg-white/15 backdrop-blur-sm"
-        style={{ boxShadow: "0 2px 12px rgba(0,0,0,0.5)" }}
-      >
-        <Icon className={`w-6 h-6 ${def.accent}`} />
-      </div>
+      {/* Tooltip */}
+      <AnimatePresence>
+        {hovered && (
+          <motion.div
+            initial={{ opacity: 0, y: 6, scale: 0.88 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: 6, scale: 0.88 }}
+            transition={{ type: "spring", stiffness: 500, damping: 30 }}
+            className="absolute bottom-full mb-2.5 px-2 py-1 font-mono-code text-[9px] text-white whitespace-nowrap pointer-events-none z-50"
+            style={{
+              background: "rgba(0,0,0,0.85)",
+              border: "1px solid rgba(255,255,255,0.15)",
+              backdropFilter: "blur(8px)",
+            }}
+          >
+            {def.label}
+          </motion.div>
+        )}
+      </AnimatePresence>
 
-      {/* Label */}
-      <span
-        className="font-mono-code text-[9px] text-white text-center leading-tight w-full truncate px-1"
-        style={{ textShadow: "0 1px 4px rgba(0,0,0,1), 0 0 8px rgba(0,0,0,0.8)" }}
+      {/* Icon square */}
+      <motion.div
+        className="w-9 h-9 flex items-center justify-center border border-white/20 bg-white/10"
+        style={{
+          backdropFilter: "blur(8px)",
+          WebkitBackdropFilter: "blur(8px)",
+        }}
+        whileHover={{ scale: 1.22, y: -5 }}
+        whileTap={{ scale: 0.88 }}
+        transition={{ type: "spring", stiffness: 420, damping: 26 }}
       >
-        {def.label}
-      </span>
+        <Icon className={`w-4 h-4 ${def.accent}`} />
+      </motion.div>
 
       {/* Open indicator dot */}
       {isOpen && (
-        <span className="w-1 h-1 rounded-full bg-white/80 shrink-0" />
+        <motion.span
+          initial={{ scale: 0 }}
+          animate={{ scale: 1 }}
+          className="w-1 h-1 rounded-full bg-white/80 mt-0.5 shrink-0"
+        />
       )}
-    </motion.div>
+    </div>
   );
 
   if (def.href) {
     return (
-      <Link to={def.href} className="w-full block">
+      <Link to={def.href} className="block">
         {inner}
       </Link>
     );
   }
 
   return (
-    <button className="w-full" onClick={onClick}>
+    <button onClick={onClick} className="block">
       {inner}
     </button>
   );
@@ -104,30 +120,43 @@ export default function DesktopLayer({ visible }: DesktopLayerProps) {
   const { setExperience } = useApp();
 
   // Map of appId → open timestamp. Unique timestamp = fresh React key = fresh mount.
-  // This fixes "close then reopen shows nothing" — AnimatePresence won't block a re-open
-  // because the key is different every time the app is opened.
+  // This fixes "close then reopen shows nothing" — different key every open.
   const [openApps, setOpenApps] = useState<Record<string, number>>({});
 
-  const openApp = (id: string) =>
+  // z-order stack: last element = highest z-index (focused window)
+  const [zOrder, setZOrder] = useState<string[]>([]);
+
+  const openApp = (id: string) => {
     setOpenApps(prev => ({ ...prev, [id]: Date.now() }));
+    setZOrder(prev => [...prev.filter(x => x !== id), id]);
+  };
 
-  const closeApp = (id: string) =>
+  const closeApp = (id: string) => {
     setOpenApps(prev => { const n = { ...prev }; delete n[id]; return n; });
+    setZOrder(prev => prev.filter(x => x !== id));
+  };
 
-  const openIds = Object.keys(openApps);
+  const focusApp = (id: string) => {
+    setZOrder(prev => [...prev.filter(x => x !== id), id]);
+  };
+
+  // z-index: 200 base + position in stack * 10. Top of stack = highest.
+  const zIndexFor = (id: string): number => {
+    const idx = zOrder.indexOf(id);
+    return 200 + (idx === -1 ? 0 : idx * 10);
+  };
 
   const navIcons: IconDef[] = [
     { id: "home",     label: "Home",     icon: FileText,   href: "/",         accent: "text-orange-400" },
     { id: "projects", label: "Projects", icon: FolderOpen, href: "/projects", accent: "text-white" },
     { id: "about",    label: "About",    icon: BookOpen,   href: "/about",    accent: "text-blue-300" },
     { id: "contact",  label: "Contact",  icon: Mail,       href: "/contact",  accent: "text-red-300" },
-    { id: "switch",   label: "Exit OS",  icon: Monitor,    action: () => setExperience("website"), accent: "text-white/70" },
   ];
 
   const appIcons: IconDef[] = [
     { id: "terminal", label: "Terminal", icon: Terminal, action: () => openApp("terminal"), accent: "text-orange-400" },
-    { id: "resume",   label: "Resume",   icon: Scroll,   action: () => openApp("resume"),   accent: "text-emerald-300" },
-    { id: "deploy",   label: "Deploy",   icon: Rocket,   action: () => openApp("deploy"),   accent: "text-violet-300" },
+    { id: "resume",   label: "Resume",   icon: Scroll,   action: () => openApp("resume"),  accent: "text-emerald-300" },
+    { id: "deploy",   label: "Deploy",   icon: Rocket,   action: () => openApp("deploy"),  accent: "text-violet-300" },
   ];
 
   return (
@@ -146,27 +175,24 @@ export default function DesktopLayer({ visible }: DesktopLayerProps) {
         }}
       />
 
-      {/* ── Left dock ────────────────────────────────────────────────────────── */}
+      {/* ── Centered bottom dock ──────────────────────────────────────────────── */}
       <div
-        className="absolute left-0 flex flex-col items-center py-4 px-2 gap-2"
+        className="fixed bottom-4 left-1/2 -translate-x-1/2 flex items-center gap-1.5 px-3 py-2"
         style={{
-          top: "36px",
-          bottom: "48px", // leave room for bottom dock
-          width: 80,
-          background: "rgba(0,0,0,0.60)",
-          backdropFilter: "blur(16px)",
-          WebkitBackdropFilter: "blur(16px)",
-          borderRight: "1px solid rgba(255,255,255,0.10)",
-          zIndex: 40,
+          background: "rgba(0,0,0,0.55)",
+          backdropFilter: "blur(20px)",
+          WebkitBackdropFilter: "blur(20px)",
+          border: "1px solid rgba(255,255,255,0.12)",
+          zIndex: 50,
         }}
       >
         {/* Nav icons */}
         {navIcons.map((def) => (
-          <DockIcon key={def.id} def={def} onClick={def.action} />
+          <DockIcon key={def.id} def={def} />
         ))}
 
         {/* Divider */}
-        <div className="w-10 h-px bg-white/20 my-1 shrink-0" />
+        <div className="w-px h-5 bg-white/20 mx-0.5 shrink-0" />
 
         {/* App icons */}
         {appIcons.map((def) => (
@@ -177,78 +203,46 @@ export default function DesktopLayer({ visible }: DesktopLayerProps) {
             onClick={def.action}
           />
         ))}
+
+        {/* Divider */}
+        <div className="w-px h-5 bg-white/20 mx-0.5 shrink-0" />
+
+        {/* Exit OS */}
+        <DockIcon
+          def={{
+            id: "switch",
+            label: "Exit OS",
+            icon: Monitor,
+            accent: "text-white/60",
+          }}
+          onClick={() => setExperience("website")}
+        />
       </div>
 
-      {/* ── Bottom taskbar dock ───────────────────────────────────────────────── */}
-      <div
-        className="fixed bottom-0 left-0 right-0 h-12 flex items-center px-4 gap-2"
-        style={{
-          background: "rgba(0,0,0,0.65)",
-          backdropFilter: "blur(16px)",
-          WebkitBackdropFilter: "blur(16px)",
-          borderTop: "1px solid rgba(255,255,255,0.10)",
-          zIndex: 45,
-        }}
-      >
-        {openIds.length === 0 ? (
-          <span
-            className="font-mono-code text-[10px] text-white/30"
-            style={{ textShadow: "0 1px 3px rgba(0,0,0,0.9)" }}
-          >
-            No apps open — click an icon to launch one
-          </span>
-        ) : (
-          <AnimatePresence>
-            {openIds.map((id) => {
-              const meta = APP_META[id];
-              if (!meta) return null;
-              return (
-                <motion.div
-                  key={id}
-                  initial={{ opacity: 0, y: 8, scale: 0.9 }}
-                  animate={{ opacity: 1, y: 0, scale: 1 }}
-                  exit={{ opacity: 0, y: 8, scale: 0.9 }}
-                  transition={{ type: "spring", stiffness: 420, damping: 28 }}
-                  className={`flex items-center gap-2 px-3 h-8 ${meta.color} border border-white/20`}
-                >
-                  <span
-                    className="font-mono-code text-[10px] text-white"
-                    style={{ textShadow: "0 1px 3px rgba(0,0,0,0.9)" }}
-                  >
-                    {meta.label}
-                  </span>
-                  <button
-                    onClick={() => closeApp(id)}
-                    className="text-white/50 hover:text-white transition-colors ml-1"
-                  >
-                    <X className="w-2.5 h-2.5" />
-                  </button>
-                </motion.div>
-              );
-            })}
-          </AnimatePresence>
-        )}
-      </div>
-
-      {/* ── Mini apps ──────────────────────────────────────────────────────────── */}
-      {/* z-index 200 lives in MiniWindow itself — above taskbar (50) + page content */}
+      {/* ── Mini apps (rendered via portal in MiniWindow) ─────────────────────── */}
       <AnimatePresence>
         {openApps.terminal && (
           <TerminalApp
             key={`terminal-${openApps.terminal}`}
             onClose={() => closeApp("terminal")}
+            onFocus={() => focusApp("terminal")}
+            zIndex={zIndexFor("terminal")}
           />
         )}
         {openApps.resume && (
           <ResumeApp
             key={`resume-${openApps.resume}`}
             onClose={() => closeApp("resume")}
+            onFocus={() => focusApp("resume")}
+            zIndex={zIndexFor("resume")}
           />
         )}
         {openApps.deploy && (
           <DeployApp
             key={`deploy-${openApps.deploy}`}
             onClose={() => closeApp("deploy")}
+            onFocus={() => focusApp("deploy")}
+            zIndex={zIndexFor("deploy")}
           />
         )}
       </AnimatePresence>

@@ -9,6 +9,9 @@ export default defineConfig({
     globals: true,
     setupFiles: ["./src/test/setup.ts"],
     include: ["src/**/*.{test,spec}.{ts,tsx}"],
+    alias: {
+      "framer-motion": path.resolve(__dirname, "./src/test/__mocks__/framer-motion.tsx"),
+    },
   },
   resolve: {
     alias: { "@": path.resolve(__dirname, "./src") },

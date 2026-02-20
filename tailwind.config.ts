@@ -14,8 +14,16 @@ export default {
     },
     extend: {
       fontFamily: {
-        display: ["Instrument Serif", "Georgia", "serif"],
-        body: ["Space Grotesk", "system-ui", "sans-serif"],
+        display: ['"Instrument Serif"', "Georgia", "serif"],
+        body: ['"Space Grotesk"', "system-ui", "sans-serif"],
+        mono: ['"JetBrains Mono"', '"Fira Code"', "monospace"],
+      },
+      fontSize: {
+        "display-xl": ["9rem",  { lineHeight: "0.88", letterSpacing: "-0.02em" }],
+        "display-lg": ["7rem",  { lineHeight: "0.88", letterSpacing: "-0.02em" }],
+        "display-md": ["5rem",  { lineHeight: "0.90", letterSpacing: "-0.01em" }],
+        "heading-xl": ["3rem",  { lineHeight: "1.1",  letterSpacing: "-0.01em" }],
+        "heading-lg": ["2.25rem", { lineHeight: "1.1" }],
       },
       colors: {
         border: "hsl(var(--border))",

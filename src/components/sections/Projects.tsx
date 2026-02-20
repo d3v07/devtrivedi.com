@@ -1,4 +1,5 @@
 import { ArrowUpRight, Github } from "lucide-react";
+import { motion } from "framer-motion";
 import { useRef } from "react";
 
 interface Project {
@@ -17,7 +18,7 @@ const projects: Project[] = [
     category: "AI Code Review",
     description: "Agentic PR review pipeline with AST context retrieval and evidence-gated inline comments. Reduced review turnaround by 60%.",
     tech: ["Python", "Tree-sitter", "LLM", "GitHub API"],
-    color: "bg-purple-100",
+    color: "bg-secondary",
   },
   {
     number: "02",
@@ -25,7 +26,7 @@ const projects: Project[] = [
     category: "Financial Research",
     description: "Session-based research workspace with 4-mode agent adapter and real-time artifact rendering. Sub-10s decision-ready output.",
     tech: ["React", "Node.js", "JWT", "Chart.js"],
-    color: "bg-amber-100",
+    color: "bg-accent/20",
   },
   {
     number: "06",
@@ -33,7 +34,7 @@ const projects: Project[] = [
     category: "AI Cost Optimization",
     description: "AI-driven cloud cost analyzer with predictive recommendations. Identified ~$18K annual savings across 12 services.",
     tech: ["TypeScript", "Node.js", "AI/ML", "AWS"],
-    color: "bg-emerald-100",
+    color: "bg-card",
   },
   {
     number: "05",
@@ -41,7 +42,7 @@ const projects: Project[] = [
     category: "Event-Driven Monitoring",
     description: "Real-time operations dashboard with Kafka streams and Redis-backed aggregates. Sub-second writes at 3x peak load.",
     tech: ["Node.js", "Kafka", "Redis", "GraphQL"],
-    color: "bg-orange-100",
+    color: "bg-primary/10",
   },
 ];
 
@@ -69,9 +70,12 @@ const Projects = () => {
         style={{ marginLeft: "-1.5rem", marginRight: "-1.5rem", paddingLeft: "1.5rem", paddingRight: "1.5rem" }}
       >
         {projects.map((project) => (
-          <div
+          <motion.div
             key={project.title}
-            className={`flex-shrink-0 w-[85vw] md:w-[500px] scroll-snap-item ${project.color} p-8 group hover-lift`}
+            className={`flex-shrink-0 w-[85vw] md:w-[500px] scroll-snap-item ${project.color} p-8 group interactive-card`}
+            whileHover={{ x: 4, y: 4, boxShadow: "0px 0px 0px hsl(var(--foreground))" }}
+            whileTap={{ scale: 0.97 }}
+            transition={{ type: "spring", stiffness: 400, damping: 28 }}
           >
             <div className="flex justify-between items-start mb-8">
               <span className="font-display text-6xl text-foreground/20">
@@ -117,7 +121,7 @@ const Projects = () => {
                 </span>
               ))}
             </div>
-          </div>
+          </motion.div>
         ))}
       </div>
     </section>

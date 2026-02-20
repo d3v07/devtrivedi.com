@@ -1,176 +1,111 @@
-import { ArrowRight, Github, Linkedin, Mail, MapPin, Sparkles } from "lucide-react";
+import { ArrowRight, Github, Linkedin, Mail, MapPin, Terminal } from "lucide-react";
 import { Link } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 import ScrollReveal from "@/components/ScrollReveal";
-import MagneticButton from "@/components/MagneticButton";
 import Footer from "@/components/sections/Footer";
+import { useApp } from "@/context/AppContext";
 
 const Home = () => {
+  const { experience } = useApp();
   const [prefersReducedMotion] = useState(
     () => typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches,
   );
 
-  // Animation state
   const [topLine, setTopLine] = useState("Dev");
   const [bottomLine, setBottomLine] = useState("Trivedi");
-  const [topOutlined, setTopOutlined] = useState(false); // Dev = filled, Software = outlined
-  const [bottomOutlined, setBottomOutlined] = useState(true); // Trivedi = outlined, Developer = filled
-  const [phase, setPhase] = useState<"stateA" | "transitionAB" | "stateB" | "transitionBA">("stateA");
+  const [topOutlined, setTopOutlined] = useState(false);
+  const [bottomOutlined, setBottomOutlined] = useState(true);
   const animationRef = useRef<number | null>(null);
-  const intervalsRef = useRef<number[]>([]);
-
-  // Typewriter helper
-  const typeText = (
-    target: string,
-    setter: (val: string) => void,
-    startFrom: string,
-    speed: number,
-    onComplete: () => void,
-  ) => {
-    let index = startFrom.length;
-    setter(startFrom);
-    const interval = window.setInterval(() => {
-      if (index < target.length) {
-        setter(target.slice(0, index + 1));
-        index++;
-      } else {
-        window.clearInterval(interval);
-        onComplete();
-      }
-    }, speed);
-    intervalsRef.current.push(interval);
-  };
-
-  // Erase helper
-  const eraseText = (
-    current: string,
-    stopAt: string,
-    setter: (val: string) => void,
-    speed: number,
-    onComplete: () => void,
-  ) => {
-    let len = current.length;
-    const interval = window.setInterval(() => {
-      if (len > stopAt.length) {
-        len--;
-        setter(current.slice(0, len));
-      } else {
-        window.clearInterval(interval);
-        onComplete();
-      }
-    }, speed);
-    intervalsRef.current.push(interval);
-  };
 
   useEffect(() => {
     if (prefersReducedMotion) return;
-
-    const clearAllIntervals = () => {
-      intervalsRef.current.forEach((i) => window.clearInterval(i));
-      intervalsRef.current = [];
-    };
-
-    // Much slower, calmer animation - just smooth crossfades
     const runLoop = () => {
-      // State A: Dev / Trivedi - hold 4s
-      setPhase("stateA");
       setTopLine("Dev");
       setBottomLine("Trivedi");
       setTopOutlined(false);
       setBottomOutlined(true);
-
       animationRef.current = window.setTimeout(() => {
-        // Smooth transition to State B
-        setPhase("transitionAB");
         setTopLine("Software");
         setBottomLine("Developer");
         setTopOutlined(true);
         setBottomOutlined(false);
-
-        // Hold State B for 4s
-        animationRef.current = window.setTimeout(() => {
-          setPhase("stateB");
-
-          // Then transition back to State A
-          animationRef.current = window.setTimeout(() => {
-            setPhase("transitionBA");
-            setTopLine("Dev");
-            setBottomLine("Trivedi");
-            setTopOutlined(false);
-            setBottomOutlined(true);
-
-            // Loop back after 4s
-            animationRef.current = window.setTimeout(() => {
-              runLoop();
-            }, 4000);
-          }, 4000);
-        }, 100);
+        animationRef.current = window.setTimeout(runLoop, 4000);
       }, 4000);
     };
-
-    // Start after 2s delay
-    const initialDelay = window.setTimeout(() => {
-      runLoop();
-    }, 2000);
-
+    const init = window.setTimeout(runLoop, 1500);
     return () => {
-      window.clearTimeout(initialDelay);
+      window.clearTimeout(init);
       if (animationRef.current) window.clearTimeout(animationRef.current);
-      clearAllIntervals();
     };
   }, [prefersReducedMotion]);
-  return (
-    <main className="min-h-screen relative overflow-hidden cursor-none">
-      {/* Decorative elements */}
-      <motion.div
-        className="absolute top-20 right-10 w-72 h-72 bg-primary/5 rounded-full blur-3xl pointer-events-none"
-        animate={{
-          scale: [1, 1.2, 1],
-          opacity: [0.5, 0.3, 0.5],
-        }}
-        transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-      />
-      <motion.div
-        className="absolute bottom-40 left-10 w-96 h-96 bg-primary/3 rounded-full blur-3xl pointer-events-none"
-        animate={{
-          scale: [1.2, 1, 1.2],
-          opacity: [0.3, 0.5, 0.3],
-        }}
-        transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
-      />
 
-      {/* Hero Section */}
-      <section className="min-h-screen flex flex-col justify-center px-6 md:px-12 lg:px-24 pt-24 pb-12 relative">
+  const metrics = [
+    { num: "01", value: "4.0 GPA", context: "MS Computer Science, NJIT" },
+    { num: "02", value: "$18K saved", context: "AI cost optimization — SpendLens" },
+    { num: "03", value: "3× throughput", context: "Sub-second writes at peak — PulseOps" },
+    { num: "04", value: "20+ tenants", context: "Multi-tenant SaaS — VendorFlow" },
+    { num: "05", value: "1.5+ years", context: "Professional software engineering" },
+    { num: "06", value: "30+ projects", context: "Developed, deployed, scaled" },
+  ];
+
+  const featured = [
+    { name: "PulseOps.go", category: "Event-Driven Monitoring", num: "01", impact: "Sub-second writes at 3× peak" },
+    { name: "SpendLens.py", category: "AI Cost Optimization", num: "02", impact: "$18K annual savings" },
+    { name: "VendorFlow.ts", category: "Multi-tenant SaaS", num: "03", impact: "20+ tenants, 2K+ invoices" },
+  ];
+
+  const bedtime = [
+    { tag: "Cost Engineering", title: "How I Cut AWS Costs by $18K Without Removing a Single Feature", time: "4 min read", href: "/blog/cutting-aws-costs-18k" },
+    { tag: "SaaS Architecture", title: "Building Multi-Tenant SaaS in One Sprint: What Actually Happened", time: "6 min read", href: "/blog/multi-tenant-saas-one-sprint" },
+    { tag: "Observability", title: "Real-Time Monitoring: Because Your Database Should Tell You When It's Dying", time: "5 min read", href: "/blog/real-time-monitoring-database" },
+    { tag: "Systems Design", title: "Five Things I Learned About Distributed Systems That No Textbook Told Me", time: "7 min read", href: "/blog/distributed-systems-lessons" },
+    { tag: "Student Life", title: "What NJIT's MS Computer Science Actually Teaches You (Versus What You Expect)", time: "5 min read", href: "/blog/cs-grad-school-reality" },
+  ];
+
+  return (
+    <main className="min-h-screen selection-accent">
+
+      {/* ── HERO ────────────────────────────────────────────────────────── */}
+      <section className={`min-h-screen flex flex-col justify-center px-6 md:px-12 lg:px-24 ${experience === "os" ? "pt-10" : "pt-28"} pb-16`}>
         <div className="max-w-6xl mx-auto w-full">
-          <div className="grid lg:grid-cols-12 gap-12 items-center">
-            {/* Main content */}
+
+          {/* Visitor counter — PostHog humor */}
+          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.15 }} className="mb-8">
+            <span className="font-mono-code text-[11px] text-muted-foreground border border-border/60 px-2 py-1">
+              Visitor #{(3_847_291).toLocaleString()} (probably)
+            </span>
+          </motion.div>
+
+          <div className="grid lg:grid-cols-12 gap-10 items-start">
+            {/* Left: main content */}
             <div className="lg:col-span-8">
               <motion.p
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 14 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, ease: [0.25, 0.4, 0.25, 1] }}
-                className="font-body text-sm tracking-widest uppercase text-primary mb-6 flex items-center gap-2"
+                transition={{ duration: 0.45 }}
+                className="font-mono-code text-xs tracking-widest uppercase text-primary mb-5 flex items-center gap-2"
               >
-                <span className="w-8 h-px bg-primary" />
-                Software Engineer
+                <span className="w-5 h-px bg-primary" />
+                software engineer
               </motion.p>
 
+              {/* Giant animated name */}
               <motion.h1
-                initial={{ opacity: 0, y: 40 }}
+                initial={{ opacity: 0, y: 28 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.1, ease: [0.25, 0.4, 0.25, 1] }}
-                className="font-display text-6xl md:text-8xl lg:text-[8rem] leading-[0.85] tracking-tight mb-8 h-[2em] md:h-[2em]"
+                transition={{ duration: 0.55, delay: 0.1 }}
+                className="font-display text-[4.5rem] md:text-[7.5rem] lg:text-[9rem] leading-[0.88] tracking-tight mb-6 h-[2em]"
               >
                 <span className="block h-[1em] overflow-visible">
                   <AnimatePresence mode="wait">
                     <motion.span
                       key={topLine}
                       className={topOutlined ? "text-stroke" : ""}
-                      initial={{ opacity: 0, y: 10 }}
+                      initial={{ opacity: 0, y: 8 }}
                       animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: -10 }}
-                      transition={{ duration: 0.6, ease: "easeInOut" }}
+                      exit={{ opacity: 0, y: -8 }}
+                      transition={{ duration: 0.4, ease: "easeInOut" }}
                     >
                       {topLine || "\u00A0"}
                     </motion.span>
@@ -181,10 +116,10 @@ const Home = () => {
                     <motion.span
                       key={bottomLine}
                       className={bottomOutlined ? "text-stroke" : ""}
-                      initial={{ opacity: 0, y: 10 }}
+                      initial={{ opacity: 0, y: 8 }}
                       animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: -10 }}
-                      transition={{ duration: 0.6, ease: "easeInOut" }}
+                      exit={{ opacity: 0, y: -8 }}
+                      transition={{ duration: 0.4, ease: "easeInOut" }}
                     >
                       {bottomLine || "\u00A0"}
                     </motion.span>
@@ -192,99 +127,106 @@ const Home = () => {
                 </span>
               </motion.h1>
 
-              <motion.div
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.3, ease: [0.25, 0.4, 0.25, 1] }}
-                className="max-w-lg mb-12"
-              >
-                <p className="font-body text-lg text-muted-foreground leading-relaxed">
-                  Building <span className="highlight">scalable systems</span> and cloud-native applications. MS
-                  Computer Science @ NJIT with a focus on
-                  <span className="highlight"> full-stack development </span> and AWS.
-                </p>
-              </motion.div>
-
-              {/* CTAs */}
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.5, ease: [0.25, 0.4, 0.25, 1] }}
-                className="flex flex-wrap gap-4 mb-12"
-              >
-                <MagneticButton strength={0.2}>
-                  <Link
-                    to="/projects"
-                    className="group inline-flex items-center gap-2 font-body text-sm px-6 py-3 bg-foreground text-background hover:bg-primary transition-all duration-500"
-                  >
-                    View Projects
-                    <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
-                  </Link>
-                </MagneticButton>
-                <MagneticButton strength={0.2}>
-                  <Link
-                    to="/contact"
-                    className="inline-flex items-center gap-2 font-body text-sm px-6 py-3 border-2 border-foreground hover:bg-foreground hover:text-background transition-all duration-500"
-                  >
-                    Get in Touch
-                  </Link>
-                </MagneticButton>
-              </motion.div>
-
-              {/* Social links */}
+              {/* Terminal CTA line */}
               <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                transition={{ duration: 0.6, delay: 0.7, ease: [0.25, 0.4, 0.25, 1] }}
-                className="flex items-center gap-6"
+                transition={{ delay: 0.38 }}
+                className="mb-8 inline-flex items-center gap-3 bg-foreground text-background px-4 py-2.5 border-2 border-foreground hard-shadow-primary"
+              >
+                <Terminal className="w-4 h-4 text-primary flex-shrink-0" />
+                <code className="font-mono-code text-sm">$ hire dev --start=asap --domain=systems --remote=yes</code>
+                <span className="font-mono-code text-primary cursor-blink select-none">|</span>
+              </motion.div>
+
+              {/* Description */}
+              <motion.p
+                initial={{ opacity: 0, y: 14 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.33 }}
+                className="font-body text-base text-muted-foreground leading-relaxed max-w-lg mb-10"
+              >
+                Building scalable systems and cloud-native applications. MS Computer Science @ NJIT.
+                Focus on full-stack development, AWS, and things that actually ship.
+              </motion.p>
+
+              {/* CTA buttons */}
+              <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.48 }}
+                className="flex flex-wrap gap-3 mb-10"
+              >
+                <Link
+                  to="/projects"
+                  className="group inline-flex items-center gap-2 font-body text-sm px-6 py-3 bg-foreground text-background border-2 border-foreground neo-btn-primary"
+                >
+                  View Projects
+                  <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
+                </Link>
+                <Link
+                  to="/contact"
+                  className="inline-flex items-center gap-2 font-body text-sm px-6 py-3 bg-background border-2 border-foreground neo-btn"
+                >
+                  Get in Touch
+                </Link>
+              </motion.div>
+
+              {/* Socials */}
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.6 }}
+                className="flex items-center gap-3"
               >
                 {[
                   { href: "https://github.com/d3v07", icon: Github, label: "GitHub" },
                   { href: "https://linkedin.com/in/trivedi-dev", icon: Linkedin, label: "LinkedIn" },
                   { href: "mailto:trivedidev16@gmail.com", icon: Mail, label: "Email" },
-                ].map((social) => (
-                  <MagneticButton key={social.label} strength={0.4}>
-                    <a
-                      href={social.href}
-                      target={social.href.startsWith("mailto") ? undefined : "_blank"}
-                      rel="noopener noreferrer"
-                      className="p-3 text-muted-foreground hover:text-primary hover:bg-primary/10 transition-all duration-300 rounded-lg"
-                      aria-label={social.label}
-                    >
-                      <social.icon className="w-5 h-5" />
-                    </a>
-                  </MagneticButton>
+                ].map((s) => (
+                  <motion.a
+                    key={s.label}
+                    href={s.href}
+                    target={s.href.startsWith("mailto") ? undefined : "_blank"}
+                    rel="noopener noreferrer"
+                    className="p-2 border-2 border-transparent text-muted-foreground"
+                    aria-label={s.label}
+                    whileHover={{ scale: 1.12, borderColor: "hsl(var(--foreground))", color: "hsl(var(--foreground))" }}
+                    whileTap={{ scale: 0.9 }}
+                    transition={{ type: "spring", stiffness: 400, damping: 28 }}
+                  >
+                    <s.icon className="w-4 h-4" />
+                  </motion.a>
                 ))}
-                <span className="h-4 w-px bg-border" />
-                <span className="flex items-center gap-2 font-body text-sm text-muted-foreground">
-                  <MapPin className="w-4 h-4" />
+                <span className="h-4 w-px bg-border mx-1" />
+                <span className="flex items-center gap-1.5 font-mono-code text-[11px] text-muted-foreground">
+                  <MapPin className="w-3.5 h-3.5" />
                   New Jersey, USA
                 </span>
               </motion.div>
             </div>
 
-            {/* Stats sidebar */}
+            {/* Right: stat cards */}
             <motion.div
-              initial={{ opacity: 0, x: 40 }}
+              initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8, delay: 0.4, ease: [0.25, 0.4, 0.25, 1] }}
-              className="lg:col-span-4 space-y-6"
+              transition={{ duration: 0.55, delay: 0.28 }}
+              className="lg:col-span-4 space-y-3 pt-2"
             >
               {[
-                { value: "4.0", label: "GPA at NJIT", delay: 0 },
-                { value: "1.5+", label: "Years of Experience", delay: 0.1 },
-                { value: "30+", label: "Projects Developed, Deployed & Scaled", delay: 0.2 },
+                { value: "4.0", label: "GPA at NJIT" },
+                { value: "1.5+", label: "Years Experience" },
+                { value: "30+", label: "Projects Shipped" },
               ].map((stat) => (
                 <motion.div
                   key={stat.label}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: 0.6 + stat.delay }}
-                  whileHover={{ scale: 1.02, y: -2 }}
-                  className="p-6 border border-border bg-card/50 backdrop-blur-sm hover:border-primary/50 transition-all duration-500"
+                  className="p-5 border-2 border-foreground bg-card interactive-card"
+                  whileHover={{ x: 4, y: 4, boxShadow: "0px 0px 0px hsl(var(--foreground))" }}
+                  whileTap={{ scale: 0.98 }}
+                  transition={{ type: "spring", stiffness: 400, damping: 28 }}
                 >
-                  <span className="font-display text-5xl text-primary">{stat.value}</span>
-                  <p className="font-body text-sm text-muted-foreground mt-2">{stat.label}</p>
+                  <span className="font-display text-5xl text-primary block">{stat.value}</span>
+                  <p className="font-body text-sm text-muted-foreground mt-1">{stat.label}</p>
                 </motion.div>
               ))}
             </motion.div>
@@ -292,89 +234,59 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Quick highlights */}
-      <section className="py-20 px-6 md:px-12 lg:px-24 border-t border-border bg-card/30">
-        <div className="max-w-6xl mx-auto">
-          <div className="grid md:grid-cols-3 gap-12">
-            {[
-              { tag: "Currently", title: "MS Computer Science", subtitle: "NJIT Ying Wu College of Computing" },
-              { tag: "Previously", title: "Software Engineer", subtitle: "RR Enterprise • Nuance Media" },
-              {
-                tag: "Focus Areas",
-                title: "Full-Stack & Cloud",
-                subtitle: "AWS • React • Node.js • C++ • PostgreSQL • Azure ",
-              },
-            ].map((item, index) => (
-              <ScrollReveal key={item.tag} delay={index * 0.1} direction="up">
-                <div className="group">
-                  <span className="font-body text-xs tracking-widest uppercase text-primary block mb-3">
-                    {item.tag}
-                  </span>
-                  <p className="font-display text-xl mb-2 group-hover:text-primary transition-colors duration-300">
-                    {item.title}
-                  </p>
-                  <p className="font-body text-sm text-muted-foreground">{item.subtitle}</p>
-                </div>
-              </ScrollReveal>
-            ))}
-          </div>
+      {/* ── CONTEXT STRIP ──────────────────────────────────────────────── */}
+      <section className="py-6 px-6 md:px-12 lg:px-24 border-t-2 border-b-2 border-foreground section-alt">
+        <div className="max-w-6xl mx-auto grid md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-border/30">
+          {[
+            { tag: "Currently", title: "MS Computer Science", sub: "NJIT Ying Wu College of Computing" },
+            { tag: "Previously", title: "Software Engineer", sub: "RR Enterprise · Nuance Media" },
+            { tag: "Building with", title: "Full-Stack & Cloud", sub: "AWS · React · Node.js · C++ · PostgreSQL" },
+          ].map((item, i) => (
+            <ScrollReveal key={item.tag} delay={i * 0.07} direction="up">
+              <div className={`py-6 ${i > 0 ? "md:pl-8" : ""} ${i < 2 ? "md:pr-8" : ""}`}>
+                <span className="font-mono-code text-xs tracking-widest uppercase text-primary block mb-2">{item.tag}</span>
+                <p className="font-display text-xl mb-1">{item.title}</p>
+                <p className="font-body text-sm text-muted-foreground">{item.sub}</p>
+              </div>
+            </ScrollReveal>
+          ))}
         </div>
       </section>
 
-      {/* Featured projects preview */}
-      <section className="py-32 px-6 md:px-12 lg:px-24">
+      {/* ── FEATURED PROJECTS ──────────────────────────────────────────── */}
+      <section className="py-24 px-6 md:px-12 lg:px-24">
         <div className="max-w-6xl mx-auto">
           <ScrollReveal>
-            <div className="flex justify-between items-end mb-16">
+            <div className="flex justify-between items-end mb-12">
               <div>
-                <span className="font-body text-sm tracking-widest uppercase text-primary block mb-4">
+                <span className="font-mono-code text-xs tracking-widest uppercase text-primary block mb-3">
                   Featured Work
                 </span>
                 <h2 className="font-display text-4xl md:text-5xl">Recent Projects</h2>
               </div>
-              <MagneticButton strength={0.3}>
-                <Link
-                  to="/projects"
-                  className="group font-body text-sm flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors duration-300"
-                >
-                  View all
-                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
-                </Link>
-              </MagneticButton>
+              <Link to="/projects" className="group font-body text-sm flex items-center gap-1.5 text-muted-foreground hover:text-primary transition-colors">
+                View all <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
+              </Link>
             </div>
           </ScrollReveal>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {[
-              {
-                name: "PulseOps",
-                category: "Event-Driven Monitoring",
-                num: "01",
-                desc: "Sub-second writes at 3x peak",
-              },
-              { name: "SpendLens", category: "AI Cost Optimization", num: "02", desc: "$18K annual savings" },
-              { name: "VendorFlow", category: "Multi-tenant SaaS", num: "03", desc: "20+ tenants, 2K+ invoices" },
-            ].map((project, index) => (
-              <ScrollReveal key={project.name} delay={index * 0.15} direction="up">
+            {featured.map((p, i) => (
+              <ScrollReveal key={p.name} delay={i * 0.1} direction="up">
                 <motion.div
-                  whileHover={{ y: -8, scale: 1.02 }}
-                  transition={{ duration: 0.4, ease: [0.25, 0.4, 0.25, 1] }}
+                  className="group border-2 border-foreground bg-card interactive-card"
+                  whileHover={{ x: 4, y: 4, boxShadow: "0px 0px 0px hsl(var(--foreground))" }}
+                  whileTap={{ scale: 0.97 }}
+                  transition={{ type: "spring", stiffness: 400, damping: 28 }}
                 >
-                  <Link
-                    to="/projects"
-                    className="group block p-8 border border-border hover:border-primary bg-card/30 hover:bg-card transition-all duration-500"
-                  >
-                    <span className="font-display text-6xl text-muted/20 group-hover:text-primary/30 transition-colors duration-500 block mb-4">
-                      {project.num}
-                    </span>
-                    <span className="font-body text-xs tracking-widest uppercase text-muted-foreground block mb-2">
-                      {project.category}
-                    </span>
-                    <h3 className="font-display text-2xl group-hover:text-primary transition-colors duration-300 flex items-center gap-2 mb-2">
-                      {project.name}
-                      <ArrowRight className="w-4 h-4 opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all duration-300" />
-                    </h3>
-                    <p className="font-body text-sm text-muted-foreground">{project.desc}</p>
+                  <Link to="/projects" className="block p-5">
+                    <span className="font-mono-code text-[11px] text-muted-foreground block mb-3">{p.name}</span>
+                    <span className="font-body text-xs tracking-widest uppercase text-muted-foreground block mb-2">{p.category}</span>
+                    <p className="font-display text-xl group-hover:text-primary transition-colors mb-2">{p.name.split(".")[0]}</p>
+                    <p className="font-body text-sm text-muted-foreground">{p.impact}</p>
+                    <div className="mt-4 font-body text-xs text-primary flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                      Open slides <ArrowRight className="w-3 h-3" />
+                    </div>
                   </Link>
                 </motion.div>
               </ScrollReveal>
@@ -383,36 +295,125 @@ const Home = () => {
         </div>
       </section>
 
-      {/* CTA Section */}
+      {/* ── METRICS TABLE ──────────────────────────────────────────────── */}
       <ScrollReveal>
-        <section className="py-32 px-6 md:px-12 lg:px-24 bg-foreground text-background relative overflow-hidden">
-          <motion.div
-            className="absolute top-0 right-0 w-96 h-96 bg-primary/20 rounded-full blur-3xl"
-            animate={{ scale: [1, 1.3, 1], opacity: [0.2, 0.4, 0.2] }}
-            transition={{ duration: 8, repeat: Infinity }}
-          />
-          <div className="max-w-6xl mx-auto text-center relative z-10">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-            >
-              <Sparkles className="w-8 h-8 mx-auto mb-6 text-primary" />
-              <h2 className="font-display text-4xl md:text-6xl mb-6">Let's work together</h2>
-              <p className="font-body text-lg opacity-70 max-w-xl mx-auto mb-10">
-                Currently open to new opportunities. Let's build something exceptional.
-              </p>
-              <MagneticButton strength={0.2}>
-                <Link
-                  to="/contact"
-                  className="inline-flex items-center gap-3 font-body text-sm px-10 py-4 bg-primary text-primary-foreground hover:scale-105 transition-all duration-300"
+        <section className="py-20 px-6 md:px-12 lg:px-24 section-alt border-t-2 border-b-2 border-foreground">
+          <div className="max-w-4xl mx-auto">
+            <span className="font-mono-code text-xs tracking-widest uppercase text-primary block mb-8">By the numbers</span>
+            <div className="border-2 border-foreground hard-shadow-lg">
+              {metrics.map((m, i) => (
+                <div
+                  key={m.num}
+                  className={`flex items-center gap-6 px-6 py-4 ${i < metrics.length - 1 ? "border-b border-border/20" : ""} ${i % 2 === 0 ? "bg-card" : "bg-background"} hover:bg-primary/5 transition-colors duration-150`}
                 >
-                  Get in Touch
-                  <ArrowRight className="w-4 h-4" />
+                  <span className="font-mono-code text-xs text-muted-foreground w-6 shrink-0">{m.num}</span>
+                  <span className="font-display text-2xl text-primary w-44 shrink-0">{m.value}</span>
+                  <span className="font-body text-sm text-muted-foreground">{m.context}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      </ScrollReveal>
+
+      {/* ── SHAMELESS PITCH ────────────────────────────────────────────── */}
+      <ScrollReveal>
+        <section className="py-24 px-6 md:px-12 lg:px-24">
+          <div className="max-w-4xl mx-auto">
+            <div className="relative border-2 border-foreground p-10 md:p-14 hard-shadow-lg">
+              <span className="absolute -top-3 left-6 bg-background px-2 font-mono-code text-xs text-muted-foreground">
+                shameless pitch — we know.
+              </span>
+              <div className="grid md:grid-cols-2 gap-12 items-center">
+                <div>
+                  <h2 className="font-display text-3xl md:text-4xl mb-4 leading-tight">
+                    We could write something here about how you <em>really</em> should hire Dev...
+                  </h2>
+                  <p className="font-body text-muted-foreground text-base leading-relaxed mb-2">
+                    ...and this is incredibly important and your competitors already have and blah blah blah.
+                  </p>
+                  <p className="font-body text-foreground text-base font-semibold">
+                    But honestly: he builds real things that work at scale.
+                  </p>
+                </div>
+                <div className="space-y-3">
+                  {[
+                    "4.0 GPA — because precision matters",
+                    "Open source contributor",
+                    "Ships things. Actually ships them.",
+                    "Has opinions on distributed systems (you want this)",
+                    "Available now",
+                  ].map((point) => (
+                    <div key={point} className="flex items-start gap-3">
+                      <span className="text-primary mt-0.5 shrink-0 font-mono-code text-sm">→</span>
+                      <span className="font-body text-sm">{point}</span>
+                    </div>
+                  ))}
+                  <Link
+                    to="/contact"
+                    className="inline-flex items-center gap-2 mt-4 font-body text-sm px-5 py-2.5 bg-primary text-primary-foreground border-2 border-primary neo-btn"
+                  >
+                    Hire Dev →
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </ScrollReveal>
+
+      {/* ── THE BLOG ───────────────────────────────────────────────────── */}
+      <ScrollReveal>
+        <section className="py-20 px-6 md:px-12 lg:px-24 border-t-2 border-foreground section-alt">
+          <div className="max-w-4xl mx-auto">
+            <span className="font-mono-code text-xs tracking-widest uppercase text-muted-foreground block mb-1">The Blog</span>
+            <p className="font-body text-xs text-muted-foreground mb-8">Technical writing from the trenches.</p>
+            <div className="border-2 border-foreground hard-shadow">
+              {bedtime.map((item, i) => (
+                <Link
+                  key={item.title}
+                  to={item.href}
+                  className={`flex items-center justify-between p-5 hover:bg-primary/5 transition-colors duration-150 group ${i < bedtime.length - 1 ? "border-b border-border/20" : ""}`}
+                >
+                  <div>
+                    <span className="font-mono-code text-xs text-primary block mb-1">{item.tag}</span>
+                    <p className="font-body text-sm font-medium group-hover:text-primary transition-colors">{item.title}</p>
+                  </div>
+                  <div className="flex items-center gap-3 shrink-0 ml-6">
+                    <span className="font-mono-code text-xs text-muted-foreground hidden md:block">{item.time}</span>
+                    <ArrowRight className="w-4 h-4 text-muted-foreground group-hover:text-primary group-hover:translate-x-0.5 transition-all" />
+                  </div>
                 </Link>
-              </MagneticButton>
-            </motion.div>
+              ))}
+            </div>
+            <div className="mt-6 text-right">
+              <Link to="/blog" className="font-mono-code text-xs text-primary hover:underline flex items-center gap-1 justify-end">
+                All posts <ArrowRight className="w-3 h-3" />
+              </Link>
+            </div>
+          </div>
+        </section>
+      </ScrollReveal>
+
+      {/* ── CTA ─────────────────────────────────────────────────────────── */}
+      <ScrollReveal>
+        <section className="py-24 px-6 md:px-12 lg:px-24 bg-foreground text-background border-t-2 border-foreground">
+          <div className="max-w-4xl mx-auto flex flex-col md:flex-row items-start md:items-center justify-between gap-8">
+            <div>
+              <h2 className="font-display text-4xl md:text-5xl mb-3 leading-tight">
+                Currently open to new opportunities.
+              </h2>
+              <p className="font-body text-base opacity-60 max-w-lg">
+                Let's build something. Or at the very least, have a good conversation about distributed systems.
+              </p>
+            </div>
+            <Link
+              to="/contact"
+              className="shrink-0 inline-flex items-center gap-2 font-body text-sm px-8 py-4 bg-primary text-primary-foreground border-2 border-primary neo-btn-invert"
+            >
+              Get in Touch
+              <ArrowRight className="w-4 h-4" />
+            </Link>
           </div>
         </section>
       </ScrollReveal>

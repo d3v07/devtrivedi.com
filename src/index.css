@@ -1,85 +1,108 @@
+@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* Dev Trivedi Portfolio - Editorial Magazine Style
-   Cream/off-white with rust accent, bold typography
-   All colors MUST be HSL.
+/* Dev Trivedi Portfolio — PostHog-inspired Neo-Brutalism
+   Hard shadows, thick borders, no blur, editorial typography.
+   PostHog orange (#f54e00) as primary accent.
 */
-
-@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Space+Grotesk:wght@400;500;600;700&display=swap');
 
 @layer base {
   :root {
-    --background: 45 30% 96%;
-    --foreground: 30 10% 15%;
-    --card: 45 25% 92%;
-    --card-foreground: 30 10% 15%;
-    --popover: 45 30% 96%;
-    --popover-foreground: 30 10% 15%;
-    --primary: 20 80% 50%;
-    --primary-foreground: 45 30% 96%;
-    --secondary: 45 20% 88%;
-    --secondary-foreground: 30 10% 25%;
-    --muted: 45 15% 75%;
-    --muted-foreground: 30 8% 45%;
-    --accent: 45 20% 88%;
-    --accent-foreground: 30 10% 15%;
+    /* Warm cream background — PostHog-inspired */
+    /* Bumped saturation to 35% to land in #F0E8DC family, not warm gray */
+    --background: 36 35% 96%;
+    --foreground: 0 0% 8%;
+
+    --card: 38 20% 98%;
+    --card-foreground: 0 0% 8%;
+
+    --popover: 36 35% 96%;
+    --popover-foreground: 0 0% 8%;
+
+    /* PostHog orange #f54e00 */
+    --primary: 20 100% 48%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 35 18% 90%;
+    --secondary-foreground: 0 0% 12%;
+
+    /* Warm dark gray — 38% lightness, enough contrast on cream */
+    --muted: 35 12% 82%;
+    --muted-foreground: 30 12% 38%;
+
+    --accent: 38 99% 49%;
+    --accent-foreground: 0 0% 10%;
+
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
-    --border: 30 15% 85%;
-    --input: 30 15% 85%;
-    --ring: 20 80% 50%;
+
+    /* Dark thick borders — neo-brutalist */
+    --border: 0 0% 12%;
+    --input: 0 0% 12%;
+    --ring: 20 100% 48%;
+
     --radius: 0rem;
 
-    /* Custom portfolio tokens */
+    /* Typography */
     --display-font: 'Instrument Serif', Georgia, serif;
     --body-font: 'Space Grotesk', system-ui, sans-serif;
-    --highlight: 50 100% 70%;
+    --mono-font: 'JetBrains Mono', 'Fira Code', monospace;
 
-    --sidebar-background: 45 30% 96%;
-    --sidebar-foreground: 30 10% 15%;
-    --sidebar-primary: 20 80% 50%;
-    --sidebar-primary-foreground: 45 30% 96%;
-    --sidebar-accent: 45 20% 88%;
-    --sidebar-accent-foreground: 30 10% 15%;
-    --sidebar-border: 30 15% 85%;
-    --sidebar-ring: 20 80% 50%;
+    --sidebar-background: 36 18% 92%;
+    --sidebar-foreground: 0 0% 10%;
+    --sidebar-primary: 20 100% 48%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 35 30% 86%;
+    --sidebar-accent-foreground: 0 0% 10%;
+    --sidebar-border: 0 0% 12%;
+    --sidebar-ring: 20 100% 48%;
   }
 
   .dark {
-    --background: 220 20% 10%;
-    --foreground: 45 30% 96%;
-    --card: 220 18% 14%;
-    --card-foreground: 45 30% 96%;
-    --popover: 220 20% 10%;
-    --popover-foreground: 45 30% 96%;
-    --primary: 20 80% 55%;
-    --primary-foreground: 220 20% 10%;
-    --secondary: 220 15% 20%;
-    --secondary-foreground: 45 25% 90%;
-    --muted: 220 12% 30%;
-    --muted-foreground: 220 10% 60%;
-    --accent: 220 15% 20%;
-    --accent-foreground: 45 30% 96%;
+    --background: 0 0% 6%;
+    --foreground: 33 50% 93%;
+
+    --card: 0 0% 9%;
+    --card-foreground: 33 50% 93%;
+
+    --popover: 0 0% 6%;
+    --popover-foreground: 33 50% 93%;
+
+    --primary: 20 100% 48%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 0 0% 15%;
+    --secondary-foreground: 33 40% 88%;
+
+    --muted: 0 0% 20%;
+    --muted-foreground: 0 0% 62%;
+
+    --accent: 38 99% 49%;
+    --accent-foreground: 0 0% 6%;
+
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
-    --border: 220 15% 22%;
-    --input: 220 15% 22%;
-    --ring: 20 80% 55%;
 
-    --highlight: 20 80% 40%;
+    --border: 33 40% 88%;
+    --input: 33 40% 88%;
+    --ring: 20 100% 48%;
 
-    --sidebar-background: 220 20% 10%;
-    --sidebar-foreground: 45 30% 96%;
-    --sidebar-primary: 20 80% 55%;
-    --sidebar-primary-foreground: 220 20% 10%;
-    --sidebar-accent: 220 15% 20%;
-    --sidebar-accent-foreground: 45 30% 96%;
-    --sidebar-border: 220 15% 22%;
-    --sidebar-ring: 20 80% 55%;
+    --sidebar-background: 0 0% 6%;
+    --sidebar-foreground: 33 50% 93%;
+    --sidebar-primary: 20 100% 48%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 0 0% 15%;
+    --sidebar-accent-foreground: 33 40% 88%;
+    --sidebar-border: 33 40% 88%;
+    --sidebar-ring: 20 100% 48%;
   }
 }
+
+/* BORDER RULE: border-t-2 border-foreground for major section breaks
+   border-t border-border/30 for sub-content separators ONLY */
 
 @layer base {
   * {
@@ -98,9 +121,14 @@
   h1, h2, h3, h4, h5, h6 {
     font-family: var(--display-font);
   }
+
+  :focus-visible {
+    @apply outline-none ring-2 ring-primary ring-offset-2 ring-offset-background;
+  }
 }
 
 @layer utilities {
+  /* ── Typography ────────────────────────────────── */
   .font-display {
     font-family: var(--display-font);
   }
@@ -109,42 +137,163 @@
     font-family: var(--body-font);
   }
 
+  .font-mono-code {
+    font-family: var(--mono-font);
+  }
+
+  /* ── Neo-Brutalist Shadows ─────────────────────── */
+  .hard-shadow {
+    box-shadow: 4px 4px 0px hsl(var(--foreground));
+  }
+
+  .hard-shadow-lg {
+    box-shadow: 6px 6px 0px hsl(var(--foreground));
+  }
+
+  .hard-shadow-sm {
+    box-shadow: 2px 2px 0px hsl(var(--foreground));
+  }
+
+  .hard-shadow-primary {
+    box-shadow: 4px 4px 0px hsl(var(--primary));
+  }
+
+  /* Interactive card: shadow lives here. Hover shift is owned by framer-motion
+     whileHover — do NOT add :hover rules here or CSS/framer transforms will fight. */
+  .interactive-card {
+    box-shadow: 4px 4px 0px hsl(var(--foreground));
+  }
+
+  /* ── Borders ────────────────────────────────────── */
+  .border-thick {
+    border: 2px solid hsl(var(--border));
+  }
+
+  /* ── Section alternation ─────────────────────────── */
+  .section-alt {
+    background-color: hsl(var(--card));
+  }
+
+  /* ── Text effects ─────────────────────────────── */
   .text-stroke {
-    -webkit-text-stroke: 1.5px currentColor;
+    -webkit-text-stroke: 2.5px currentColor;
     -webkit-text-fill-color: transparent;
   }
 
-  .highlight {
-    background: linear-gradient(120deg, hsl(var(--highlight)) 0%, hsl(var(--highlight)) 100%);
-    background-repeat: no-repeat;
-    background-size: 100% 40%;
-    background-position: 0 90%;
+  /* ── PostHog Slide sidebar ─────────────────────── */
+  .slide-nav-item {
+    opacity: 0.45;
+    transform: translateY(3px);
+    transition: opacity 0.22s ease, transform 0.22s ease;
+    position: relative;
   }
 
-  .hover-lift {
-    transition: transform 0.3s ease;
+  .slide-nav-item.active-sidebar-item {
+    opacity: 1;
+    transform: translateY(0);
+    font-weight: 600;
   }
 
-  .hover-lift:hover {
-    transform: translateY(-4px);
+  .slide-nav-item.active-sidebar-item::before {
+    content: "";
+    position: absolute;
+    left: -14px;
+    top: 2px;
+    bottom: 2px;
+    width: 4px;
+    background: #f54e00;
+    border-radius: 1px;
   }
 
-  .selection-accent::selection {
+  /* ── Neo-Brutalist buttons ─────────────────────── */
+  /* Replace JS onMouseEnter/Leave shadow handlers    */
+  .neo-btn {
+    transition: transform 0.12s ease, box-shadow 0.12s ease;
+    box-shadow: 4px 4px 0px hsl(var(--foreground));
+  }
+
+  .neo-btn:hover {
+    transform: translate(4px, 4px);
+    box-shadow: 0px 0px 0px transparent;
+  }
+
+  .neo-btn-primary {
+    transition: transform 0.12s ease, box-shadow 0.12s ease;
+    box-shadow: 4px 4px 0px hsl(var(--primary));
+  }
+
+  .neo-btn-primary:hover {
+    transform: translate(4px, 4px);
+    box-shadow: 0px 0px 0px transparent;
+  }
+
+  .neo-btn-invert {
+    transition: transform 0.12s ease, box-shadow 0.12s ease;
+    box-shadow: 4px 4px 0px rgba(255, 255, 255, 0.25);
+  }
+
+  .neo-btn-invert:hover {
+    transform: translate(4px, 4px);
+    box-shadow: 0px 0px 0px transparent;
+  }
+
+  /* Small variant for filter pills / compact buttons */
+  .neo-btn-sm {
+    transition: transform 0.1s ease, box-shadow 0.1s ease;
+    box-shadow: 2px 2px 0px hsl(var(--foreground));
+  }
+
+  .neo-btn-sm:hover {
+    transform: translate(2px, 2px);
+    box-shadow: 0px 0px 0px transparent;
+  }
+
+  /* ── Marquee ───────────────────────────────────── */
+  @keyframes marquee {
+    0%   { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+
+  .animate-marquee {
+    animation: marquee 18s linear infinite;
+  }
+
+  /* ── Blinking cursor ───────────────────────────── */
+  @keyframes blink {
+    0%, 100% { opacity: 1; }
+    50%       { opacity: 0; }
+  }
+
+  .cursor-blink {
+    animation: blink 1s step-end infinite;
+  }
+
+  /* ── Selection ─────────────────────────────────── */
+  ::selection {
     background: hsl(var(--primary));
     color: hsl(var(--primary-foreground));
   }
 }
 
-/* Custom scrollbar */
+/* ── Custom scrollbar ──────────────────────────── */
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 6px;
 }
 
 ::-webkit-scrollbar-track {
-  background: hsl(var(--muted));
+  background: hsl(var(--card));
 }
 
 ::-webkit-scrollbar-thumb {
   background: hsl(var(--primary));
-  border-radius: 4px;
+  border-radius: 0;
+}
+
+/* ── Swiper overrides (PostHog orange) ─────────── */
+:root {
+  --swiper-pagination-color: #f54e00;
+  --swiper-pagination-bullet-inactive-color: #999;
+  --swiper-pagination-bullet-inactive-opacity: 0.4;
+  --swiper-navigation-color: #f54e00;
+  --swiper-navigation-size: 22px;
 }

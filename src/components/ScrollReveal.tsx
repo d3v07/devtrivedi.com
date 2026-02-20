@@ -15,7 +15,7 @@ const ScrollReveal = ({
   className = "",
   delay = 0,
   direction = "up",
-  duration = 0.6,
+  duration = 0.45,
   once = true,
 }: ScrollRevealProps) => {
   const ref = useRef(null);
@@ -28,15 +28,15 @@ const ScrollReveal = ({
   const getDirectionOffset = () => {
     switch (direction) {
       case "up":
-        return { x: 0, y: 60 };
+        return { x: 0, y: 24 };
       case "down":
-        return { x: 0, y: -60 };
+        return { x: 0, y: -24 };
       case "left":
-        return { x: 60, y: 0 };
+        return { x: 32, y: 0 };
       case "right":
-        return { x: -60, y: 0 };
+        return { x: -32, y: 0 };
       default:
-        return { x: 0, y: 60 };
+        return { x: 0, y: 24 };
     }
   };
 
@@ -45,18 +45,8 @@ const ScrollReveal = ({
   return (
     <motion.div
       ref={ref}
-      initial={{ 
-        opacity: 0, 
-        x: offset.x, 
-        y: offset.y,
-        filter: "blur(10px)"
-      }}
-      animate={isInView ? { 
-        opacity: 1, 
-        x: 0, 
-        y: 0,
-        filter: "blur(0px)"
-      } : {}}
+      initial={{ opacity: 0, x: offset.x, y: offset.y }}
+      animate={isInView ? { opacity: 1, x: 0, y: 0 } : {}}
       transition={{
         duration,
         delay,

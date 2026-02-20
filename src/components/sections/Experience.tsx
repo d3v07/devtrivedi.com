@@ -38,9 +38,9 @@ const experiences: ExperienceItem[] = [
 
 const Experience = () => {
   return (
-    <section id="work" className="py-24 px-6 md:px-12 lg:px-24 bg-card">
+    <section id="work" className="py-20 px-6 md:px-12 lg:px-24 bg-card">
       <div className="max-w-6xl mx-auto">
-        <div className="flex justify-between items-end mb-16">
+        <div className="flex justify-between items-end mb-12">
           <div>
             <span className="font-body text-sm tracking-widest uppercase text-primary block mb-4">
               Experience
@@ -53,12 +53,12 @@ const Experience = () => {
           {experiences.map((exp, index) => (
             <div
               key={exp.company}
-              className={`group py-12 ${index !== experiences.length - 1 ? "border-b border-border" : ""}`}
+              className={`group py-12 ${index !== experiences.length - 1 ? "border-b-2 border-foreground" : ""}`}
             >
               <div className="grid md:grid-cols-12 gap-8 items-start">
                 {/* Number */}
                 <div className="md:col-span-1">
-                  <span className="font-display text-6xl text-muted/50 group-hover:text-primary transition-colors">
+                  <span className="font-display text-6xl text-muted-foreground/50 group-hover:text-primary transition-colors">
                     {exp.number}
                   </span>
                 </div>

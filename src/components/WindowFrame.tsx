@@ -41,7 +41,8 @@ const ROUTE_TITLES: Record<string, string> = {
 const DEFAULT_TOP    = 44;
 const DEFAULT_LEFT   = 116;
 const DEFAULT_WIDTH  = () => window.innerWidth - 128;
-const DEFAULT_HEIGHT = () => window.innerHeight - 56;
+// Leave 88px at the bottom for the dock (64px) + bottom-4 margin (16px) + 8px breathing room
+const DEFAULT_HEIGHT = () => window.innerHeight - DEFAULT_TOP - 88;
 const TASKBAR_H      = 36;
 
 // ─── Resize handle ────────────────────────────────────────────────────────────
@@ -167,7 +168,7 @@ export default function WindowFrame({ children }: { children: React.ReactNode })
       animate(motionX, 0, spring);
       animate(motionY, TASKBAR_H, spring);
       animate(motionW, window.innerWidth, spring);
-      animate(motionH, window.innerHeight - TASKBAR_H, spring);
+      animate(motionH, window.innerHeight - TASKBAR_H - 88, spring);
       setWindowState("maximized");
     }
   }, [windowState, motionX, motionY, motionW, motionH, setWindowState]);
@@ -180,6 +181,15 @@ export default function WindowFrame({ children }: { children: React.ReactNode })
     setWindowOpen(false);
     setWindowState("normal");
   }, [setWindowOpen, setWindowState]);
+
+  const resetPosition = useCallback(() => {
+    const spring = { type: "spring" as const, stiffness: 400, damping: 38 };
+    animate(motionX, DEFAULT_LEFT, spring);
+    animate(motionY, DEFAULT_TOP, spring);
+    animate(motionW, DEFAULT_WIDTH(), spring);
+    animate(motionH, DEFAULT_HEIGHT(), spring);
+    setWindowState("normal");
+  }, [motionX, motionY, motionW, motionH, setWindowState]);
 
   // ── Scroll reset on route change ────────────────────────────────────────────
 
@@ -265,6 +275,7 @@ export default function WindowFrame({ children }: { children: React.ReactNode })
           dragListener={false}
           dragMomentum={false}
           dragElastic={0}
+          dragConstraints={{ top: TASKBAR_H }}
           style={{
             x: motionX,
             y: motionY,
@@ -297,6 +308,8 @@ export default function WindowFrame({ children }: { children: React.ReactNode })
             className="flex items-center gap-3 px-3 h-9 bg-card border-b-2 border-foreground shrink-0 select-none"
             style={{ cursor: windowState === "normal" ? "grab" : "default" }}
             onPointerDown={(e) => { if (windowState === "normal") dragControls.start(e); }}
+            onDoubleClick={resetPosition}
+            title="Double-click to reset position"
           >
             {/* Traffic lights */}
             <div

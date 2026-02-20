@@ -7,7 +7,7 @@
  * Mini apps: timestamp-keyed so closing + reopening always mounts fresh.
  */
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "react-router-dom";
 import {
@@ -72,16 +72,16 @@ function DockIcon({
 
       {/* Icon square */}
       <motion.div
-        className="w-9 h-9 flex items-center justify-center border border-white/20 bg-white/10"
+        className="w-11 h-11 flex items-center justify-center border border-white/20 bg-white/10"
         style={{
           backdropFilter: "blur(8px)",
           WebkitBackdropFilter: "blur(8px)",
         }}
-        whileHover={{ scale: 1.22, y: -5 }}
+        whileHover={{ scale: 1.18, y: -6 }}
         whileTap={{ scale: 0.88 }}
         transition={{ type: "spring", stiffness: 420, damping: 26 }}
       >
-        <Icon className={`w-4 h-4 ${def.accent}`} />
+        <Icon className={`w-5 h-5 ${def.accent}`} />
       </motion.div>
 
       {/* Open indicator dot */}
@@ -118,6 +118,12 @@ interface DesktopLayerProps {
 
 export default function DesktopLayer({ visible }: DesktopLayerProps) {
   const { setExperience } = useApp();
+
+  // Increment every time OS mode is entered — used as dock key to retrigger entrance animation
+  const [enterKey, setEnterKey] = useState(0);
+  useEffect(() => {
+    if (visible) setEnterKey(k => k + 1);
+  }, [visible]);
 
   // Map of appId → open timestamp. Unique timestamp = fresh React key = fresh mount.
   // This fixes "close then reopen shows nothing" — different key every open.
@@ -176,14 +182,36 @@ export default function DesktopLayer({ visible }: DesktopLayerProps) {
       />
 
       {/* ── Centered bottom dock ──────────────────────────────────────────────── */}
-      <div
-        className="fixed bottom-4 left-1/2 -translate-x-1/2 flex items-center gap-1.5 px-3 py-2"
+      <motion.div
+        key={enterKey}
+        className="fixed bottom-4 left-1/2 -translate-x-1/2 flex items-center gap-2 px-4 py-3"
         style={{
-          background: "rgba(0,0,0,0.55)",
+          background: "rgba(0,0,0,0.60)",
           backdropFilter: "blur(20px)",
           WebkitBackdropFilter: "blur(20px)",
           border: "1px solid rgba(255,255,255,0.12)",
           zIndex: 50,
+        }}
+        initial={{ y: 24, opacity: 0, scale: 0.92 }}
+        animate={{
+          y: 0,
+          opacity: 1,
+          scale: 1,
+          boxShadow: [
+            "0 0 0px rgba(255,255,255,0)",
+            "0 0 0px rgba(255,255,255,0)",
+            "0 0 18px rgba(255,255,255,0.55), 0 0 6px rgba(255,255,255,0.3)",
+            "0 0 4px rgba(255,255,255,0.15)",
+            "0 0 18px rgba(255,255,255,0.55), 0 0 6px rgba(255,255,255,0.3)",
+            "0 0 4px rgba(255,255,255,0.15)",
+            "0 0 0px rgba(255,255,255,0)",
+          ],
+        }}
+        transition={{
+          y:         { type: "spring", stiffness: 380, damping: 28 },
+          opacity:   { duration: 0.3 },
+          scale:     { type: "spring", stiffness: 380, damping: 28 },
+          boxShadow: { duration: 2.8, delay: 0.5, times: [0, 0.12, 0.28, 0.45, 0.62, 0.78, 1] },
         }}
       >
         {/* Nav icons */}
@@ -192,7 +220,7 @@ export default function DesktopLayer({ visible }: DesktopLayerProps) {
         ))}
 
         {/* Divider */}
-        <div className="w-px h-5 bg-white/20 mx-0.5 shrink-0" />
+        <div className="w-px h-7 bg-white/20 mx-0.5 shrink-0" />
 
         {/* App icons */}
         {appIcons.map((def) => (
@@ -205,7 +233,7 @@ export default function DesktopLayer({ visible }: DesktopLayerProps) {
         ))}
 
         {/* Divider */}
-        <div className="w-px h-5 bg-white/20 mx-0.5 shrink-0" />
+        <div className="w-px h-7 bg-white/20 mx-0.5 shrink-0" />
 
         {/* Exit OS */}
         <DockIcon
@@ -217,7 +245,7 @@ export default function DesktopLayer({ visible }: DesktopLayerProps) {
           }}
           onClick={() => setExperience("website")}
         />
-      </div>
+      </motion.div>
 
       {/* ── Mini apps (rendered via portal in MiniWindow) ─────────────────────── */}
       <AnimatePresence>

@@ -5,21 +5,21 @@
  * Dock: rendered via createPortal to document.body at z-index 50 (above all windows).
  *   — Centered when no mini apps are open.
  *   — Slides to left margin when any mini app is open.
- * Mini apps: each uses createPortal internally at z-index 200+.
+ * Nav icons: reopen + restore window then navigate — no dead-end clicks.
  */
 
 import { useState, useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import {
   FileText, FolderOpen, BookOpen, Mail, Monitor,
-  Terminal, Scroll, Rocket,
+  Terminal, Scroll, BookMarked,
 } from "lucide-react";
 import { useApp } from "@/context/AppContext";
 import TerminalApp from "./apps/TerminalApp";
 import ResumeApp   from "./apps/ResumeApp";
-import DeployApp   from "./apps/DeployApp";
+import BlogApp     from "./apps/BlogApp";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -27,8 +27,7 @@ interface IconDef {
   id: string;
   label: string;
   icon: React.FC<{ className?: string }>;
-  href?: string;
-  action?: () => void;
+  action: () => void;
   accent: string;
 }
 
@@ -37,78 +36,65 @@ interface IconDef {
 function DockIcon({
   def,
   isOpen,
-  onClick,
 }: {
   def: IconDef;
   isOpen?: boolean;
-  onClick?: () => void;
 }) {
   const [hovered, setHovered] = useState(false);
   const Icon = def.icon;
 
-  const inner = (
-    <div
-      className="relative flex flex-col items-center"
+  return (
+    <button
+      onClick={def.action}
+      className="block"
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
-      {/* Tooltip */}
-      <AnimatePresence>
-        {hovered && (
-          <motion.div
-            initial={{ opacity: 0, y: 6, scale: 0.88 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 6, scale: 0.88 }}
-            transition={{ type: "spring", stiffness: 500, damping: 30 }}
-            className="absolute bottom-full mb-3 px-2.5 py-1 font-mono-code text-[10px] text-white whitespace-nowrap pointer-events-none"
-            style={{
-              background: "rgba(0,0,0,0.88)",
-              border: "1px solid rgba(255,255,255,0.15)",
-              backdropFilter: "blur(8px)",
-              zIndex: 999,
-            }}
-          >
-            {def.label}
-          </motion.div>
+      <div className="relative flex flex-col items-center">
+        {/* Tooltip */}
+        <AnimatePresence>
+          {hovered && (
+            <motion.div
+              initial={{ opacity: 0, y: 6, scale: 0.88 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: 6, scale: 0.88 }}
+              transition={{ type: "spring", stiffness: 500, damping: 30 }}
+              className="absolute bottom-full mb-3 px-2.5 py-1 font-mono-code text-[10px] text-white whitespace-nowrap pointer-events-none"
+              style={{
+                background: "rgba(0,0,0,0.88)",
+                border: "1px solid rgba(255,255,255,0.15)",
+                backdropFilter: "blur(8px)",
+                zIndex: 999,
+              }}
+            >
+              {def.label}
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        {/* Icon square */}
+        <motion.div
+          className="w-12 h-12 flex items-center justify-center border border-white/25 bg-white/12"
+          style={{
+            backdropFilter: "blur(10px)",
+            WebkitBackdropFilter: "blur(10px)",
+          }}
+          whileHover={{ scale: 1.20, y: -7 }}
+          whileTap={{ scale: 0.88 }}
+          transition={{ type: "spring", stiffness: 420, damping: 26 }}
+        >
+          <Icon className={`w-6 h-6 ${def.accent}`} />
+        </motion.div>
+
+        {/* Open indicator dot */}
+        {isOpen && (
+          <motion.span
+            initial={{ scale: 0 }}
+            animate={{ scale: 1 }}
+            className="w-1.5 h-1.5 rounded-full bg-white/90 mt-1 shrink-0"
+          />
         )}
-      </AnimatePresence>
-
-      {/* Icon square */}
-      <motion.div
-        className="w-12 h-12 flex items-center justify-center border border-white/25 bg-white/12"
-        style={{
-          backdropFilter: "blur(10px)",
-          WebkitBackdropFilter: "blur(10px)",
-        }}
-        whileHover={{ scale: 1.20, y: -7 }}
-        whileTap={{ scale: 0.88 }}
-        transition={{ type: "spring", stiffness: 420, damping: 26 }}
-      >
-        <Icon className={`w-6 h-6 ${def.accent}`} />
-      </motion.div>
-
-      {/* Open indicator dot */}
-      {isOpen && (
-        <motion.span
-          initial={{ scale: 0 }}
-          animate={{ scale: 1 }}
-          className="w-1.5 h-1.5 rounded-full bg-white/90 mt-1 shrink-0"
-        />
-      )}
-    </div>
-  );
-
-  if (def.href) {
-    return (
-      <Link to={def.href} className="block">
-        {inner}
-      </Link>
-    );
-  }
-
-  return (
-    <button onClick={onClick} className="block">
-      {inner}
+      </div>
     </button>
   );
 }
@@ -120,7 +106,8 @@ interface DesktopLayerProps {
 }
 
 export default function DesktopLayer({ visible }: DesktopLayerProps) {
-  const { setExperience } = useApp();
+  const { setExperience, windowOpen, setWindowOpen, windowState, setWindowState } = useApp();
+  const navigate = useNavigate();
 
   // Increment each time OS mode is entered — reruns entrance animation
   const [enterKey, setEnterKey] = useState(0);
@@ -153,14 +140,18 @@ export default function DesktopLayer({ visible }: DesktopLayerProps) {
     return 200 + (idx === -1 ? 0 : idx * 10);
   };
 
+  // Navigate to a page: always reopen + restore the main window first
+  const navTo = (path: string) => {
+    if (!windowOpen) setWindowOpen(true);
+    if (windowState === "minimized") setWindowState("normal");
+    navigate(path);
+  };
+
   const hasOpen = Object.keys(openApps).length > 0;
 
   // ── Dynamic dock position ────────────────────────────────────────────────────
-  // Centered when no apps open, left-margin when apps are open.
-  // Uses pixel x-translation (left: 0 is anchor) so framer-motion can interpolate.
   const dockRef = useRef<HTMLDivElement>(null);
   const [dockX, setDockX] = useState(() =>
-    // Initial estimate before measurement: roughly center
     Math.max(16, (window.innerWidth - 580) / 2)
   );
 
@@ -177,22 +168,19 @@ export default function DesktopLayer({ visible }: DesktopLayerProps) {
   // ── Icon definitions ─────────────────────────────────────────────────────────
 
   const navIcons: IconDef[] = [
-    { id: "home",     label: "Home",     icon: FileText,   href: "/",         accent: "text-orange-400" },
-    { id: "projects", label: "Projects", icon: FolderOpen, href: "/projects", accent: "text-white" },
-    { id: "about",    label: "About",    icon: BookOpen,   href: "/about",    accent: "text-blue-300" },
-    { id: "contact",  label: "Contact",  icon: Mail,       href: "/contact",  accent: "text-red-300" },
+    { id: "home",     label: "Home",     icon: FileText,   action: () => navTo("/"),         accent: "text-orange-400" },
+    { id: "projects", label: "Projects", icon: FolderOpen, action: () => navTo("/projects"), accent: "text-white" },
+    { id: "about",    label: "About",    icon: BookOpen,   action: () => navTo("/about"),    accent: "text-blue-300" },
+    { id: "contact",  label: "Contact",  icon: Mail,       action: () => navTo("/contact"),  accent: "text-red-300" },
   ];
 
   const appIcons: IconDef[] = [
-    { id: "terminal", label: "Terminal", icon: Terminal, action: () => openApp("terminal"), accent: "text-orange-400" },
-    { id: "resume",   label: "Resume",   icon: Scroll,   action: () => openApp("resume"),  accent: "text-emerald-300" },
-    { id: "deploy",   label: "Deploy",   icon: Rocket,   action: () => openApp("deploy"),  accent: "text-violet-300" },
+    { id: "terminal", label: "Terminal", icon: Terminal,   action: () => openApp("terminal"), accent: "text-orange-400" },
+    { id: "resume",   label: "Resume",   icon: Scroll,     action: () => openApp("resume"),   accent: "text-emerald-300" },
+    { id: "blog",     label: "Blog",     icon: BookMarked, action: () => openApp("blog"),     accent: "text-violet-300" },
   ];
 
   // ── Dock markup (portalled to document.body) ─────────────────────────────────
-  // Two-layer motion:
-  //   Outer: entrance slide-up + border pulse (keyed by enterKey → reruns on OS entry)
-  //   Inner: horizontal slide left/center (smooth spring when apps open/close)
 
   const dock = (
     <motion.div
@@ -219,7 +207,6 @@ export default function DesktopLayer({ visible }: DesktopLayerProps) {
         boxShadow: { duration: 3.0, delay: 0.6, times: [0, 0.1, 0.28, 0.46, 0.64, 1] },
       }}
     >
-      {/* Inner div handles horizontal position */}
       <motion.div
         ref={dockRef}
         className="flex items-center gap-2.5 px-5 py-3"
@@ -232,31 +219,27 @@ export default function DesktopLayer({ visible }: DesktopLayerProps) {
         animate={{ x: dockX }}
         transition={{ type: "spring", stiffness: 300, damping: 32 }}
       >
-        {/* Nav icons */}
+        {/* Nav icons — reopen window + navigate */}
         {navIcons.map((def) => (
           <DockIcon key={def.id} def={def} />
         ))}
 
-        {/* Divider */}
         <div className="w-px h-8 bg-white/20 mx-0.5 shrink-0" />
 
-        {/* App icons */}
+        {/* App icons — open mini windows */}
         {appIcons.map((def) => (
           <DockIcon
             key={def.id}
             def={def}
             isOpen={def.id in openApps}
-            onClick={def.action}
           />
         ))}
 
-        {/* Divider */}
         <div className="w-px h-8 bg-white/20 mx-0.5 shrink-0" />
 
         {/* Exit OS */}
         <DockIcon
-          def={{ id: "switch", label: "Exit OS", icon: Monitor, accent: "text-white/60" }}
-          onClick={() => setExperience("website")}
+          def={{ id: "switch", label: "Exit OS", icon: Monitor, action: () => setExperience("website"), accent: "text-white/60" }}
         />
       </motion.div>
     </motion.div>
@@ -264,7 +247,7 @@ export default function DesktopLayer({ visible }: DesktopLayerProps) {
 
   return (
     <>
-      {/* ── Wallpaper layer — explicit z-5 so WindowFrame (z-20) paints above it ── */}
+      {/* Wallpaper — z-5, below WindowFrame (z-20) */}
       <div
         className={`fixed inset-0 transition-opacity duration-200 ${
           visible ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
@@ -281,10 +264,10 @@ export default function DesktopLayer({ visible }: DesktopLayerProps) {
         />
       </div>
 
-      {/* ── Dock portal — above WindowFrame and Desktop bar ──────────────────────── */}
+      {/* Dock portal — z-50, above all windows */}
       {visible && createPortal(dock, document.body)}
 
-      {/* ── Mini apps — each MiniWindow uses its own portal at z-200+ ─────────────── */}
+      {/* Mini apps — each MiniWindow uses its own portal at z-200+ */}
       {visible && (
         <AnimatePresence>
           {openApps.terminal && (
@@ -303,12 +286,12 @@ export default function DesktopLayer({ visible }: DesktopLayerProps) {
               zIndex={zIndexFor("resume")}
             />
           )}
-          {openApps.deploy && (
-            <DeployApp
-              key={`deploy-${openApps.deploy}`}
-              onClose={() => closeApp("deploy")}
-              onFocus={() => focusApp("deploy")}
-              zIndex={zIndexFor("deploy")}
+          {openApps.blog && (
+            <BlogApp
+              key={`blog-${openApps.blog}`}
+              onClose={() => closeApp("blog")}
+              onFocus={() => focusApp("blog")}
+              zIndex={zIndexFor("blog")}
             />
           )}
         </AnimatePresence>

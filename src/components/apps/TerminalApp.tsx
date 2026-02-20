@@ -24,9 +24,9 @@ const COMMANDS: Record<string, string | (() => string)> = {
   location:  new jersey, usa`,
 
   ls: `total 6
-  drwxr-xr-x  PulseOps.go/
-  drwxr-xr-x  SpendLens.py/
-  drwxr-xr-x  VendorFlow.ts/
+  drwxr-xr-x  PulseOps/
+  drwxr-xr-x  SpendLens/
+  drwxr-xr-x  VendorFlow/
   drwxr-xr-x  portfolio-os/
   -rw-r--r--  resume.pdf
   -rw-r--r--  about.md`,
@@ -47,9 +47,9 @@ const COMMANDS: Record<string, string | (() => string)> = {
       feat: multi-tenant SaaS, 20+ tenants in one sprint`,
 
   "ps aux": `PID   PROCESS           CPU   STATUS
-  001   PulseOps.go        3%    running
-  002   SpendLens.py       1%    running
-  003   VendorFlow.ts      2%    running
+  001   PulseOps           3%    running
+  002   SpendLens          1%    running
+  003   VendorFlow         2%    running
   004   portfolio-os       0%    running
   005   coffee.sh         99%    critical`,
 

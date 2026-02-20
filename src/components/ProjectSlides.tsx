@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react";
+import { createPortal } from "react-dom";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination } from "swiper/modules";
 import type { Swiper as SwiperInstance } from "swiper";
@@ -355,7 +356,8 @@ export default function ProjectSlides({ project, onClose }: ProjectSlidesProps) 
     swiperRef.current?.slideTo(index);
   };
 
-  return (
+  // createPortal escapes WindowFrame's CSS transform so `fixed` is relative to viewport
+  return createPortal(
     <AnimatePresence>
       {/* Backdrop */}
       <motion.div
@@ -363,7 +365,7 @@ export default function ProjectSlides({ project, onClose }: ProjectSlidesProps) 
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
         transition={{ duration: 0.15 }}
-        className="fixed inset-0 z-[100] bg-foreground/50 flex items-center justify-center p-4 md:p-8"
+        className="fixed inset-0 z-[300] bg-foreground/50 flex items-center justify-center p-4 md:p-8"
         onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}
       >
       {/* Modal window */}
@@ -529,6 +531,7 @@ export default function ProjectSlides({ project, onClose }: ProjectSlidesProps) 
         </AnimatePresence>
       </motion.div>
       </motion.div>
-    </AnimatePresence>
+    </AnimatePresence>,
+    document.body
   );
 }

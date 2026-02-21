@@ -77,7 +77,7 @@ const Home = () => {
             </span>
           </motion.div>
 
-          <div className="grid lg:grid-cols-12 gap-10 items-start">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
             {/* Left: main content */}
             <div className="lg:col-span-8">
               <motion.p
@@ -132,11 +132,14 @@ const Home = () => {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.38 }}
-                className="mb-8 flex items-center gap-3 bg-foreground text-background px-4 py-2.5 border-2 border-foreground hard-shadow-primary overflow-hidden"
+                className="mb-8 flex items-center gap-3 bg-foreground text-background px-4 py-2.5 border-2 border-foreground hard-shadow-primary"
               >
                 <Terminal className="w-4 h-4 text-primary flex-shrink-0" />
-                <code className="font-mono-code text-[11px] sm:text-sm truncate min-w-0">$ hire dev --start=asap --domain=systems --remote=yes</code>
-                <span className="font-mono-code text-primary cursor-blink select-none">|</span>
+                <code className="font-mono-code text-[11px] sm:text-sm">
+                  <span className="sm:hidden">$ open-to-work --now</span>
+                  <span className="hidden sm:inline">$ hire dev --start=asap --domain=systems --remote=yes</span>
+                </code>
+                <span className="font-mono-code text-primary cursor-blink select-none ml-auto sm:ml-0">|</span>
               </motion.div>
 
               {/* Description */}
@@ -211,7 +214,7 @@ const Home = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.55, delay: 0.28 }}
-              className="lg:col-span-4 grid grid-cols-3 lg:grid-cols-1 gap-3 lg:gap-0 lg:space-y-3 lg:pt-2"
+              className="lg:col-span-4 flex flex-col gap-3 lg:gap-0 lg:space-y-3 lg:pt-2"
             >
               {[
                 { value: "4.0", label: "GPA at NJIT" },
@@ -220,7 +223,7 @@ const Home = () => {
               ].map((stat) => (
                 <motion.div
                   key={stat.label}
-                  className="p-3 lg:p-5 border-2 border-foreground bg-card interactive-card"
+                  className="p-4 lg:p-5 border-2 border-foreground bg-card interactive-card"
                   whileHover={{ x: 4, y: 4, boxShadow: "0px 0px 0px hsl(var(--foreground))" }}
                   whileTap={{ scale: 0.98 }}
                   transition={{ type: "spring", stiffness: 400, damping: 28 }}

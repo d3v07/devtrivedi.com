@@ -20,6 +20,13 @@ function AppShell() {
   const { experience, setExperience } = useApp();
   const isOsMode = experience === "os";
 
+  // Mobile always gets website mode — auto-switch on resize too
+  useEffect(() => {
+    const check = () => { if (window.innerWidth < 768) setExperience("website"); };
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
+  }, [setExperience]);
+
   // Global click sound — plays on any button or link click across the site
   useEffect(() => {
     const handleClick = (e: MouseEvent) => {

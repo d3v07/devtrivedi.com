@@ -18,6 +18,8 @@ const AppContext = createContext<AppContextValue | null>(null);
 export function AppProvider({ children }: { children: ReactNode }) {
   const [experience, setExperienceState] = useState<Experience>(() => {
     try {
+      // Mobile always defaults to website mode
+      if (typeof window !== "undefined" && window.innerWidth < 768) return "website";
       const saved = localStorage.getItem("portfolio-experience");
       return (saved as Experience) || "os";
     } catch {

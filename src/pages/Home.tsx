@@ -132,7 +132,7 @@ const Home = () => {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.38 }}
-                className="mb-8 flex overflow-hidden items-center gap-3 bg-foreground text-background px-4 py-2.5 border-2 border-foreground hard-shadow-primary"
+                className="mb-8 flex items-center gap-3 bg-foreground text-background px-4 py-2.5 border-2 border-foreground hard-shadow-primary overflow-hidden"
               >
                 <Terminal className="w-4 h-4 text-primary flex-shrink-0" />
                 <code className="font-mono-code text-[11px] sm:text-sm truncate min-w-0">$ hire dev --start=asap --domain=systems --remote=yes</code>
@@ -206,12 +206,12 @@ const Home = () => {
               </motion.div>
             </div>
 
-            {/* Right: stat cards */}
+            {/* Right: stat cards — row on mobile, stacked column on desktop */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.55, delay: 0.28 }}
-              className="lg:col-span-4 space-y-3 pt-2"
+              className="lg:col-span-4 grid grid-cols-3 lg:grid-cols-1 gap-3 lg:gap-0 lg:space-y-3 lg:pt-2"
             >
               {[
                 { value: "4.0", label: "GPA at NJIT" },
@@ -220,13 +220,13 @@ const Home = () => {
               ].map((stat) => (
                 <motion.div
                   key={stat.label}
-                  className="p-5 border-2 border-foreground bg-card interactive-card"
+                  className="p-3 lg:p-5 border-2 border-foreground bg-card interactive-card"
                   whileHover={{ x: 4, y: 4, boxShadow: "0px 0px 0px hsl(var(--foreground))" }}
                   whileTap={{ scale: 0.98 }}
                   transition={{ type: "spring", stiffness: 400, damping: 28 }}
                 >
-                  <span className="font-display text-5xl text-primary block">{stat.value}</span>
-                  <p className="font-body text-sm text-muted-foreground mt-1">{stat.label}</p>
+                  <span className="font-display text-2xl lg:text-5xl text-primary block">{stat.value}</span>
+                  <p className="font-body text-xs lg:text-sm text-muted-foreground mt-0.5 lg:mt-1 leading-tight">{stat.label}</p>
                 </motion.div>
               ))}
             </motion.div>

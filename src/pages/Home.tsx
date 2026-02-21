@@ -132,10 +132,10 @@ const Home = () => {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.38 }}
-                className="mb-8 inline-flex max-w-full overflow-hidden items-center gap-3 bg-foreground text-background px-4 py-2.5 border-2 border-foreground hard-shadow-primary"
+                className="mb-8 flex overflow-hidden items-center gap-3 bg-foreground text-background px-4 py-2.5 border-2 border-foreground hard-shadow-primary"
               >
                 <Terminal className="w-4 h-4 text-primary flex-shrink-0" />
-                <code className="font-mono-code text-[11px] sm:text-sm truncate">$ hire dev --start=asap --domain=systems --remote=yes</code>
+                <code className="font-mono-code text-[11px] sm:text-sm truncate min-w-0">$ hire dev --start=asap --domain=systems --remote=yes</code>
                 <span className="font-mono-code text-primary cursor-blink select-none">|</span>
               </motion.div>
 
@@ -208,8 +208,8 @@ const Home = () => {
 
             {/* Right: stat cards */}
             <motion.div
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.55, delay: 0.28 }}
               className="lg:col-span-4 space-y-3 pt-2"
             >

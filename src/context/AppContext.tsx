@@ -19,9 +19,9 @@ export function AppProvider({ children }: { children: ReactNode }) {
   const [experience, setExperienceState] = useState<Experience>(() => {
     try {
       const saved = localStorage.getItem("portfolio-experience");
-      return (saved as Experience) || "website";
+      return (saved as Experience) || "os";
     } catch {
-      return "website";
+      return "os";
     }
   });
 

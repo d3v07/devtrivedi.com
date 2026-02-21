@@ -115,6 +115,15 @@ export default function DesktopLayer({ visible }: DesktopLayerProps) {
     if (visible) setEnterKey(k => k + 1);
   }, [visible]);
 
+  // Dock hint — shows briefly on OS entry, then fades
+  const [showDockHint, setShowDockHint] = useState(false);
+  useEffect(() => {
+    if (!visible) return;
+    setShowDockHint(true);
+    const t = setTimeout(() => setShowDockHint(false), 5000);
+    return () => clearTimeout(t);
+  }, [enterKey]);
+
   // Map of appId → open timestamp. Unique timestamp = fresh React key = fresh mount.
   const [openApps, setOpenApps] = useState<Record<string, number>>({});
 
@@ -266,6 +275,34 @@ export default function DesktopLayer({ visible }: DesktopLayerProps) {
 
       {/* Dock portal — z-50, above all windows */}
       {visible && createPortal(dock, document.body)}
+
+      {/* Dock hint — appears for 5s on OS entry, subtle bounce pointing down */}
+      {visible && createPortal(
+        <AnimatePresence>
+          {showDockHint && (
+            <motion.div
+              initial={{ opacity: 0, y: -6 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -6 }}
+              transition={{ duration: 0.4 }}
+              className="fixed bottom-[84px] left-1/2 pointer-events-none"
+              style={{ zIndex: 48, transform: "translateX(-50%)" }}
+            >
+              <motion.div
+                animate={{ y: [0, -5, 0, -5, 0] }}
+                transition={{ duration: 2, repeat: 2, ease: "easeInOut", delay: 0.3 }}
+                className="flex flex-col items-center gap-1"
+              >
+                <span className="font-mono-code text-[9px] uppercase tracking-widest text-white/50">
+                  try the dock
+                </span>
+                <span className="text-white/30 text-xs leading-none">↓</span>
+              </motion.div>
+            </motion.div>
+          )}
+        </AnimatePresence>,
+        document.body
+      )}
 
       {/* Mini apps — each MiniWindow uses its own portal at z-200+ */}
       {visible && (

@@ -1,9 +1,12 @@
+import { createPortal } from "react-dom";
 import { motion, useDragControls } from "framer-motion";
 import { ReactNode } from "react";
 
 interface MiniWindowProps {
   title: string;
   onClose: () => void;
+  onFocus?: () => void;
+  zIndex?: number;
   initialX?: number;
   initialY?: number;
   width?: number;
@@ -14,6 +17,8 @@ interface MiniWindowProps {
 export default function MiniWindow({
   title,
   onClose,
+  onFocus,
+  zIndex = 200,
   initialX = 300,
   initialY = 80,
   width = 320,
@@ -22,7 +27,7 @@ export default function MiniWindow({
 }: MiniWindowProps) {
   const dragControls = useDragControls();
 
-  return (
+  return createPortal(
     <motion.div
       drag
       dragControls={dragControls}
@@ -33,10 +38,11 @@ export default function MiniWindow({
       animate={{ opacity: 1, scale: 1 }}
       exit={{ opacity: 0, scale: 0.9, transition: { duration: 0.12 } }}
       transition={{ type: "spring", stiffness: 400, damping: 28 }}
-      style={{ position: "fixed", zIndex: 200, width }}
+      style={{ position: "fixed", zIndex, width, top: 0, left: 0 }}
       className="border-2 border-foreground hard-shadow-lg bg-background flex flex-col"
+      onPointerDown={onFocus}
     >
-      {/* Title bar — drag handle */}
+      {/* Title bar */}
       <div
         className="flex items-center gap-2 px-3 h-8 bg-card border-b-2 border-foreground shrink-0 select-none"
         style={{ cursor: "grab" }}
@@ -61,6 +67,7 @@ export default function MiniWindow({
       >
         {children}
       </div>
-    </motion.div>
+    </motion.div>,
+    document.body
   );
 }

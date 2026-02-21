@@ -342,11 +342,13 @@ export default function ProjectSlides({ project, onClose }: ProjectSlidesProps) 
 
   const slides = buildSlides(project);
 
-  // Keyboard shortcuts
+  // Keyboard shortcuts — window-level so they work without focus on swiper
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
-      if (e.key === "Escape") onClose();
+      if (e.key === "Escape")     { onClose(); return; }
       if (e.key === "n" || e.key === "N") setShowNotes((v) => !v);
+      if (e.key === "ArrowRight") swiperRef.current?.slideNext();
+      if (e.key === "ArrowLeft")  swiperRef.current?.slidePrev();
     };
     window.addEventListener("keydown", handler);
     return () => window.removeEventListener("keydown", handler);

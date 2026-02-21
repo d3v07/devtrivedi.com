@@ -10,13 +10,26 @@ import ScrollToTop from "./components/ScrollToTop";
 import Desktop from "./components/Desktop";
 import DesktopLayer from "./components/DesktopLayer";
 import WindowFrame from "./components/WindowFrame";
+import ChatWidget from "./components/ChatWidget";
 import { AppProvider, useApp } from "./context/AppContext";
+import { sounds } from "./lib/sounds";
 
 const queryClient = new QueryClient();
 
 function AppShell() {
   const { experience, setExperience } = useApp();
   const isOsMode = experience === "os";
+
+  // Global click sound — plays on any button or link click across the site
+  useEffect(() => {
+    const handleClick = (e: MouseEvent) => {
+      if ((e.target as Element).closest("button, a, [role='button']")) {
+        sounds.click();
+      }
+    };
+    document.addEventListener("click", handleClick);
+    return () => document.removeEventListener("click", handleClick);
+  }, []);
 
   // OS mode is desktop-only — auto-fall-back to website mode on narrow viewports
   useEffect(() => {
@@ -31,7 +44,7 @@ function AppShell() {
   }, [experience, setExperience]);
 
   return (
-    <>
+    <div data-experience={experience}>
       {/* Desktop taskbar — only visible in OS mode */}
       {isOsMode && <Desktop />}
 
@@ -58,7 +71,10 @@ function AppShell() {
           <AnimatedRoutes />
         </div>
       </WindowFrame>
-    </>
+
+      {/* Sir Turing floating widget — always visible in both modes */}
+      <ChatWidget />
+    </div>
   );
 }
 

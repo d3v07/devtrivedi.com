@@ -275,6 +275,16 @@
   }
 }
 
+/* ── OS mode: white window content ────────────────
+   Website mode uses warm cream (--background).
+   In OS mode the window sits on a photo wallpaper;
+   white content makes the window clearly distinct.  */
+[data-experience="os"] {
+  --background:      0 0% 100%;
+  --card:            0 0% 97%;
+  --secondary:       0 0% 93%;
+}
+
 /* ── Custom scrollbar ──────────────────────────── */
 ::-webkit-scrollbar {
   width: 6px;

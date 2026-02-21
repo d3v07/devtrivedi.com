@@ -175,11 +175,12 @@ export default function Desktop() {
     <div className="fixed top-0 left-0 right-0 h-9 bg-card border-b-2 border-foreground flex items-center justify-between px-3 z-50">
       {/* Left: logo + macOS-style menu bar */}
       <div className="flex items-center gap-1 shrink-0 relative" ref={menuRef}>
-        <span className="font-display text-sm font-bold mr-3">
+        <span className="font-display text-sm font-bold mr-1 sm:mr-3">
           DT<span className="text-primary">.</span>
         </span>
 
-        {/* Menu labels */}
+        {/* Menu labels — hidden on mobile to save space */}
+        <div className="hidden sm:flex items-center gap-1">
         {["File", "Edit", "View", "History"].map((menu) => (
           <button
             key={menu}
@@ -212,6 +213,7 @@ export default function Desktop() {
             )}
           </div>
         )}
+        </div>{/* end hidden sm:flex menu labels */}
       </div>
 
       {/* Center: minimized pill or reopen pill */}
@@ -240,7 +242,8 @@ export default function Desktop() {
           onClick={() => setExperience("website")}
           className="font-mono-code text-xs px-2 py-1 border border-foreground hover:bg-foreground hover:text-background transition-colors duration-150"
         >
-          Exit OS mode
+          <span className="hidden sm:inline">Exit OS mode</span>
+          <span className="sm:hidden">Exit</span>
         </button>
         <Clock />
       </div>

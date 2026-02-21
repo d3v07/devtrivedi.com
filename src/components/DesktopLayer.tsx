@@ -74,7 +74,7 @@ function DockIcon({
 
         {/* Icon square */}
         <motion.div
-          className="w-12 h-12 flex items-center justify-center border border-white/25 bg-white/12"
+          className="w-9 h-9 sm:w-12 sm:h-12 flex items-center justify-center border border-white/25 bg-white/12"
           style={{
             backdropFilter: "blur(10px)",
             WebkitBackdropFilter: "blur(10px)",
@@ -83,7 +83,7 @@ function DockIcon({
           whileTap={{ scale: 0.88 }}
           transition={{ type: "spring", stiffness: 420, damping: 26 }}
         >
-          <Icon className={`w-6 h-6 ${def.accent}`} />
+          <Icon className={`w-4 h-4 sm:w-6 sm:h-6 ${def.accent}`} />
         </motion.div>
 
         {/* Open indicator dot */}
@@ -218,7 +218,7 @@ export default function DesktopLayer({ visible }: DesktopLayerProps) {
     >
       <motion.div
         ref={dockRef}
-        className="flex items-center gap-2.5 px-5 py-3"
+        className="flex items-center gap-1.5 sm:gap-2.5 px-3 sm:px-5 py-2 sm:py-3 overflow-x-auto max-w-[calc(100vw-32px)] sm:max-w-none"
         style={{
           background: "rgba(0,0,0,0.62)",
           backdropFilter: "blur(22px)",

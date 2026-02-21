@@ -31,17 +31,6 @@ function AppShell() {
     return () => document.removeEventListener("click", handleClick);
   }, []);
 
-  // OS mode is desktop-only — auto-fall-back to website mode on narrow viewports
-  useEffect(() => {
-    const check = () => {
-      if (window.innerWidth < 768 && experience === "os") {
-        setExperience("website");
-      }
-    };
-    check();
-    window.addEventListener("resize", check);
-    return () => window.removeEventListener("resize", check);
-  }, [experience, setExperience]);
 
   return (
     <div data-experience={experience}>

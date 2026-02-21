@@ -39,10 +39,12 @@ const ROUTE_TITLES: Record<string, string> = {
 // ─── Geometry defaults ────────────────────────────────────────────────────────
 
 const DEFAULT_TOP    = 44;
-const DEFAULT_LEFT   = 116;
-const DEFAULT_WIDTH  = () => window.innerWidth - 128;
+const isMobile       = () => window.innerWidth < 640;
+const DEFAULT_LEFT   = () => isMobile() ? 0 : 116;
+const DEFAULT_WIDTH  = () => isMobile() ? window.innerWidth : window.innerWidth - 128;
 // Leave 88px at the bottom for the dock (64px) + bottom-4 margin (16px) + 8px breathing room
-const DEFAULT_HEIGHT = () => window.innerHeight - DEFAULT_TOP - 88;
+// On mobile leave 72px (dock is smaller)
+const DEFAULT_HEIGHT = () => window.innerHeight - DEFAULT_TOP - (isMobile() ? 72 : 88);
 const TASKBAR_H      = 36;
 
 // ─── Resize handle ────────────────────────────────────────────────────────────
@@ -130,14 +132,14 @@ export default function WindowFrame({ children }: { children: React.ReactNode })
   const isOsMode = experience === "os";
 
   // Motion values drive position + size — required for animate() helper
-  const motionX = useMotionValue(DEFAULT_LEFT);
+  const motionX = useMotionValue(DEFAULT_LEFT());
   const motionY = useMotionValue(DEFAULT_TOP);
   const motionW = useMotionValue(DEFAULT_WIDTH());
   const motionH = useMotionValue(DEFAULT_HEIGHT());
 
   // Persist normal geometry while dragging/resizing so maximize can restore
   const normalGeom = useRef({
-    x: DEFAULT_LEFT, y: DEFAULT_TOP,
+    x: DEFAULT_LEFT(), y: DEFAULT_TOP,
     w: DEFAULT_WIDTH(), h: DEFAULT_HEIGHT(),
   });
 
@@ -184,7 +186,7 @@ export default function WindowFrame({ children }: { children: React.ReactNode })
 
   const resetPosition = useCallback(() => {
     const spring = { type: "spring" as const, stiffness: 400, damping: 38 };
-    animate(motionX, DEFAULT_LEFT, spring);
+    animate(motionX, DEFAULT_LEFT(), spring);
     animate(motionY, DEFAULT_TOP, spring);
     animate(motionW, DEFAULT_WIDTH(), spring);
     animate(motionH, DEFAULT_HEIGHT(), spring);
@@ -270,7 +272,7 @@ export default function WindowFrame({ children }: { children: React.ReactNode })
       {windowOpen && (
         <motion.div
           key="window"
-          drag={windowState === "normal"}
+          drag={windowState === "normal" && !isMobile()}
           dragControls={dragControls}
           dragListener={false}
           dragMomentum={false}
@@ -306,8 +308,8 @@ export default function WindowFrame({ children }: { children: React.ReactNode })
           {/* ── Title bar — drag handle ────────────────────────────────────── */}
           <div
             className="flex items-center gap-3 px-3 h-9 bg-card border-b-2 border-foreground shrink-0 select-none"
-            style={{ cursor: windowState === "normal" ? "grab" : "default" }}
-            onPointerDown={(e) => { if (windowState === "normal") dragControls.start(e); }}
+            style={{ cursor: windowState === "normal" && !isMobile() ? "grab" : "default" }}
+            onPointerDown={(e) => { if (windowState === "normal" && !isMobile()) dragControls.start(e); }}
             onDoubleClick={resetPosition}
             title="Double-click to reset position"
           >
@@ -366,8 +368,8 @@ export default function WindowFrame({ children }: { children: React.ReactNode })
             {children}
           </div>
 
-          {/* ── Corner resize handles (normal state only) ─────────────────────── */}
-          {windowState === "normal" && (
+          {/* ── Corner resize handles (normal state, desktop only) ─────────────── */}
+          {windowState === "normal" && !isMobile() && (
             <>
               <ResizeHandle edge="se" onResizeStart={handleResizeStart} />
               <ResizeHandle edge="sw" onResizeStart={handleResizeStart} />

@@ -13,7 +13,7 @@ export default function Blog() {
           <span className="font-mono-code text-xs tracking-widest uppercase text-primary block mb-4">
             The Blog
           </span>
-          <h1 className="font-display text-6xl md:text-8xl mb-6">Writing.</h1>
+          <h1 className="font-display text-4xl md:text-8xl mb-6">Writing.</h1>
           <p className="font-body text-muted-foreground max-w-xl">
             Technical writing from the trenches. Case studies, lessons learned, and honest takes on building software.
           </p>
@@ -41,7 +41,7 @@ export default function Blog() {
                     {post.teaser}
                   </p>
                 </div>
-                <div className="flex items-center gap-4 shrink-0 ml-8 mt-1">
+                <div className="flex items-center gap-4 shrink-0 ml-4 sm:ml-8 mt-1">
                   <span className="font-mono-code text-xs text-muted-foreground hidden md:block">
                     {post.time}
                   </span>

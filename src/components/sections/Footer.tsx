@@ -7,16 +7,16 @@ const Footer = () => {
         {/* Marquee */}
         <div className="overflow-hidden mb-12 pb-2">
           <div className="flex animate-marquee whitespace-nowrap">
-            <span className="font-display text-6xl md:text-8xl opacity-20 mx-8">
+            <span className="font-display text-3xl md:text-6xl lg:text-8xl opacity-20 mx-8">
               Dev Trivedi • Software Engineer • Full Stack • AWS •
             </span>
-            <span className="font-display text-6xl md:text-8xl opacity-20 mx-8">
+            <span className="font-display text-3xl md:text-6xl lg:text-8xl opacity-20 mx-8">
               Dev Trivedi • Software Engineer • Full Stack • AWS •
             </span>
-            <span className="font-display text-6xl md:text-8xl opacity-20 mx-8">
+            <span className="font-display text-3xl md:text-6xl lg:text-8xl opacity-20 mx-8">
               Dev Trivedi • Software Engineer • Full Stack • AWS •
             </span>
-            <span className="font-display text-6xl md:text-8xl opacity-20 mx-8">
+            <span className="font-display text-3xl md:text-6xl lg:text-8xl opacity-20 mx-8">
               Dev Trivedi • Software Engineer • Full Stack • AWS •
             </span>
           </div>

@@ -140,7 +140,7 @@ const About = () => {
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.22 }}
-            className="grid md:grid-cols-2 gap-10 font-body text-base text-muted-foreground max-w-5xl leading-relaxed mb-12"
+            className="grid md:grid-cols-2 gap-6 md:gap-10 font-body text-base text-muted-foreground max-w-5xl leading-relaxed mb-12"
           >
             <p>
               Currently pursuing my Master's in Computer Science at NJIT with a{" "}
@@ -205,7 +205,7 @@ const About = () => {
                   boxShadow: { type: "spring", stiffness: 400, damping: 28 },
                   scale: { type: "spring", stiffness: 400, damping: 28 },
                 }}
-                className="border-2 border-foreground bg-background interactive-card p-8"
+                className="border-2 border-foreground bg-background interactive-card p-5 md:p-8"
               >
                 <div className="grid md:grid-cols-12 gap-6">
                   {/* Number */}
@@ -330,7 +330,7 @@ const About = () => {
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.4, delay: idx * 0.12 }}
-                className={`grid md:grid-cols-2 gap-8 p-8 bg-background ${idx < education.length - 1 ? "border-b-2 border-foreground" : ""}`}
+                className={`grid md:grid-cols-2 gap-6 md:gap-8 p-5 md:p-8 bg-background ${idx < education.length - 1 ? "border-b-2 border-foreground" : ""}`}
               >
                 <div>
                   <div className="flex items-center gap-3 mb-2">

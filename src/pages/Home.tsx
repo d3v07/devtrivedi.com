@@ -95,7 +95,7 @@ const Home = () => {
                 initial={{ opacity: 0, y: 28 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.55, delay: 0.1 }}
-                className="font-display text-[4.5rem] md:text-[7.5rem] lg:text-[9rem] leading-[0.88] tracking-tight mb-6 h-[2em]"
+                className="font-display text-[2.5rem] sm:text-[4.5rem] lg:text-[7.5rem] xl:text-[9rem] leading-[0.88] tracking-tight mb-6 h-[2em]"
               >
                 <span className="block h-[1em] overflow-visible">
                   <AnimatePresence mode="wait">
@@ -132,10 +132,10 @@ const Home = () => {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.38 }}
-                className="mb-8 inline-flex items-center gap-3 bg-foreground text-background px-4 py-2.5 border-2 border-foreground hard-shadow-primary"
+                className="mb-8 inline-flex max-w-full overflow-hidden items-center gap-3 bg-foreground text-background px-4 py-2.5 border-2 border-foreground hard-shadow-primary"
               >
                 <Terminal className="w-4 h-4 text-primary flex-shrink-0" />
-                <code className="font-mono-code text-sm">$ hire dev --start=asap --domain=systems --remote=yes</code>
+                <code className="font-mono-code text-[11px] sm:text-sm truncate">$ hire dev --start=asap --domain=systems --remote=yes</code>
                 <span className="font-mono-code text-primary cursor-blink select-none">|</span>
               </motion.div>
 
@@ -304,10 +304,10 @@ const Home = () => {
               {metrics.map((m, i) => (
                 <div
                   key={m.num}
-                  className={`flex items-center gap-6 px-6 py-4 ${i < metrics.length - 1 ? "border-b border-border/20" : ""} ${i % 2 === 0 ? "bg-card" : "bg-background"} hover:bg-primary/5 transition-colors duration-150`}
+                  className={`flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-6 px-4 sm:px-6 py-3 sm:py-4 ${i < metrics.length - 1 ? "border-b border-border/20" : ""} ${i % 2 === 0 ? "bg-card" : "bg-background"} hover:bg-primary/5 transition-colors duration-150`}
                 >
                   <span className="font-mono-code text-xs text-muted-foreground w-6 shrink-0">{m.num}</span>
-                  <span className="font-display text-2xl text-primary w-44 shrink-0">{m.value}</span>
+                  <span className="font-display text-2xl text-primary w-full sm:w-44 shrink-0">{m.value}</span>
                   <span className="font-body text-sm text-muted-foreground">{m.context}</span>
                 </div>
               ))}
@@ -320,11 +320,11 @@ const Home = () => {
       <ScrollReveal>
         <section className="py-24 px-6 md:px-12 lg:px-24">
           <div className="max-w-4xl mx-auto">
-            <div className="relative border-2 border-foreground p-10 md:p-14 hard-shadow-lg">
+            <div className="relative border-2 border-foreground p-6 md:p-14 hard-shadow-lg">
               <span className="absolute -top-3 left-6 bg-background px-2 font-mono-code text-xs text-muted-foreground">
                 shameless pitch — we know.
               </span>
-              <div className="grid md:grid-cols-2 gap-12 items-center">
+              <div className="grid md:grid-cols-2 gap-8 md:gap-12 items-center">
                 <div>
                   <h2 className="font-display text-3xl md:text-4xl mb-4 leading-tight">
                     We could write something here about how you <em>really</em> should hire Dev...
@@ -379,7 +379,7 @@ const Home = () => {
                     <span className="font-mono-code text-xs text-primary block mb-1">{item.tag}</span>
                     <p className="font-body text-sm font-medium group-hover:text-primary transition-colors">{item.title}</p>
                   </div>
-                  <div className="flex items-center gap-3 shrink-0 ml-6">
+                  <div className="flex items-center gap-3 shrink-0 ml-3 sm:ml-6">
                     <span className="font-mono-code text-xs text-muted-foreground hidden md:block">{item.time}</span>
                     <ArrowRight className="w-4 h-4 text-muted-foreground group-hover:text-primary group-hover:translate-x-0.5 transition-all" />
                   </div>

@@ -581,13 +581,6 @@ export default function TuringWidget() {
                     {isLoading && lastIsUser && <ThinkingText />}
                   </div>
 
-                  {/* Suggestion chips */}
-                  <AnimatePresence>
-                    {showChips && chips && (
-                      <SuggestionChips suggestions={chips} onSelect={handleChipClick} />
-                    )}
-                  </AnimatePresence>
-
                   {error && (
                     <div className="shrink-0 px-4 py-1 border-t border-border/30 bg-card">
                       <p className="font-mono-code text-[9px] text-red-500">{error}</p>

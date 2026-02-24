@@ -99,7 +99,7 @@ export const CHAIN_BASIC: Record<string, string[]> = {
   "Distributed systems depth?":       ["PulseOps, VendorFlow, DocWeave — all distributed?", "How do I reach him?"],
   "Full-stack + AI breadth?":         ["9 projects across 3 domains — really?", "How do I reach him?"],
   "What languages does he work in?":  ["TypeScript, Python, Go, C++ — all in production?", "How do I reach him?"],
-  "Where is he based?":               ["New Jersey, open to remote?", "How do I reach him?"],
+  "Where is he based?":               ["New York City, open to remote?", "How do I reach him?"],
 
   // ── Tech stack ─────────────────────────────────────────────────────────────
   "TypeScript or Python — which?":   ["TypeScript for backends, Python for ML — why split?", "What's his backend depth?"],

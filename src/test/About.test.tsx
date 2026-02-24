@@ -75,7 +75,7 @@ describe("About page", () => {
     renderAbout();
     expect(screen.getByText(/Beyond the code/)).toBeInTheDocument();
     expect(screen.getByText("Qualcomm AI Hackathon, NYU")).toBeInTheDocument();
-    expect(screen.getByText("NJIT GDG, Newark")).toBeInTheDocument();
+    expect(screen.getByText("NJIT GDG, New York City")).toBeInTheDocument();
   });
 
   it("shows no blur orbs (no blur-3xl class in rendered output)", () => {

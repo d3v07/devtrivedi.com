@@ -26,7 +26,7 @@ export default function ResumeApp({ onClose, onFocus, zIndex }: ResumeAppProps) 
             Software Engineer
           </p>
           <p className="font-mono-code text-[9px] text-muted-foreground mt-1">
-            trivedidev16@gmail.com · New Jersey, USA
+            trivedidev16@gmail.com · New York City, NY
           </p>
         </div>
 

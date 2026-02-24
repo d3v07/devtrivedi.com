@@ -5,7 +5,7 @@
  */
 const RAG_CONTEXT = `
 IDENTITY
-Name: Dev Trivedi. Location: New Jersey, USA. Email: trivedidev16@gmail.com.
+Name: Dev Trivedi. Location: New York City, New York, USA. Email: trivedidev16@gmail.com.
 Status: Actively seeking software engineering roles — backend, full-stack, or platform engineering.
 Open to remote or hybrid positions.
 

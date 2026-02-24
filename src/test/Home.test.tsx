@@ -81,7 +81,7 @@ describe("Home page", () => {
 
   it("shows location badge", () => {
     renderHome();
-    expect(screen.getByText(/New Jersey/)).toBeInTheDocument();
+    expect(screen.getByText(/New York City/)).toBeInTheDocument();
   });
 
   it("has GitHub, LinkedIn, and Email social links", () => {

@@ -204,7 +204,7 @@ const Home = () => {
                 <span className="h-4 w-px bg-border mx-1" />
                 <span className="flex items-center gap-1.5 font-mono-code text-[11px] text-muted-foreground">
                   <MapPin className="w-3.5 h-3.5" />
-                  New Jersey, USA
+                  New York City, NY
                 </span>
               </motion.div>
             </div>

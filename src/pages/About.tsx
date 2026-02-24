@@ -46,7 +46,7 @@ const education = [
     degree: "Master of Science in Computer Science",
     period: "Jan 2025 — Dec 2026",
     gpa: "4.0",
-    location: "Newark, NJ",
+    location: "New York City, NY",
     coursework: [
       "Operating Systems",
       "Data Structures & Algorithms",
@@ -98,7 +98,7 @@ const leadership = [
   },
   {
     role: "Event Coordinator",
-    org: "NJIT GDG, Newark",
+    org: "NJIT GDG, New York City",
     year: "April 2025",
     description:
       "Organized coding workshops and peer-learning sessions for 40+ students, fostering collaboration in emerging technologies.",

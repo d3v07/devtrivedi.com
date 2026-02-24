@@ -63,7 +63,7 @@ const Contact = () => {
             className="font-body text-base text-muted-foreground max-w-lg mb-10 leading-relaxed"
           >
             Open to full-time roles, internships, and interesting collaborations.
-            Based in New Jersey, USA — open to remote.
+            Based in New York City, NY — open to remote.
             I typically respond within 24 hours.
           </motion.p>
 
@@ -164,7 +164,7 @@ const Contact = () => {
               <h2 className="font-display text-2xl mb-3">Open to work</h2>
               <p className="font-body text-sm text-muted-foreground leading-relaxed mb-6">
                 Full-time roles, internships, and interesting side projects.
-                New Jersey, USA — fully open to remote work.
+                New York City, NY — fully open to remote work.
               </p>
 
               <div className="space-y-2">

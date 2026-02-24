@@ -125,7 +125,7 @@ export function useChat(ragContext: string): UseChatReturn {
           "X-Title": "Dev Trivedi Portfolio",
         },
         body: JSON.stringify({
-          model: "anthropic/claude-3.5-haiku",
+          model: "mistralai/mistral-small-3.1-24b-instruct:free",
           messages: [
             { role: "system", content: systemPrompt },
             ...messages.slice(-6).map(m => ({ role: m.role, content: m.content })),

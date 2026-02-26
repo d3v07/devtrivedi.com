@@ -21,7 +21,7 @@ const COMMANDS: Record<string, string | (() => string)> = {
   role:      software engineer
   degree:    ms computer science @ njit (gpa: 4.0)
   status:    open to work
-  location:  new jersey, usa`,
+  location:  new york city, new york`,
 
   ls: `total 6
   drwxr-xr-x  PulseOps/

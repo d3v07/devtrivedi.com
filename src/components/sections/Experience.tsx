@@ -36,7 +36,7 @@ const experiences: ExperienceItem[] = [
   },
   {
     number: "03",
-    company: "AIML Analytics",
+    company: "AIML Analytics Solutions",
     role: "Software Engineer",
     period: "May — Sep 2023",
     description: "Automated cross-cloud ML pipelines spanning Azure Databricks and AWS for enterprise evaluation platforms.",

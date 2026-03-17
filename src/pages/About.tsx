@@ -178,7 +178,7 @@ const About = () => {
           >
             {[
               { value: "4.0", label: "GPA at NJIT" },
-              { value: "1.5+", label: "Years Experience" },
+              { value: "2+", label: "Years Experience" },
               { value: "85%", label: "Latency Reduction" },
               { value: "10K", label: "Records / Day" },
             ].map((stat, i) => (

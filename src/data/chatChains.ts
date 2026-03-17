@@ -97,7 +97,7 @@ export const CHAIN_BASIC: Record<string, string[]> = {
   "Backend or platform engineering?": ["What languages does he work in?", "How do I reach him?"],
   "Remote or hybrid?":                ["Where is he based?", "How do I reach him?"],
   "Distributed systems depth?":       ["PulseOps, VendorFlow, DocWeave — all distributed?", "How do I reach him?"],
-  "Full-stack + AI breadth?":         ["9 projects across 3 domains — really?", "How do I reach him?"],
+  "Full-stack + AI breadth?":         ["20 projects across 3 domains — really?", "How do I reach him?"],
   "What languages does he work in?":  ["TypeScript, Python, Go, C++ — all in production?", "How do I reach him?"],
   "Where is he based?":               ["New York City, open to remote?", "How do I reach him?"],
 
@@ -114,12 +114,12 @@ export const CHAIN_BASIC: Record<string, string[]> = {
 
   // ── Background ─────────────────────────────────────────────────────────────
   "Where did he study?":             ["MS at NJIT — what's the program?", "What was the undergrad?", "Has he worked professionally?"],
-  "Has he worked professionally?":   ["Tell me about RR Enterprise", "Tell me about Nuance Media"],
-  "GPA and grad school?":            ["4.0 in grad school while shipping 9 projects?", "Is Dev available to hire?"],
+  "Has he worked professionally?":   ["Tell me about RR Enterprise", "Tell me about Nuance Media", "Tell me about AIML Analytics"],
+  "GPA and grad school?":            ["4.0 in grad school while shipping 20 projects?", "Is Dev available to hire?"],
 
   "MS at NJIT — what's the program?": ["Computer Science — expected graduation 2026?", "Is Dev available to hire?"],
   "What was the undergrad?":          ["CS from JNTUH — what did he focus on?", "Has he worked professionally?"],
-  "4.0 in grad school while shipping 9 projects?": ["How does he manage that?", "Is Dev available to hire?"],
+  "4.0 in grad school while shipping 20 projects?": ["How does he manage that?", "Is Dev available to hire?"],
   "How does he manage that?":         ["What's his approach to shipping fast?", "Is Dev available to hire?"],
 
   // ── Work experience ────────────────────────────────────────────────────────
@@ -130,6 +130,13 @@ export const CHAIN_BASIC: Record<string, string[]> = {
   "What were the results?":          ["40% faster transactions, 99.9% payment reliability?", "Is Dev available to hire?"],
   "What was the work?":              ["Media pipelines and real-time analytics?", "Is Dev available to hire?"],
   "What improved because of him?":   ["35% faster API, 500+ daily uploads?", "Is Dev available to hire?"],
+
+  // ── AIML Analytics ──────────────────────────────────────────────────────────
+  "Tell me about AIML Analytics":   ["What did he automate there?", "How big was the team?", "Is Dev available to hire?"],
+  "What did he automate there?":    ["Cross-cloud ML pipeline — Azure to AWS?", "Is Dev available to hire?"],
+  "How big was the team?":          ["4-person pod, 50+ Jira tickets — how?", "What else did he ship?"],
+  "Cross-cloud ML pipeline — Azure to AWS?": ["Lambda triggering SageMaker automatically?", "Is Dev available to hire?"],
+  "4-person pod, 50+ Jira tickets — how?":   ["He coordinated scope across the team?", "Is Dev available to hire?"],
 };
 
 // ─── Turing mode chains ───────────────────────────────────────────────────────
@@ -196,6 +203,7 @@ export function detectChainEntry(msg: string, mode: ChatMode): string[] {
   if (/rideshare/.test(t))                     return CHAIN_BASIC["Tell me about RideShare"] ?? [];
   if (/chatterbox/.test(t))                    return CHAIN_BASIC["Tell me about ChatterBox"] ?? [];
   if (/rr enterprise|nuance/.test(t))          return CHAIN_BASIC["Has he worked professionally?"] ?? [];
+  if (/aiml|analytics/.test(t))               return CHAIN_BASIC["Tell me about AIML Analytics"] ?? [];
 
   // Topic matches
   if (/hire|available|role|job|position|recruit/.test(t)) return CHAIN_BASIC["Is Dev available to hire?"] ?? [];

@@ -23,7 +23,11 @@ Company: Nuance Media. Role: Full Stack Developer. Period: September 2023 to May
 Description: Developed media processing pipelines and real-time analytics dashboards.
 Key results: 35% reduction in API response times, 80% less manual intervention, 500 plus daily uploads processed.
 
-PROJECTS (9 total, organized by domain)
+Company: AIML Analytics Solutions. Role: Software Engineer. Period: May to September 2023.
+Description: Automated cross-cloud ML pipelines spanning Azure Databricks and AWS for enterprise evaluation platforms.
+Key results: Built Python plus AWS Lambda pipeline to auto-trigger SageMaker batch inference on GB-scale datasets, coordinated 50 plus Jira tickets across a 4-person team, reviewed PRs across React frontend and Python backend.
+
+PROJECTS (20 total, organized by domain)
 
 AI DOMAIN PROJECTS:
 
@@ -94,6 +98,63 @@ Solution: System V IPC with RAII wrappers, mutex-protected server-client concurr
 Key results: 50 plus concurrent users, 0.4s average response latency, 93% reduction in dropped messages in stress tests.
 Tech stack: C++, System V IPC, POSIX Threads, Sockets.
 
+Project 10: CIMphony. Category: AI M&A Research.
+Tagline: Real-time M&A due diligence with multi-agent research and live voice.
+Problem: M&A due diligence requires parallel research across financial, competitive, and risk dimensions.
+Solution: Multi-agent command center with Finance, Competitive, and Risk analysts feeding into a synthesis agent, with real-time bidirectional voice via Gemini Live API.
+Tech stack: Next.js, React, FastAPI, Python, Gemini 2.0 Flash, Cloud Firestore.
+
+Project 11: Metropolis. Category: AI Simulation.
+Tagline: Autonomous NPC city simulation with persistent memory and emergent behavior.
+Problem: Traditional game NPCs follow scripted behavior and don't form memories or exhibit emergent social dynamics.
+Solution: 45 AI agents with vector memory via Pinecone, agent-to-agent encounters, Temporal workflows, and LangGraph cognitive graphs.
+Tech stack: Next.js, Gemini AI, Temporal.io, Firebase, Pinecone, Redis, LangGraph.
+
+Project 12: Aegis-X. Category: AI Industrial Safety.
+Tagline: Production-grade safety dispatcher with real-time vision and autonomous reasoning.
+Solution: Edge vision pipeline with YOLOv8 plus ByteTrack for worker and PPE detection, orchestrated by multi-agent LangGraph with Neo4j knowledge graph.
+Tech stack: TypeScript, Python, FastAPI, LangGraph, YOLOv8, Neo4j, Docker, Kubernetes.
+
+Project 13: Axiom. Category: Dev Tools and Agents.
+Tagline: Local-first autonomous coding agent with deterministic verification via Z3 constraint solver.
+Solution: Deterministic execution loop with typed contracts and Z3 verification before executing proposed actions.
+Tech stack: Node.js, Python, Z3 Solver.
+
+Project 14: Dexter. Category: AI Financial Research.
+Tagline: Autonomous financial research agent with self-validation and live data.
+Solution: Task-first planning agent that decomposes queries into structured research steps with automatic tool selection and self-validation.
+Tech stack: Bun, OpenAI, OpenRouter, Financial Datasets API, Exa API, LangSmith.
+
+Project 15: NexaCore. Category: Agentic Settlement.
+Tagline: Local-first operator platform for agentic settlement with verifiable provenance and compliance.
+Solution: x402-style settlement orchestration with proof issuance and real-time compliance engine.
+Tech stack: Python, Flask, SQLite, JavaScript, MCP, Docker.
+
+Project 16: Predictr.AI. Category: AI Web3 Finance.
+Tagline: AI-augmented prediction market with hybrid virtual economy and algorithmic trading.
+Solution: Hybrid economy with PredictPoints, fiat and crypto bridges, Constant Product Market Maker, and NLP sentiment analysis.
+Tech stack: Vite.js, Django, PostgreSQL, Solidity, LangChain, Scikit-learn.
+
+Project 17: PRincipal. Category: AI DevTools.
+Tagline: AI-powered code review with rule-based analysis and synthetic data tooling.
+Solution: Event-driven review pipeline with rule-based reviewer, optional Bedrock fallback, and synthetic PR data generation.
+Tech stack: TypeScript, AWS Lambda, Step Functions, DynamoDB, React, OpenAI API.
+
+Project 18: Rivet. Category: DevSecOps Agents.
+Tagline: Multi-agent DevSecOps flow from Jira requirements to secure deployment.
+Solution: Multi-agent async pipeline with specialized Planner, Developer, Security, Deployer agents and carbon-aware deployment.
+Tech stack: TypeScript, Node.js, MCP SDK, Ollama, Gemini, Jira REST, GCP BigQuery.
+
+Project 19: CivicProof. Category: AI Gov-Tech.
+Tagline: Investigative control plane for federal spending transparency with evidence-grounded claims.
+Solution: 6-node LangGraph pipeline where every claim must cite a stored artifact with verifiable content hash.
+Tech stack: Python, FastAPI, LangGraph, GCP Cloud Run, Next.js, Vertex AI, OpenRouter.
+
+Project 20: Job Radar. Category: Automation and Personal Tools.
+Tagline: Zero-cost job monitoring system with multi-source aggregation and Telegram alerts.
+Solution: Polyphonic job source aggregator polling Greenhouse and Lever APIs, parsing email alerts, and RSS feeds with cross-source dedup.
+Tech stack: Python, GitHub Actions, Greenhouse API, Lever API, Gmail IMAP, Telegram Bot API.
+
 SKILLS
 Languages: TypeScript, JavaScript, Python, C++, Java, Go.
 Frontend: React, Tailwind CSS, Framer Motion, Vite.
@@ -105,9 +166,9 @@ Tools: Apache Kafka, Prometheus, Git, GitHub Actions, Socket.IO.
 
 KEY FACTS
 Dev builds systems that scale: distributed, event-driven, multi-tenant architectures.
-He maintains a 4.0 GPA in grad school while shipping 9 real projects.
+He maintains a 4.0 GPA in grad school while shipping 20 real projects.
 Strong backend and platform engineering instincts with full-stack and AI capability.
-Has professional experience at 2 companies across internship and full-time roles.
+Has professional experience at 3 companies: RR Enterprise, Nuance Media, and AIML Analytics Solutions.
 Best contact: trivedidev16@gmail.com
 `.trim();
 

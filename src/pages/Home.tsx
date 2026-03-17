@@ -242,7 +242,7 @@ const Home = () => {
         <div className="max-w-6xl mx-auto grid md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-border/30">
           {[
             { tag: "Currently", title: "MS Computer Science", sub: "NJIT Ying Wu College of Computing" },
-            { tag: "Previously", title: "Software Engineer", sub: "RR Enterprise · Nuance Media" },
+            { tag: "Previously", title: "Software Engineer", sub: "RR Enterprise · Nuance Media · AIML Analytics" },
             { tag: "Building with", title: "Full-Stack & Cloud", sub: "AWS · React · Node.js · C++ · PostgreSQL" },
           ].map((item, i) => (
             <ScrollReveal key={item.tag} delay={i * 0.07} direction="up">

@@ -1,6 +1,7 @@
 import { ArrowUpRight, Github, Shuffle, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useState, useCallback } from "react";
+import { createPortal } from "react-dom";
 import ScrollReveal from "@/components/ScrollReveal";
 import Footer from "@/components/sections/Footer";
 import ProjectSlides from "@/components/ProjectSlides";
@@ -476,26 +477,27 @@ const Projects = () => {
         </div>
       </section>
 
-      {/* ── Project Detail Drawer ─────────────────────────────────── */}
-      <AnimatePresence>
-        {selectedProject && (
-          <>
-            {/* Backdrop */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className="fixed inset-0 bg-foreground/30 z-40"
-              onClick={() => setSelectedProject(null)}
-            />
-            {/* Drawer */}
-            <motion.div
-              initial={{ x: "100%" }}
-              animate={{ x: 0 }}
-              exit={{ x: "100%" }}
-              transition={{ type: "tween", duration: 0.25 }}
-              className="fixed right-0 top-0 bottom-0 w-full max-w-lg bg-background border-l-2 border-foreground z-50 flex flex-col overflow-hidden"
-            >
+      {/* ── Project Detail Drawer (portaled to escape PageTransition transform) ── */}
+      {createPortal(
+        <AnimatePresence>
+          {selectedProject && (
+            <>
+              {/* Backdrop */}
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                className="fixed inset-0 bg-foreground/30 z-40"
+                onClick={() => setSelectedProject(null)}
+              />
+              {/* Drawer */}
+              <motion.div
+                initial={{ x: "100%" }}
+                animate={{ x: 0 }}
+                exit={{ x: "100%" }}
+                transition={{ type: "tween", duration: 0.25 }}
+                className="fixed right-0 top-0 bottom-0 w-full max-w-lg bg-background border-l-2 border-foreground z-50 flex flex-col overflow-hidden"
+              >
               {/* Drawer header */}
               <div className="flex items-center justify-between p-5 border-b-2 border-foreground shrink-0">
                 <div>
@@ -581,7 +583,9 @@ const Projects = () => {
             </motion.div>
           </>
         )}
-      </AnimatePresence>
+      </AnimatePresence>,
+        document.body
+      )}
 
       {/* ── Project Slides Modal ──────────────────────────────────── */}
       <AnimatePresence>

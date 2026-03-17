@@ -34,6 +34,18 @@ const experiences: ExperienceItem[] = [
       "500+ daily uploads processed",
     ],
   },
+  {
+    number: "03",
+    company: "AIML Analytics Solutions",
+    role: "Software Engineer",
+    period: "May — Sep 2023",
+    description: "Automated cross-cloud ML pipelines spanning Azure Databricks and AWS for enterprise evaluation platforms.",
+    highlights: [
+      "50+ Jira tickets coordinated",
+      "Zero manual model triggers",
+      "GB-scale daily inference",
+    ],
+  },
 ];
 
 const Experience = () => {

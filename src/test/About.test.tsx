@@ -35,10 +35,11 @@ describe("About page", () => {
     expect(screen.getByText("10K")).toBeInTheDocument();
   });
 
-  it("shows experience section with both companies", () => {
+  it("shows experience section with all three companies", () => {
     renderAbout();
     expect(screen.getByText("RR Enterprise")).toBeInTheDocument();
     expect(screen.getByText("Nuance Media")).toBeInTheDocument();
+    expect(screen.getByText("AIML Analytics Solutions")).toBeInTheDocument();
   });
 
   it("shows skill categories", () => {

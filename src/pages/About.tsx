@@ -37,6 +37,22 @@ const experiences = [
     ],
     technologies: ["React", "MongoDB", "GitHub Actions", "Vercel", "Jest", "Jira"],
   },
+  {
+    number: "03",
+    company: "AIML Analytics Solutions",
+    role: "Software Engineer",
+    period: "May 2023 — Sep 2023",
+    location: "Remote",
+    description:
+      "Automated cross-cloud ML pipelines spanning Azure Databricks and AWS, eliminating manual model triggers for enterprise evaluation platforms.",
+    achievements: [
+      "Built Python + AWS Lambda pipeline to auto-trigger SageMaker batch inference on GB-scale client datasets",
+      "Coordinated 50+ Jira tickets across a 4-person cross-functional team over a 5-month Agile cycle",
+      "Reviewed PRs across React frontend and Python backend modules, catching integration mismatches before release",
+      "Bridged Azure Databricks ingestion to AWS processing (EC2, EBS, SageMaker) with CloudWatch monitoring",
+    ],
+    technologies: ["Python", "AWS Lambda", "SageMaker", "Azure Databricks", "EC2", "React", "Jira"],
+  },
 ];
 
 const education = [

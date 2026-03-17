@@ -203,7 +203,7 @@ export function detectChainEntry(msg: string, mode: ChatMode): string[] {
   if (/rideshare/.test(t))                     return CHAIN_BASIC["Tell me about RideShare"] ?? [];
   if (/chatterbox/.test(t))                    return CHAIN_BASIC["Tell me about ChatterBox"] ?? [];
   if (/rr enterprise|nuance/.test(t))          return CHAIN_BASIC["Has he worked professionally?"] ?? [];
-  if (/aiml|analytics/.test(t))               return CHAIN_BASIC["Tell me about AIML Analytics"] ?? [];
+  if (/aiml/.test(t))                          return CHAIN_BASIC["Tell me about AIML Analytics"] ?? [];
 
   // Topic matches
   if (/hire|available|role|job|position|recruit/.test(t)) return CHAIN_BASIC["Is Dev available to hire?"] ?? [];

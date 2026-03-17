@@ -164,7 +164,7 @@ const projects: Project[] = [
   {
     number: "11",
     title: "ChatterBox",
-    filename: "ChatterBox.rs",
+    filename: "ChatterBox.cpp",
     category: "Systems / C++",
     domain: "Engineering",
     tagline: "Terminal-based multi-user chat with IPC and thread synchronization",

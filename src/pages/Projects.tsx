@@ -118,7 +118,7 @@ const projects: Project[] = [
     impact: ["Autonomous Jira-to-deploy pipeline with specialized agents", "Carbon-aware deployment with region selection based on intensity", "Security scanning with auto-patching and human-in-the-loop gates", "Pipeline Bill of Materials (PBOM) for full audit trails"],
     features: ["Multi-provider LLM integration with specialized agents", "MCP Server tools for Jira and GCP metrics", "Carbon-aware deployment with latency optimization", "Security scanning with auto-patching and PBOM"],
     tech: ["TypeScript", "Node.js", "MCP SDK", "Ollama", "Gemini", "Jira REST", "GCP BigQuery", "Vitest"],
-    links: { github: "https://github.com/d3v07/rivet" },
+    links: { github: "https://github.com/d3v07/rivet", live: "https://d3v07.github.io/rivet/" },
   },
   {
     number: "08",

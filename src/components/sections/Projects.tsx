@@ -9,6 +9,7 @@ interface Project {
   description: string;
   tech: string[];
   color: string;
+  links: { github?: string; live?: string };
 }
 
 const projects: Project[] = [
@@ -19,6 +20,7 @@ const projects: Project[] = [
     description: "Agentic PR review pipeline with AST context retrieval and evidence-gated inline comments. Reduced review turnaround by 60%.",
     tech: ["Python", "Tree-sitter", "LLM", "GitHub API"],
     color: "bg-secondary",
+    links: { github: "https://github.com/d3v07/lintellect" },
   },
   {
     number: "02",
@@ -27,22 +29,25 @@ const projects: Project[] = [
     description: "Session-based research workspace with 4-mode agent adapter and real-time artifact rendering. Sub-10s decision-ready output.",
     tech: ["React", "Node.js", "JWT", "Chart.js"],
     color: "bg-accent/20",
+    links: { github: "https://github.com/d3v07/finmind" },
   },
   {
-    number: "06",
+    number: "03",
     title: "SpendLens",
     category: "AI Cost Optimization",
     description: "AI-driven cloud cost analyzer with predictive recommendations. Identified ~$18K annual savings across 12 services.",
     tech: ["TypeScript", "Node.js", "AI/ML", "AWS"],
     color: "bg-card",
+    links: { github: "https://github.com/d3v07/spendlens" },
   },
   {
-    number: "05",
+    number: "04",
     title: "PulseOps",
     category: "Event-Driven Monitoring",
     description: "Real-time operations dashboard with Kafka streams and Redis-backed aggregates. Sub-second writes at 3x peak load.",
     tech: ["Node.js", "Kafka", "Redis", "GraphQL"],
     color: "bg-primary/10",
+    links: { github: "https://github.com/d3v07/pulseops" },
   },
 ];
 
@@ -82,20 +87,28 @@ const Projects = () => {
                 {project.number}
               </span>
               <div className="flex gap-2">
-                <a
-                  href="#"
-                  className="p-2 bg-background/80 hover:bg-background transition-colors"
-                  aria-label="View on GitHub"
-                >
-                  <Github className="w-5 h-5" />
-                </a>
-                <a
-                  href="#"
-                  className="p-2 bg-background/80 hover:bg-background transition-colors"
-                  aria-label="View project"
-                >
-                  <ArrowUpRight className="w-5 h-5" />
-                </a>
+                {project.links.github && (
+                  <a
+                    href={project.links.github}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="p-2 bg-background/80 hover:bg-background transition-colors"
+                    aria-label="View on GitHub"
+                  >
+                    <Github className="w-5 h-5" />
+                  </a>
+                )}
+                {project.links.live && (
+                  <a
+                    href={project.links.live}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="p-2 bg-background/80 hover:bg-background transition-colors"
+                    aria-label="View project"
+                  >
+                    <ArrowUpRight className="w-5 h-5" />
+                  </a>
+                )}
               </div>
             </div>
 

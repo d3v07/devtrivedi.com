@@ -15,39 +15,35 @@
  * 11. Rate limiting — 5th request allowed, 6th blocked
  * 12. isLoading is true during API call, false after
  * 13. AbortError is silently swallowed (no error state)
- * 14. ragContext is injected into system prompt
- * 15. Last 6 messages are sent as context in the API call body
+ * 14. ragContext is sent to the server-side chat route
+ * 15. Last 6 messages are sent as history in the API call body
  */
 
 import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
 import { renderHook, act, waitFor } from "@testing-library/react";
 import { useChat } from "@/hooks/use-chat";
 
-// ── Environment ────────────────────────────────────────────────────────────────
-
-vi.stubEnv("VITE_OPENROUTER_API_KEY", "test-key");
-
 // ── Helpers ────────────────────────────────────────────────────────────────────
 
 /** Build a minimal ok fetch response that returns an assistant message. */
 function makeOkResponse(content = "Hello from Sir Turing.") {
-  return Promise.resolve({
+  return {
     ok: true,
     status: 200,
     json: () =>
       Promise.resolve({
-        choices: [{ message: { role: "assistant", content } }],
+        message: content,
       }),
-  } as Response);
+  } as Response;
 }
 
 /** Build a non-ok fetch response with a given HTTP status. */
 function makeErrorResponse(status: number) {
-  return Promise.resolve({
+  return {
     ok: false,
     status,
     json: () => Promise.resolve({}),
-  } as Response);
+  } as Response;
 }
 
 /**
@@ -77,7 +73,7 @@ describe("useChat", () => {
 
   it("silently ignores empty input — no fetch call, no message added", async () => {
     const fetchSpy = vi.spyOn(globalThis, "fetch").mockResolvedValue(
-      makeOkResponse() as any
+      makeOkResponse()
     );
 
     const { result } = renderHook(() => useChat("context"));
@@ -94,7 +90,7 @@ describe("useChat", () => {
 
   it("silently ignores whitespace-only input — no fetch call, no message added", async () => {
     const fetchSpy = vi.spyOn(globalThis, "fetch").mockResolvedValue(
-      makeOkResponse() as any
+      makeOkResponse()
     );
 
     const { result } = renderHook(() => useChat("context"));
@@ -111,7 +107,7 @@ describe("useChat", () => {
 
   it("trims input longer than 500 chars to exactly 500 before sending", async () => {
     const fetchSpy = vi.spyOn(globalThis, "fetch").mockResolvedValue(
-      makeOkResponse() as any
+      makeOkResponse()
     );
 
     const { result } = renderHook(() => useChat("context"));
@@ -125,10 +121,10 @@ describe("useChat", () => {
     expect(fetchSpy).toHaveBeenCalledOnce();
 
     const body = JSON.parse((fetchSpy.mock.calls[0][1] as RequestInit).body as string);
-    // Last message in the messages array is the user message
-    const userMsg = body.messages[body.messages.length - 1];
-    expect(userMsg.content).toHaveLength(500);
-    expect(userMsg.content).toBe("a".repeat(500));
+    expect(fetchSpy.mock.calls[0][0]).toBe("/api/chat");
+    expect(body.message).toHaveLength(500);
+    expect(body.message).toBe("a".repeat(500));
+    expect((fetchSpy.mock.calls[0][1] as RequestInit).headers).not.toHaveProperty("Authorization");
   });
 
   // ── 4. Optimistic user message ──────────────────────────────────────────────
@@ -137,7 +133,7 @@ describe("useChat", () => {
     // Use a deferred fetch so we can inspect state mid-flight
     let resolveFetch!: (v: Response) => void;
     const pendingFetch = new Promise<Response>(r => { resolveFetch = r; });
-    vi.spyOn(globalThis, "fetch").mockReturnValue(pendingFetch as any);
+    vi.spyOn(globalThis, "fetch").mockReturnValue(pendingFetch);
 
     const { result } = renderHook(() => useChat("context"));
 
@@ -156,7 +152,7 @@ describe("useChat", () => {
     expect(result.current.messages[0].content).toBe("Hello");
 
     // Resolve fetch to avoid unhandled promise warnings
-    resolveFetch(makeOkResponse() as unknown as Response);
+    resolveFetch(makeOkResponse());
     await act(async () => { await pendingFetch; });
   });
 
@@ -164,7 +160,7 @@ describe("useChat", () => {
 
   it("adds assistant message after successful API call", async () => {
     vi.spyOn(globalThis, "fetch").mockResolvedValue(
-      makeOkResponse("Quite right, old chap.") as any
+      makeOkResponse("Quite right, old chap.")
     );
 
     const { result } = renderHook(() => useChat("context"));
@@ -182,7 +178,7 @@ describe("useChat", () => {
 
   it("sets 'Too many requests' error on 429 HTTP response", async () => {
     vi.spyOn(globalThis, "fetch").mockResolvedValue(
-      makeErrorResponse(429) as any
+      makeErrorResponse(429)
     );
 
     const { result } = renderHook(() => useChat("context"));
@@ -194,11 +190,25 @@ describe("useChat", () => {
     expect(result.current.error).toBe("Too many requests. Please wait a moment.");
   });
 
-  // ── 7. 401 → Service unavailable ───────────────────────────────────────────
+  // ── 7. 401/503 → Service unavailable ───────────────────────────────────────
 
   it("sets 'Service temporarily unavailable' error on 401 HTTP response", async () => {
     vi.spyOn(globalThis, "fetch").mockResolvedValue(
-      makeErrorResponse(401) as any
+      makeErrorResponse(401)
+    );
+
+    const { result } = renderHook(() => useChat("context"));
+
+    await act(async () => {
+      await result.current.sendMessage("Hello");
+    });
+
+    expect(result.current.error).toBe("Service temporarily unavailable.");
+  });
+
+  it("sets 'Service temporarily unavailable' error on 503 HTTP response", async () => {
+    vi.spyOn(globalThis, "fetch").mockResolvedValue(
+      makeErrorResponse(503)
     );
 
     const { result } = renderHook(() => useChat("context"));
@@ -214,7 +224,7 @@ describe("useChat", () => {
 
   it("sets 'Something went wrong' error on unrecognised non-ok HTTP status", async () => {
     vi.spyOn(globalThis, "fetch").mockResolvedValue(
-      makeErrorResponse(500) as any
+      makeErrorResponse(500)
     );
 
     const { result } = renderHook(() => useChat("context"));
@@ -230,7 +240,7 @@ describe("useChat", () => {
 
   it("removes the optimistic user message when the API call fails", async () => {
     vi.spyOn(globalThis, "fetch").mockResolvedValue(
-      makeErrorResponse(500) as any
+      makeErrorResponse(500)
     );
 
     const { result } = renderHook(() => useChat("context"));
@@ -248,7 +258,7 @@ describe("useChat", () => {
 
   it("clearMessages resets messages array and error to null", async () => {
     vi.spyOn(globalThis, "fetch").mockResolvedValue(
-      makeErrorResponse(500) as any
+      makeErrorResponse(500)
     );
 
     const { result } = renderHook(() => useChat("context"));
@@ -272,7 +282,7 @@ describe("useChat", () => {
 
   it("allows the 5th request within the 2-minute window", async () => {
     vi.spyOn(globalThis, "fetch").mockResolvedValue(
-      makeOkResponse() as any
+      makeOkResponse()
     );
 
     // Pre-seed 4 timestamps so this send is the 5th
@@ -293,7 +303,7 @@ describe("useChat", () => {
 
   it("blocks the 6th request within the 2-minute window with the correct error", async () => {
     const fetchSpy = vi.spyOn(globalThis, "fetch").mockResolvedValue(
-      makeOkResponse() as any
+      makeOkResponse()
     );
 
     // Pre-seed 5 timestamps — window is full
@@ -318,7 +328,7 @@ describe("useChat", () => {
   it("isLoading is true during the API call and false after it resolves", async () => {
     let resolveFetch!: (v: Response) => void;
     const pendingFetch = new Promise<Response>(r => { resolveFetch = r; });
-    vi.spyOn(globalThis, "fetch").mockReturnValue(pendingFetch as any);
+    vi.spyOn(globalThis, "fetch").mockReturnValue(pendingFetch);
 
     const { result } = renderHook(() => useChat("context"));
 
@@ -334,7 +344,7 @@ describe("useChat", () => {
     expect(result.current.isLoading).toBe(true);
 
     // Resolve the fetch
-    resolveFetch(makeOkResponse() as unknown as Response);
+    resolveFetch(makeOkResponse());
     await act(async () => {
       await pendingFetch;
       // Extra tick for json() and state updates
@@ -376,11 +386,11 @@ describe("useChat", () => {
     expect(result.current.isLoading).toBe(false);
   });
 
-  // ── 14. ragContext injected into system prompt ──────────────────────────────
+  // ── 14. ragContext sent to API route ────────────────────────────────────────
 
-  it("injects ragContext into the system prompt sent to the API", async () => {
+  it("sends ragContext to the server-side chat route", async () => {
     const fetchSpy = vi.spyOn(globalThis, "fetch").mockResolvedValue(
-      makeOkResponse() as any
+      makeOkResponse()
     );
 
     const ragContext = "Dev Trivedi is a senior engineer who loves Rust.";
@@ -396,24 +406,19 @@ describe("useChat", () => {
       (fetchSpy.mock.calls[0][1] as RequestInit).body as string
     );
 
-    const systemMessage = body.messages.find(
-      (m: { role: string; content: string }) => m.role === "system"
-    );
-
-    expect(systemMessage).toBeDefined();
-    expect(systemMessage.content).toContain(ragContext);
-    // Template placeholder should be gone
-    expect(systemMessage.content).not.toContain("{{RAG_CONTEXT}}");
+    expect(fetchSpy.mock.calls[0][0]).toBe("/api/chat");
+    expect(body.ragContext).toBe(ragContext);
+    expect(body.message).toBe("Tell me about Dev");
   });
 
-  // ── 15. Last 6 messages sent as context ────────────────────────────────────
+  // ── 15. Last 6 messages sent as history ────────────────────────────────────
 
-  it("includes up to the last 6 prior messages as context in the API call body", async () => {
+  it("includes up to the last 6 prior messages as history in the API call body", async () => {
     // We need a hook that already has 8 messages in state.
     // We will drive it through 4 successful round-trips (each adds user +
     // assistant = 2 messages → 8 total) and then inspect the 5th call.
     const fetchSpy = vi.spyOn(globalThis, "fetch").mockResolvedValue(
-      makeOkResponse("ok") as any
+      makeOkResponse("ok")
     );
 
     // Seed 0 rate timestamps so we have headroom for 5 sends
@@ -431,7 +436,7 @@ describe("useChat", () => {
 
     // Clear the call history so we isolate the 5th send
     fetchSpy.mockClear();
-    fetchSpy.mockResolvedValue(makeOkResponse("final ok") as any);
+    fetchSpy.mockResolvedValue(makeOkResponse("final ok"));
 
     await act(async () => {
       await result.current.sendMessage("Message 5");
@@ -443,17 +448,9 @@ describe("useChat", () => {
       (fetchSpy.mock.calls[0][1] as RequestInit).body as string
     );
 
-    // body.messages = [system, ...context, userMsg]
-    // The context portion should be at most 6 prior messages.
-    const [systemMsg, ...rest] = body.messages;
-    // Last entry is the current user message
-    const contextMessages = rest.slice(0, -1);
-    const currentUserMsg = rest[rest.length - 1];
-
-    expect(systemMsg.role).toBe("system");
-    expect(currentUserMsg.role).toBe("user");
-    expect(currentUserMsg.content).toBe("Message 5");
-    // Hook uses messages.slice(-6); with 8 messages in state, that is 6
-    expect(contextMessages).toHaveLength(6);
+    expect(body.message).toBe("Message 5");
+    // Hook uses messages.slice(-6); with 8 messages in state, that is 6.
+    expect(body.history).toHaveLength(6);
+    expect(body.history.every((m: { role: string }) => ["user", "assistant"].includes(m.role))).toBe(true);
   });
 });

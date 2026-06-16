@@ -27,7 +27,7 @@ Company: AIML Analytics Solutions. Role: Software Engineer. Period: May to Septe
 Description: Automated cross-cloud ML pipelines spanning Azure Databricks and AWS for enterprise evaluation platforms.
 Key results: Built Python plus AWS Lambda pipeline to auto-trigger SageMaker batch inference on GB-scale datasets, coordinated 50 plus Jira tickets across a 4-person team, reviewed PRs across React frontend and Python backend.
 
-PROJECTS (20 total, organized by domain)
+PROJECTS (29 total, organized by domain)
 
 AI DOMAIN PROJECTS:
 
@@ -59,6 +59,55 @@ Solution: Ensemble of SVM and Random Forest classifiers with optimized feature e
 Key results: 34% false positive reduction, 94.1% detection accuracy with 0.1s inference latency, 0.21 cross-site AUC improvement via federated learning, full data privacy preservation.
 Tech stack: Python, Django, Scikit-learn, SVM, Random Forest, Federated Learning.
 
+Concord. Category: AI Multi-Agent Observability.
+Tagline: Contract-to-repair diagnostic layer that detects, attributes, and patches AG2 multi-agent violations.
+Problem: Multi-agent systems fail silently and there is no tooling to catch, root-cause, and repair behavioral contract violations from outside the workflow.
+Solution: Reads an AG2 execution trace through a seven-stage pipeline with deterministic contract checks, LLM attribution, a deterministic primitive map for the fix target, and Daytona-sandboxed regression tests.
+Key results: 288 tests (274 unit + 14 integration); detects 3 violations in the demo fixture and maps each to the correct AG2 primitive.
+Tech stack: Python, AG2, Gemini 2.5 Flash via OpenRouter, Tavily, Daytona, FastAPI, React.
+
+Unsyphn. Category: AI Autonomous Agent.
+Tagline: Always-on agent that monitors SaaS vendor terms, diffs every change, and routes findings.
+Problem: Enterprise SaaS contracts drift constantly and teams discover DPA, sub-processor, and pricing changes too late.
+Solution: A seven-stage pipeline runs every 60 seconds per vendor — fetch, Gemini structured-output diff, ClickHouse storage, policy rules, and routing to Slack, Jira, Email, Calendar, and Senso over a single SSE event bus.
+Key results: 84 tests across 16 files passing with typecheck and build clean; six external tools wired as typed providers; Stripe webhook flips entitlements autonomously.
+Tech stack: TypeScript, Node.js, Hono, React, Zod, ClickHouse, Gemini 2.5 Pro, Stripe, Vitest.
+
+Mean It. Category: AI Writing Tool.
+Tagline: Guided writing companion that interviews before it drafts, then proves every line came from you.
+Problem: AI writing tools jump to generation, producing text with no traceable connection to what the user meant.
+Solution: Runs a structured interview first, then assembles an artifact where every line links back to the exact question and answer that produced it, shown as a shareable provenance trace.
+Key results: 254 tests passing; a byline meter tracks authorship percentage and cannot be gamed by guide configuration.
+Tech stack: Next.js, React, TypeScript, Tailwind CSS, Anthropic SDK, OpenAI Whisper, Vitest.
+
+AutoChain eSupplyPro. Category: AI Supply Chain Platform.
+Tagline: Full-stack B2B supply chain platform with a persistent AI assistant across three role-based portals.
+Problem: Window, door, and glass distributors juggle orders, invoices, vendors, and freight across disconnected tools with no unified intelligence layer.
+Solution: A TypeScript monorepo with Next.js and Fastify delivering customer, vendor, and admin portals, each with an AI assistant supporting text, voice, visual, and agentic modes.
+Key results: Three role-based portals, 39 tests across 9 files, and a seeded dataset of 28 orders, 19 invoices, and 17 shipments.
+Tech stack: Next.js, Fastify, TypeScript, SQLite, Drizzle ORM, Ollama, Turborepo, Vitest.
+
+NetSentinel. Category: AI Network Security.
+Tagline: Unsupervised network-flow anomaly detection served via Flask API with a live React dashboard.
+Problem: Identifying anomalous network flows without labeled data requires an unsupervised approach that scores traffic in real time and explains the flag.
+Solution: An IsolationForest over 23 flow features on a bundled synthetic dataset exposes scores, alerts, and per-flow feature explanations through a JWT-authenticated REST API.
+Key results: Runs end-to-end out of the box with no dataset download; honest README distinguishes working components from roadmap stubs with no fabricated accuracy claims.
+Tech stack: Python, Flask, scikit-learn, IsolationForest, React, Vite, JWT, Docker.
+
+RoomRadar. Category: AI Productivity.
+Tagline: Paste an event URL, get a goal-ranked plan of who to meet, why, and how to open.
+Problem: Walking into a networking event without context wastes time and misses the highest-leverage people in the room.
+Solution: Scrapes any event URL via Firecrawl, enriches speakers and sponsors, and produces a goal-aware ranked action plan with openers, a room strategy score, and a shareable brief.
+Key results: Five goal modes that re-weight the ranking; per-person talk tracks and follow-up templates; runs in full demo mode with no API key.
+Tech stack: TanStack Start, React, Vite, TypeScript, Firecrawl, Tailwind CSS, TanStack Query, Zod.
+
+Strake. Category: AI Digital Twin.
+Tagline: Predictive digital twin for autonomous container port operations powered by a JEPA world model.
+Problem: Terminal operators need to anticipate future yard states in real time, but pixel-reconstruction AI is too slow for live planning.
+Solution: A JEPA-based world model encodes feeds into a latent space, predicts next-state vectors reduced to 3D coordinates, and streams them over WebSocket to a React Three Fiber canvas.
+Key results: Sub-second planning cycles at 0.98s versus 47s for pixel-reconstruction (per the repo's own benchmark); predictions stay in latent space.
+Tech stack: Next.js, React Three Fiber, Three.js, FastAPI, PyTorch, scikit-learn, RunPod, Modal.
+
 INFRASTRUCTURE DOMAIN PROJECTS:
 
 PulseOps. Category: Event-Driven Monitoring.
@@ -81,6 +130,20 @@ Problem: Needed tenant-isolated services for suppliers, agreements, and payments
 Solution: Tenant-isolated services with RBAC, asynchronous billing through queue-managed workers, and cached high-frequency read paths.
 Key results: RBAC enforced across 20 plus tenants, peak responsiveness during 2000 plus invoice runs, 40% lower persistence pressure under concurrent access.
 Tech stack: MongoDB, Express, React, Node.js, Redis, Stripe, AWS.
+
+Sift. Category: AI Database Reliability.
+Tagline: Evidence-driven MongoDB reliability agent with hash-bound human approval and verified index fixes.
+Problem: Slow MongoDB queries from missing or mis-ordered indexes are risky to fix, and AI tools apply changes without review or proof.
+Solution: Captures real query workloads with explain evidence, uses Gemini Agent Engine roles to propose ESR-correct indexes, and requires a hash-bound human approval before a deterministic controller applies and re-verifies.
+Key results: In the live demo, docs examined collapsed from 100,377 to 15 with the blocking sort removed, proven by re-running explain; every phase is written to an audit ledger.
+Tech stack: Python, FastAPI, Next.js, Gemini, Vertex AI Agent Engine, MongoDB Atlas, MCP, Voyage AI, Cloud Run.
+
+HFT Lab. Category: Trading and Market Data.
+Tagline: Local market-data and paper-trading terminal with a WebSocket order book and toy matching engine.
+Problem: Building a credible trading terminal requires real-time order-book streaming, message-contract validation, and order lifecycle without a broker dependency.
+Solution: A TypeScript monorepo where a WebSocket backend normalizes Kraken and mock feeds into a Zod-validated message bus, an in-memory order book handles paper fills, and a React terminal UI renders live state.
+Key results: 67 tests passing across backend and shared-schema suites; full order lifecycle verified in mock mode; multi-source routing across Kraken, Yahoo Finance, and an offline mock generator.
+Tech stack: Node.js, TypeScript, React, Vite, Zustand, Zod, Express, WebSocket, MongoDB, Vitest.
 
 ENGINEERING DOMAIN PROJECTS:
 
@@ -155,6 +218,27 @@ Tagline: Zero-cost job monitoring system with multi-source aggregation and Teleg
 Solution: Polyphonic job source aggregator polling Greenhouse and Lever APIs, parsing email alerts, and RSS feeds with cross-source dedup.
 Tech stack: Python, GitHub Actions, Greenhouse API, Lever API, Gmail IMAP, Telegram Bot API.
 
+Mod Vanguard. Category: Platform Tooling and Moderation.
+Tagline: Reddit-native moderation command center that turns scattered report bursts into structured, owned casefiles.
+Problem: Subreddit mod teams lose context across report queues, mod notes, and appeal threads, forcing every ruling to start from memory.
+Solution: A Devvit Web app installed on Reddit converts reports, menu actions, and appeals into structured casefiles with ownership, searchable decision memory, rule-drift analytics, and scoped audit export.
+Key results: Twelve distinct moderator workflow surfaces; searchable decision memory for precedent reuse; JSON and CSV audit export.
+Tech stack: TypeScript, Devvit, Reddit Developer Platform, Redis, pnpm.
+
+Newark IT Store. Category: Database and Retail Management.
+Tagline: Full-stack retail management system over a normalized MySQL schema with CRUD, order workflow, and reporting.
+Problem: Demonstrating end-to-end relational database skills requires a realistic schema with referential integrity and reporting queries, not a single-table toy.
+Solution: A Flask app over a normalized MySQL schema covering customers, baskets, products, offers, and transactions, with an order workflow, statistics reports, and a Docker Compose seed setup.
+Key results: 50 seeded customers, 11 products, and 50 transactions verified live; six statistics report types; credentials moved to environment variables.
+Tech stack: Python, Flask, MySQL, Jinja2, Docker Compose.
+
+HealthMesh. Category: Healthcare Interoperability.
+Tagline: Clinical-claims-pharma interoperability platform with role-based dashboards and audit-aware API services.
+Problem: The surface between providers, payers, and pharma is fragmented across incompatible data standards with no unified plane for prior auth, claims, and outcomes.
+Solution: A full-stack monorepo with four role dashboards, a JWT-authenticated Express API with audit middleware, dual MongoDB and PostgreSQL storage, and Python adapters for FHIR, HL7, and X12.
+Key results: Four role dashboards each surfacing domain-specific workflows; audit middleware on every route; one-command Docker Compose environment.
+Tech stack: React, TypeScript, Node.js, Express, MongoDB, PostgreSQL, Socket.IO, FastAPI, Docker.
+
 SKILLS
 Languages: TypeScript, JavaScript, Python, C++, Java, Go.
 Frontend: React, Tailwind CSS, Framer Motion, Vite.
@@ -166,7 +250,7 @@ Tools: Apache Kafka, Prometheus, Git, GitHub Actions, Socket.IO.
 
 KEY FACTS
 Dev builds systems that scale: distributed, event-driven, multi-tenant architectures.
-He maintains a 4.0 GPA in grad school while shipping 20 real projects.
+He maintains a 4.0 GPA in grad school while shipping 29 real projects.
 Strong backend and platform engineering instincts with full-stack and AI capability.
 Has professional experience at 3 companies: RR Enterprise, Nuance Media, and AIML Analytics Solutions.
 Best contact: trivedidev16@gmail.com

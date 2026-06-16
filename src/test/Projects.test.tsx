@@ -79,7 +79,7 @@ describe("Projects page", () => {
     const user = userEvent.setup();
     renderProjects();
     await user.click(screen.getByRole("button", { name: /Engineering/ }));
-    expect(screen.getByText("ChatterBox.rs")).toBeInTheDocument();
+    expect(screen.getByText("ChatterBox.cpp")).toBeInTheDocument();
     expect(screen.queryByText("Lintellect.cpp")).not.toBeInTheDocument();
   });
 

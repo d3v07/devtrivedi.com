@@ -1,12 +1,12 @@
 # Dev Trivedi's Portfolio
 
-Personal portfolio site showcasing 16 full-stack and systems projects across AI, finance, infra, and distributed systems.
+Personal portfolio site showcasing 29 full-stack and systems projects across AI, finance, infra, and distributed systems.
 
 **Live:** https://devtrivedi.com (deployed on Vercel)
 
 ## What's Inside
 
-A curated selection of 16 completed projects organized by tier:
+Completed projects organized by tier:
 
 ### Tier 1: Flagship Products
 - **Lintellect** — AI code review with evidence-gated validation (AWS CDK, 173 tests)
@@ -28,6 +28,20 @@ A curated selection of 16 completed projects organized by tier:
 - **CivicProof** — Federal fraud investigator with deterministic auditing (Python, Vertex AI)
 - **ChatterBox** — High-performance terminal chat (C++17, System V IPC)
 - **NexaCore** — Agentic settlement platform (Python, x402 orchestration)
+
+### Recent Additions
+- **Sift** — MongoDB DBRE agent with hash-bound human approval (Gemini Agent Engine, Cloud Run)
+- **Concord** — Contract-to-repair diagnostic for AG2 multi-agent workflows (Daytona, FastAPI)
+- **Unsyphn** — Always-on agent monitoring SaaS vendor contract drift (Gemini, ClickHouse, SSE)
+- **Mean It** — Guided writing companion with line-level provenance (Next.js, Anthropic SDK)
+- **Mod Vanguard** — Reddit-native moderation command center (Devvit, Redis)
+- **Newark IT Store** — Flask/MySQL retail management with reporting (Docker Compose)
+- **AutoChain eSupplyPro** — B2B supply-chain platform with a persistent AI assistant (Next.js, Fastify)
+- **NetSentinel** — Unsupervised network-flow anomaly detection (IsolationForest, Flask, React)
+- **RoomRadar** — Event-intelligence networking planner (TanStack Start, Firecrawl)
+- **HFT Lab** — Market-data + paper-trading terminal with a toy matching engine (TypeScript, WebSocket)
+- **HealthMesh** — Healthcare interoperability platform across FHIR/HL7/X12 (React, Express, FastAPI)
+- **Strake** — Predictive digital twin for port operations via a JEPA world model (PyTorch, React Three Fiber)
 
 ## Tech Stack
 
@@ -133,6 +147,6 @@ MIT — Feel free to use this as a template for your own portfolio.
 
 ---
 
-**Last Updated**: March 2026
-**Total Projects**: 16 (all evidence-based READMEs included)
+**Last Updated**: June 2026
+**Total Projects**: 29 (all evidence-based READMEs included)
 **Live Site**: https://devtrivedi.com

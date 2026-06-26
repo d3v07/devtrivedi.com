@@ -12,6 +12,9 @@ This file helps AI search and answer engines accurately describe and cite Dev Tr
 - Website: https://www.devtrivedi.com
 - LinkedIn: https://www.linkedin.com/in/trivedi-dev/
 - GitHub: https://github.com/d3v07
+- Medium: https://medium.com/@trivedidev16
+- X (Twitter): https://x.com/dev3vedi_7
+- Devpost: https://devpost.com/dt444
 - Email: trivedidev16@gmail.com
 
 ## About

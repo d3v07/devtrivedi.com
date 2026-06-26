@@ -56,7 +56,7 @@ describe("Home page", () => {
 
   it("shows metrics table with numbered rows", () => {
     renderHome();
-    expect(screen.getByText("4.0 GPA")).toBeInTheDocument();
+    expect(screen.getByText("3.94 GPA")).toBeInTheDocument();
     expect(screen.getByText("$18K saved")).toBeInTheDocument();
     expect(screen.getByText("3× throughput")).toBeInTheDocument();
   });
@@ -67,10 +67,10 @@ describe("Home page", () => {
     expect(screen.getByText(/Hire Dev/)).toBeInTheDocument();
   });
 
-  it("shows bedtime reading section", () => {
+  it("shows blog section", () => {
     renderHome();
-    expect(screen.getByText(/Bedtime reading/i)).toBeInTheDocument();
-    expect(screen.getByText(/AWS costs/i)).toBeInTheDocument();
+    expect(screen.getByText(/Technical writing from the trenches/i)).toBeInTheDocument();
+    expect(screen.getByText(/AWS Costs/i)).toBeInTheDocument();
   });
 
   it("shows footer with copyright", () => {

@@ -10,24 +10,28 @@ Status: Actively seeking software engineering roles — backend, full-stack, or 
 Open to remote or hybrid positions.
 
 EDUCATION
-MS Computer Science at NJIT (New Jersey Institute of Technology), GPA 4.0, 2024 to 2026, in progress.
+MS Computer Science at NJIT (New Jersey Institute of Technology), GPA 3.94, 2025 to 2026, in progress.
 BS Computer Science at JNTUH (Jawaharlal Nehru Technological University Hyderabad), 2020 to 2024.
 
 WORK EXPERIENCE
 
-Company: RR Enterprise. Role: Software Engineer Intern. Period: July to December 2024.
-Description: Built event-driven systems and multi-tenant APIs for a vendor management platform.
-Key results: 40% faster transaction processing, 60% reduced deployment time, 99.9% payment reliability.
+Company: NJIT (New Jersey Institute of Technology). Role: Software Engineer. Period: May 2025 to present.
+Description: Builds AI document-processing and operations tooling for university workflows.
+Key results: OCRmyPDF plus PaddleOCR pipelines on PostgreSQL, Redis, and S3 cut archive retrieval from hours to about 2 minutes; a FastAPI plus LangChain RAG assistant with pgvector cut staff search and drafting effort by 65%; LangGraph human-in-the-loop workflows and a Next.js RBAC dashboard cut setup time from 30 to 10 minutes.
 
-Company: Nuance Media. Role: Full Stack Developer. Period: September 2023 to May 2024.
-Description: Developed media processing pipelines and real-time analytics dashboards.
-Key results: 35% reduction in API response times, 80% less manual intervention, 500 plus daily uploads processed.
+Company: RR Enterprise. Role: Software Engineer. Period: July to December 2024.
+Description: Built C++ data pipelines and REST APIs for an inventory platform on AWS.
+Key results: A C++ pipeline on AWS S3 and MongoDB processed 10K plus daily records and saved about 4 thousand dollars per month; React, Express, and Node REST APIs with JWT and Swagger cut report turnaround from 40 to 12 minutes; CSV validation, retry logic, and CloudWatch monitoring cut repeat failures by 90% and downtime by 60%.
 
-Company: AIML Analytics Solutions. Role: Software Engineer. Period: May to September 2023.
-Description: Automated cross-cloud ML pipelines spanning Azure Databricks and AWS for enterprise evaluation platforms.
-Key results: Built Python plus AWS Lambda pipeline to auto-trigger SageMaker batch inference on GB-scale datasets, coordinated 50 plus Jira tickets across a 4-person team, reviewed PRs across React frontend and Python backend.
+Company: Nuance Media. Role: Software Engineer. Period: June 2023 to May 2024.
+Description: Optimized React applications and database performance with full CI/CD delivery.
+Key results: React dashboards on Vercel with code splitting cut page load time by 35%; MongoDB query tuning with Atlas cut latency from 400ms to 180ms; 20 plus features shipped at 95% test coverage with deploy time cut by 67%.
 
-PROJECTS (29 total, organized by domain)
+Company: Nuance Media. Role: Software Engineer Intern. Period: May 2022 to September 2023.
+Description: Trained ML models and orchestrated cross-cloud inference pipelines for automated evaluation reporting.
+Key results: Trained SageMaker models to 91% accuracy; orchestrated AWS Lambda and Azure Databricks workflows over 80 GB datasets; coordinated 50 plus Jira tickets across a 4-person intern team.
+
+PROJECTS (30 plus total, organized by domain)
 
 AI DOMAIN PROJECTS:
 
@@ -250,9 +254,9 @@ Tools: Apache Kafka, Prometheus, Git, GitHub Actions, Socket.IO.
 
 KEY FACTS
 Dev builds systems that scale: distributed, event-driven, multi-tenant architectures.
-He maintains a 4.0 GPA in grad school while shipping 29 real projects.
+He maintains a 3.94 GPA in grad school while shipping 30 plus real projects.
 Strong backend and platform engineering instincts with full-stack and AI capability.
-Has professional experience at 3 companies: RR Enterprise, Nuance Media, and AIML Analytics Solutions.
+Has professional experience across NJIT, RR Enterprise, and Nuance Media.
 Best contact: trivedidev16@gmail.com
 `.trim();
 

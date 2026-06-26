@@ -7,6 +7,7 @@ import { BrowserRouter } from "react-router-dom";
 import Navigation from "./components/Navigation";
 import AnimatedRoutes from "./components/AnimatedRoutes";
 import ScrollToTop from "./components/ScrollToTop";
+import RouteSeo from "./components/RouteSeo";
 import Desktop from "./components/Desktop";
 import DesktopLayer from "./components/DesktopLayer";
 import WindowFrame from "./components/WindowFrame";
@@ -82,6 +83,7 @@ const App = () => (
       <BrowserRouter>
         <AppProvider>
           <ScrollToTop />
+          <RouteSeo />
           <AppShell />
         </AppProvider>
       </BrowserRouter>

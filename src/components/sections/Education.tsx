@@ -10,14 +10,14 @@ const education: EducationItem[] = [
   {
     school: "NJIT",
     degree: "MS Computer Science",
-    period: "2024 — 2025",
-    gpa: "4.0",
+    period: "2025 — 2026",
+    gpa: "3.94",
     focus: "Cloud Computing, Distributed Systems, Machine Learning",
   },
   {
     school: "JNTU Hyderabad",
     degree: "BTech Computer Science",
-    period: "2018 — 2022",
+    period: "2020 — 2024",
     focus: "Software Engineering, Databases, Networks",
   },
 ];

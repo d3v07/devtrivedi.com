@@ -7,51 +7,63 @@ import Footer from "@/components/sections/Footer";
 const experiences = [
   {
     number: "01",
+    company: "NJIT",
+    role: "Software Engineer",
+    period: "May 2025 — Present",
+    location: "Newark, NJ",
+    description:
+      "Building AI document-processing and operations tooling for university workflows — OCR/RAG pipelines and human-in-the-loop automation.",
+    achievements: [
+      "Built OCRmyPDF + PaddleOCR pipelines on PostgreSQL, Redis, and S3, cutting archive retrieval from hours to ~2 minutes",
+      "Developed a FastAPI + LangChain RAG assistant with pgvector retrieval and audit logs, cutting staff search and drafting effort by 65%",
+      "Engineered LangGraph human-in-the-loop workflows and a Next.js ops dashboard with RBAC, retries, and monitoring, cutting setup time from 30 to 10 minutes",
+    ],
+    technologies: ["FastAPI", "LangChain", "LangGraph", "pgvector", "PostgreSQL", "Redis", "Next.js", "AWS S3"],
+  },
+  {
+    number: "02",
     company: "RR Enterprise",
     role: "Software Engineer",
     period: "Jul 2024 — Dec 2024",
     location: "India",
     description:
-      "Built high-performance data pipelines and cloud-native applications, significantly improving operational efficiency and cross-team collaboration.",
+      "Built high-performance C++ data pipelines and REST APIs for an inventory platform on AWS, improving reliability and cross-team throughput.",
     achievements: [
-      "Built C++ S3 ingestion pipeline processing 10K records daily, reducing data latency by 85%",
-      "Developed React dashboard on AWS Amplify, cutting reporting turnaround from hours to seconds",
-      "Designed secure Node.js APIs on AWS EC2 with Swagger + JWT, boosting cross-team data access by 75%",
-      "Implemented structured logging and health checks with CloudWatch, cutting incident triage to ~10 minutes",
+      "Engineered a C++ pipeline on AWS S3 and MongoDB processing 10K+ daily inventory records, saving ~$4K/month",
+      "Built React + Express + Node.js REST APIs with JWT and Swagger, cutting report turnaround from 40 to 12 minutes across a 5-person team",
+      "Added CSV validation, retry logic, CloudWatch alarms, and health checks, cutting repeat failures by 90% and downtime by 60%",
     ],
-    technologies: ["C++", "React", "Node.js", "AWS EC2", "AWS S3", "CloudWatch", "JWT"],
-  },
-  {
-    number: "02",
-    company: "Nuance Media",
-    role: "Software Engineer",
-    period: "Sep 2023 — May 2024",
-    location: "Remote",
-    description:
-      "Delivered optimized web applications and automated deployment workflows for client campaigns under tight deadlines.",
-    achievements: [
-      "Delivered React applications on Vercel with code-splitting, improving campaign performance under high traffic",
-      "Reworked MongoDB schemas with compound indexes, reducing latency from 400ms to 180ms",
-      "Shipped 20+ production features across Agile sprints using Jira and Jest, maintaining delivery quality",
-      "Automated build and deployment with GitHub Actions, cutting release cycle time by 40%",
-    ],
-    technologies: ["React", "MongoDB", "GitHub Actions", "Vercel", "Jest", "Jira"],
+    technologies: ["C++", "AWS S3", "MongoDB", "React", "Express", "Node.js", "CloudWatch", "JWT"],
   },
   {
     number: "03",
-    company: "AIML Analytics Solutions",
+    company: "Nuance Media",
     role: "Software Engineer",
-    period: "May 2023 — Sep 2023",
+    period: "Jun 2023 — May 2024",
     location: "Remote",
     description:
-      "Automated cross-cloud ML pipelines spanning Azure Databricks and AWS, eliminating manual model triggers for enterprise evaluation platforms.",
+      "Delivered optimized React applications and database performance work with full CI/CD delivery for client campaigns.",
     achievements: [
-      "Built Python + AWS Lambda pipeline to auto-trigger SageMaker batch inference on GB-scale client datasets",
-      "Coordinated 50+ Jira tickets across a 4-person cross-functional team over a 5-month Agile cycle",
-      "Reviewed PRs across React frontend and Python backend modules, catching integration mismatches before release",
-      "Bridged Azure Databricks ingestion to AWS processing (EC2, EBS, SageMaker) with CloudWatch monitoring",
+      "Optimized React dashboards on Vercel with code splitting and lazy loading, cutting page load time 35% (~$5.5K/quarter saved)",
+      "Profiled slow MongoDB queries with Atlas and added compound indexes, cutting latency from 400ms to 180ms in production",
+      "Delivered 20+ features via Jira and PR workflows with tests and CI/CD, maintaining 95% coverage and cutting deploy time by 67%",
     ],
-    technologies: ["Python", "AWS Lambda", "SageMaker", "Azure Databricks", "EC2", "React", "Jira"],
+    technologies: ["React", "Vercel", "MongoDB", "GitHub Actions", "Jest", "Jira"],
+  },
+  {
+    number: "04",
+    company: "Nuance Media",
+    role: "Software Engineer Intern",
+    period: "May 2022 — Sep 2023",
+    location: "Remote",
+    description:
+      "Trained ML models and orchestrated cross-cloud inference pipelines for automated evaluation reporting.",
+    achievements: [
+      "Trained SageMaker ML models to 91% accuracy and integrated Python inference workflows automating daily evaluation reporting",
+      "Orchestrated AWS Lambda and Azure Databricks workflows to process 80 GB client datasets for inference and batch reporting",
+      "Coordinated 50+ Jira tickets across a 4-person intern team over 5 months, translating business requests into technical tasks",
+    ],
+    technologies: ["Python", "AWS Lambda", "SageMaker", "Azure Databricks", "Jira"],
   },
 ];
 
@@ -61,7 +73,7 @@ const education = [
     short: "NJIT",
     degree: "Master of Science in Computer Science",
     period: "Jan 2025 — Dec 2026",
-    gpa: "4.0",
+    gpa: "3.94",
     location: "New York City, NY",
     coursework: [
       "Operating Systems",
@@ -160,7 +172,7 @@ const About = () => {
           >
             <p>
               Currently pursuing my Master's in Computer Science at NJIT with a{" "}
-              <span className="text-foreground font-semibold">4.0 GPA</span>. I've spent the past few years obsessing
+              <span className="text-foreground font-semibold">3.94 GPA</span>. I've spent the past few years obsessing
               over distributed systems, event-driven architectures, and making things run faster and cheaper.
             </p>
             <p>
@@ -177,8 +189,8 @@ const About = () => {
             className="grid grid-cols-2 md:grid-cols-4 border-2 border-foreground hard-shadow-lg"
           >
             {[
-              { value: "4.0", label: "GPA at NJIT" },
-              { value: "1.5+", label: "Years Experience" },
+              { value: "3.94", label: "GPA at NJIT" },
+              { value: "3+", label: "Years Experience" },
               { value: "85%", label: "Latency Reduction" },
               { value: "10K", label: "Records / Day" },
             ].map((stat, i) => (
@@ -208,7 +220,7 @@ const About = () => {
           <div className="space-y-6">
             {experiences.map((exp, idx) => (
               <motion.div
-                key={exp.company}
+                key={exp.number}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}

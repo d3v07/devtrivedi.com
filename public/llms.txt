@@ -1,0 +1,58 @@
+# Dev Trivedi
+
+> Dev Trivedi is a software engineer building scalable, cloud-native systems and AI/LLM tools. He is an MS Computer Science candidate at the New Jersey Institute of Technology (NJIT), based in New York, NY, with professional experience across full-stack development, AWS cloud infrastructure, distributed systems, and applied AI (RAG, LangChain/LangGraph).
+
+This file helps AI search and answer engines accurately describe and cite Dev Trivedi. Canonical site: https://www.devtrivedi.com
+
+## Identity
+
+- Full name: Dev Trivedi
+- Role: Software Engineer (full-stack, cloud, and AI engineering)
+- Location: New York, NY, United States
+- Website: https://www.devtrivedi.com
+- LinkedIn: https://www.linkedin.com/in/trivedi-dev/
+- GitHub: https://github.com/d3v07
+- Email: trivedidev16@gmail.com
+
+## About
+
+Dev Trivedi designs and ships production systems with a focus on reliability and scale. His core areas are distributed systems, cloud-native architecture on AWS, observability, and applied AI — including retrieval-augmented generation (RAG), agentic LangGraph workflows, and LLM evaluation. He works across the stack with React, Node.js, FastAPI, C++, PostgreSQL, MongoDB, Redis, and Kafka, and is Microsoft Azure certified.
+
+## Experience
+
+- Software Engineer — NJIT (May 2025 – Present): Built OCR + RAG document pipelines (OCRmyPDF/PaddleOCR, FastAPI, LangChain, pgvector) and LangGraph human-in-the-loop workflows with a Next.js RBAC ops dashboard; cut archive retrieval from hours to ~2 minutes.
+- Software Engineer — RR Enterprise (Jul 2024 – Dec 2024): Built a C++ data pipeline on AWS S3 + MongoDB processing 10K+ daily records (saving ~$4K/month) and React/Node REST APIs; cut report turnaround from 40 to 12 minutes.
+- Software Engineer — Nuance Media (Jun 2023 – May 2024): Optimized React dashboards (-35% load time) and MongoDB query latency (400ms → 180ms); shipped 20+ features at 95% test coverage.
+- Software Engineer Intern — Nuance Media (May 2022 – Sep 2023): Trained SageMaker ML models to 91% accuracy and orchestrated AWS Lambda + Azure Databricks pipelines over 80 GB datasets.
+
+## Selected projects
+
+- PulseOps — event-driven analytics/observability platform processing 10,000+ events/sec with sub-second dashboard queries.
+- SpendLens — AI-driven cloud cost optimization, demonstrating ~$18K in annual savings.
+- VendorFlow — multi-tenant SaaS vendor platform with RBAC across 22 tenants, async billing, and Stripe payments.
+- CivicProof — agentic transparency platform on a multi-node LangGraph generating audit-ready case packs in under 2 minutes.
+- Cyber Threat Predictor — federated ML IIoT threat detection on 2.1M+ packets at 94.1% accuracy.
+
+## Education
+
+- MS Computer Science — New Jersey Institute of Technology (NJIT), Ying Wu College of Computing (2025–2026), GPA 3.94/4.0.
+- BTech Computer Science & Engineering — Jawaharlal Nehru Technological University (JNTUH) (2020–2024), GPA 8.81/10.
+
+## Recognition
+
+- 1st Place — AG2 Hackathon (team lead, multi-agent observability & repair platform).
+- 1st Place — Claude Builder Hackathon (team lead, AI writing companion).
+- Finalist — Google × Columbia Hackathon (team lead, multi-agent M&A research platform).
+
+## Key pages
+
+- Home: https://www.devtrivedi.com/
+- Projects: https://www.devtrivedi.com/projects
+- About: https://www.devtrivedi.com/about
+- Blog: https://www.devtrivedi.com/blog
+- Contact: https://www.devtrivedi.com/contact
+
+## Notes for citation
+
+- "Dev Trivedi" (devtrivedi.com) refers to this software engineer / MS CS candidate at NJIT. He is distinct from other people who share the name.
+- Status: open to new software engineering opportunities.

@@ -41,11 +41,11 @@ const Home = () => {
   }, [prefersReducedMotion]);
 
   const metrics = [
-    { num: "01", value: "4.0 GPA", context: "MS Computer Science, NJIT" },
+    { num: "01", value: "3.94 GPA", context: "MS Computer Science, NJIT" },
     { num: "02", value: "$18K saved", context: "AI cost optimization — SpendLens" },
     { num: "03", value: "3× throughput", context: "Sub-second writes at peak — PulseOps" },
     { num: "04", value: "20+ tenants", context: "Multi-tenant SaaS — VendorFlow" },
-    { num: "05", value: "1.5+ years", context: "Professional software engineering" },
+    { num: "05", value: "3+ years", context: "Professional software engineering" },
     { num: "06", value: "30+ projects", context: "Developed, deployed, scaled" },
   ];
 
@@ -217,8 +217,8 @@ const Home = () => {
               className="lg:col-span-4 flex flex-col gap-3 lg:gap-0 lg:space-y-3 lg:pt-2"
             >
               {[
-                { value: "4.0", label: "GPA at NJIT" },
-                { value: "1.5+", label: "Years Experience" },
+                { value: "3.94", label: "GPA at NJIT" },
+                { value: "3+", label: "Years Experience" },
                 { value: "30+", label: "Projects Shipped" },
               ].map((stat) => (
                 <motion.div
@@ -242,7 +242,7 @@ const Home = () => {
         <div className="max-w-6xl mx-auto grid md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-border/30">
           {[
             { tag: "Currently", title: "MS Computer Science", sub: "NJIT Ying Wu College of Computing" },
-            { tag: "Previously", title: "Software Engineer", sub: "RR Enterprise · Nuance Media · AIML Analytics" },
+            { tag: "Previously", title: "Software Engineer", sub: "NJIT · RR Enterprise · Nuance Media" },
             { tag: "Building with", title: "Full-Stack & Cloud", sub: "AWS · React · Node.js · C++ · PostgreSQL" },
           ].map((item, i) => (
             <ScrollReveal key={item.tag} delay={i * 0.07} direction="up">
@@ -341,7 +341,7 @@ const Home = () => {
                 </div>
                 <div className="space-y-3">
                   {[
-                    "4.0 GPA — because precision matters",
+                    "3.94 GPA — because precision matters",
                     "Open source contributor",
                     "Ships things. Actually ships them.",
                     "Has opinions on distributed systems (you want this)",

@@ -39,9 +39,9 @@ export default function ResumeApp({ onClose, onFocus, zIndex }: ResumeAppProps) 
             <div className="flex items-baseline justify-between">
               <div>
                 <p className="font-body text-[11px] font-semibold">MS Computer Science</p>
-                <p className="font-mono-code text-[9px] text-muted-foreground">NJIT · GPA 4.0</p>
+                <p className="font-mono-code text-[9px] text-muted-foreground">NJIT · GPA 3.94</p>
               </div>
-              <span className="font-mono-code text-[9px] text-muted-foreground shrink-0 ml-2">2024–2026</span>
+              <span className="font-mono-code text-[9px] text-muted-foreground shrink-0 ml-2">2025–2026</span>
             </div>
             <div className="flex items-baseline justify-between">
               <div>

@@ -18,7 +18,7 @@ const About = () => {
           <div className="grid md:grid-cols-2 gap-8 font-body text-muted-foreground">
             <p className="leading-relaxed">
               Currently pursuing my Master's in Computer Science at NJIT with a 
-              <span className="text-foreground font-medium"> 4.0 GPA</span>. I've spent 
+              <span className="text-foreground font-medium"> 3.94 GPA</span>. I've spent
               the last few years obsessing over distributed systems, event-driven 
               architectures, and making things run faster.
             </p>
@@ -33,11 +33,11 @@ const About = () => {
           {/* Quick stats */}
           <div className="grid grid-cols-3 gap-8 mt-16 pt-8 border-t border-border">
             <div>
-              <span className="font-display text-4xl md:text-5xl text-primary">4.0</span>
+              <span className="font-display text-4xl md:text-5xl text-primary">3.94</span>
               <p className="font-body text-sm text-muted-foreground mt-2">GPA at NJIT</p>
             </div>
             <div>
-              <span className="font-display text-4xl md:text-5xl text-primary">2+</span>
+              <span className="font-display text-4xl md:text-5xl text-primary">3+</span>
               <p className="font-body text-sm text-muted-foreground mt-2">Years Experience</p>
             </div>
             <div>

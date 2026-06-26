@@ -19,7 +19,7 @@ const COMMANDS: Record<string, string | (() => string)> = {
 
   whoami: `dev trivedi
   role:      software engineer
-  degree:    ms computer science @ njit (gpa: 4.0)
+  degree:    ms computer science @ njit (gpa: 3.94)
   status:    open to work
   location:  new york city, new york`,
 
@@ -64,7 +64,7 @@ const COMMANDS: Record<string, string | (() => string)> = {
   Connection established.
 
   > He ships real things that work at scale.
-  > 4.0 GPA. Open to work. Has opinions on
+  > 3.94 GPA. Open to work. Has opinions on
   > distributed systems (you want this).
 
   Contact: trivedidev16@gmail.com`,

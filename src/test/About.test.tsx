@@ -26,20 +26,20 @@ describe("About page", () => {
     expect(screen.getByText(/\/\/ about\.md/)).toBeInTheDocument();
   });
 
-  it("shows stats (4.0 GPA, 1.5+ years, 85%, 10K)", () => {
+  it("shows stats (3.94 GPA, 3+ years, 85%, 10K)", () => {
     renderAbout();
-    // 4.0 appears in both the stats row and education GPA
-    expect(screen.getAllByText("4.0").length).toBeGreaterThanOrEqual(1);
-    expect(screen.getByText("1.5+")).toBeInTheDocument();
+    // 3.94 appears in both the stats row and education GPA
+    expect(screen.getAllByText("3.94").length).toBeGreaterThanOrEqual(1);
+    expect(screen.getByText("3+")).toBeInTheDocument();
     expect(screen.getByText("85%")).toBeInTheDocument();
     expect(screen.getByText("10K")).toBeInTheDocument();
   });
 
-  it("shows experience section with all three companies", () => {
+  it("shows experience section with all companies", () => {
     renderAbout();
+    expect(screen.getAllByText("NJIT").length).toBeGreaterThanOrEqual(1);
     expect(screen.getByText("RR Enterprise")).toBeInTheDocument();
-    expect(screen.getByText("Nuance Media")).toBeInTheDocument();
-    expect(screen.getByText("AIML Analytics Solutions")).toBeInTheDocument();
+    expect(screen.getAllByText("Nuance Media").length).toBeGreaterThanOrEqual(1);
   });
 
   it("shows skill categories", () => {
@@ -56,14 +56,14 @@ describe("About page", () => {
     expect(screen.getAllByText("C++").length).toBeGreaterThanOrEqual(1);
     expect(screen.getAllByText("Python").length).toBeGreaterThanOrEqual(1);
     expect(screen.getByText("Docker")).toBeInTheDocument();
-    expect(screen.getByText("PostgreSQL")).toBeInTheDocument();
+    expect(screen.getAllByText("PostgreSQL").length).toBeGreaterThanOrEqual(1);
   });
 
   it("shows education section with NJIT", () => {
     renderAbout();
     expect(screen.getByText("New Jersey Institute of Technology")).toBeInTheDocument();
-    // GPA 4.0 should appear in education section (it also appears in stats, so getAll)
-    const gpaValues = screen.getAllByText("4.0");
+    // GPA 3.94 should appear in education section (it also appears in stats, so getAll)
+    const gpaValues = screen.getAllByText("3.94");
     expect(gpaValues.length).toBeGreaterThanOrEqual(1);
   });
 
@@ -75,8 +75,8 @@ describe("About page", () => {
   it("shows leadership section", () => {
     renderAbout();
     expect(screen.getByText(/Beyond the code/)).toBeInTheDocument();
-    expect(screen.getByText("Qualcomm AI Hackathon, NYU")).toBeInTheDocument();
-    expect(screen.getByText("NJIT GDG, New York City")).toBeInTheDocument();
+    expect(screen.getByText("AG2 Hackathon (formerly Microsoft AutoGen)")).toBeInTheDocument();
+    expect(screen.getByText("Claude Builder Club Hackathon")).toBeInTheDocument();
   });
 
   it("shows no blur orbs (no blur-3xl class in rendered output)", () => {

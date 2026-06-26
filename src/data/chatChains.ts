@@ -97,7 +97,7 @@ export const CHAIN_BASIC: Record<string, string[]> = {
   "Backend or platform engineering?": ["What languages does he work in?", "How do I reach him?"],
   "Remote or hybrid?":                ["Where is he based?", "How do I reach him?"],
   "Distributed systems depth?":       ["PulseOps, VendorFlow, DocWeave — all distributed?", "How do I reach him?"],
-  "Full-stack + AI breadth?":         ["20 projects across 3 domains — really?", "How do I reach him?"],
+  "Full-stack + AI breadth?":         ["30+ projects across 3 domains — really?", "How do I reach him?"],
   "What languages does he work in?":  ["TypeScript, Python, Go, C++ — all in production?", "How do I reach him?"],
   "Where is he based?":               ["New York City, open to remote?", "How do I reach him?"],
 
@@ -114,29 +114,29 @@ export const CHAIN_BASIC: Record<string, string[]> = {
 
   // ── Background ─────────────────────────────────────────────────────────────
   "Where did he study?":             ["MS at NJIT — what's the program?", "What was the undergrad?", "Has he worked professionally?"],
-  "Has he worked professionally?":   ["Tell me about RR Enterprise", "Tell me about Nuance Media", "Tell me about AIML Analytics"],
-  "GPA and grad school?":            ["4.0 in grad school while shipping 20 projects?", "Is Dev available to hire?"],
+  "Has he worked professionally?":   ["Tell me about his NJIT role", "Tell me about RR Enterprise", "Tell me about Nuance Media"],
+  "GPA and grad school?":            ["3.94 GPA while shipping 30+ projects?", "Is Dev available to hire?"],
 
   "MS at NJIT — what's the program?": ["Computer Science — expected graduation 2026?", "Is Dev available to hire?"],
   "What was the undergrad?":          ["CS from JNTUH — what did he focus on?", "Has he worked professionally?"],
-  "4.0 in grad school while shipping 20 projects?": ["How does he manage that?", "Is Dev available to hire?"],
+  "3.94 GPA while shipping 30+ projects?": ["How does he manage that?", "Is Dev available to hire?"],
   "How does he manage that?":         ["What's his approach to shipping fast?", "Is Dev available to hire?"],
 
   // ── Work experience ────────────────────────────────────────────────────────
   "Tell me about RR Enterprise":     ["What did he build there?", "What were the results?", "Tell me about Nuance Media"],
   "Tell me about Nuance Media":      ["What was the work?", "What improved because of him?", "Is Dev available to hire?"],
 
-  "What did he build there?":        ["Event-driven vendor management — what does that mean?", "Is Dev available to hire?"],
-  "What were the results?":          ["40% faster transactions, 99.9% payment reliability?", "Is Dev available to hire?"],
-  "What was the work?":              ["Media pipelines and real-time analytics?", "Is Dev available to hire?"],
-  "What improved because of him?":   ["35% faster API, 500+ daily uploads?", "Is Dev available to hire?"],
+  "What did he build there?":        ["A C++ inventory pipeline on AWS — what does that mean?", "Is Dev available to hire?"],
+  "What were the results?":          ["~$4K/month saved, report time 40 to 12 min?", "Is Dev available to hire?"],
+  "What was the work?":              ["React dashboards and MongoDB performance work?", "Is Dev available to hire?"],
+  "What improved because of him?":   ["Page load down 35%, query latency 400 to 180ms?", "Is Dev available to hire?"],
 
-  // ── AIML Analytics ──────────────────────────────────────────────────────────
-  "Tell me about AIML Analytics":   ["What did he automate there?", "How big was the team?", "Is Dev available to hire?"],
-  "What did he automate there?":    ["Cross-cloud ML pipeline — Azure to AWS?", "Is Dev available to hire?"],
-  "How big was the team?":          ["4-person pod, 50+ Jira tickets — how?", "What else did he ship?"],
-  "Cross-cloud ML pipeline — Azure to AWS?": ["Lambda triggering SageMaker automatically?", "Is Dev available to hire?"],
-  "4-person pod, 50+ Jira tickets — how?":   ["He coordinated scope across the team?", "Is Dev available to hire?"],
+  // ── NJIT (current role) ─────────────────────────────────────────────────────
+  "Tell me about his NJIT role":    ["What does he build there?", "What's the impact?", "Is Dev available to hire?"],
+  "What does he build there?":      ["RAG assistant + OCR pipelines — for what?", "Is Dev available to hire?"],
+  "What's the impact?":             ["Archive retrieval from hours to ~2 minutes?", "What else did he ship?"],
+  "RAG assistant + OCR pipelines — for what?": ["FastAPI + LangChain + pgvector — how?", "Is Dev available to hire?"],
+  "Archive retrieval from hours to ~2 minutes?": ["LangGraph human-in-the-loop workflows — why?", "Is Dev available to hire?"],
 };
 
 // ─── Turing mode chains ───────────────────────────────────────────────────────
@@ -203,7 +203,7 @@ export function detectChainEntry(msg: string, mode: ChatMode): string[] {
   if (/rideshare/.test(t))                     return CHAIN_BASIC["Tell me about RideShare"] ?? [];
   if (/chatterbox/.test(t))                    return CHAIN_BASIC["Tell me about ChatterBox"] ?? [];
   if (/rr enterprise|nuance/.test(t))          return CHAIN_BASIC["Has he worked professionally?"] ?? [];
-  if (/aiml/.test(t))                          return CHAIN_BASIC["Tell me about AIML Analytics"] ?? [];
+  if (/ocr|rag|langgraph|langchain|pgvector/.test(t)) return CHAIN_BASIC["Tell me about his NJIT role"] ?? [];
 
   // Topic matches
   if (/hire|available|role|job|position|recruit/.test(t)) return CHAIN_BASIC["Is Dev available to hire?"] ?? [];

@@ -51,8 +51,8 @@ describe("RAG_CONTEXT coverage", () => {
     expect(RAG_CONTEXT).toContain("NJIT");
   });
 
-  test("contains 4.0 GPA", () => {
-    expect(RAG_CONTEXT).toContain("4.0");
+  test("contains 3.94 GPA", () => {
+    expect(RAG_CONTEXT).toContain("3.94");
   });
 
   test("contains RR Enterprise", () => {

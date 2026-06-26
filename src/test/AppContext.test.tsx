@@ -5,16 +5,14 @@ import { AppProvider, useApp } from "@/context/AppContext";
 
 // Helper component to expose context values
 function ContextConsumer() {
-  const { experience, wallpaper, setExperience, setWallpaper, toggleExperience, windowState, setWindowState, windowOpen, setWindowOpen } = useApp();
+  const { experience, setExperience, toggleExperience, windowState, setWindowState, windowOpen, setWindowOpen } = useApp();
   return (
     <div>
       <span data-testid="experience">{experience}</span>
-      <span data-testid="wallpaper">{wallpaper}</span>
       <span data-testid="window-state">{windowState}</span>
       <span data-testid="window-open">{String(windowOpen)}</span>
       <button onClick={() => setExperience("os")}>set-os</button>
       <button onClick={() => setExperience("website")}>set-website</button>
-      <button onClick={() => setWallpaper("dark")}>set-dark-wallpaper</button>
       <button onClick={toggleExperience}>toggle</button>
       <button onClick={() => setWindowState("minimized")}>minimize</button>
       <button onClick={() => setWindowState("maximized")}>maximize</button>
@@ -38,10 +36,9 @@ describe("AppContext", () => {
     localStorage.clear();
   });
 
-  it("defaults to website experience and default wallpaper", () => {
+  it("defaults to os experience on desktop widths", () => {
     renderWithProvider();
-    expect(screen.getByTestId("experience")).toHaveTextContent("website");
-    expect(screen.getByTestId("wallpaper")).toHaveTextContent("default");
+    expect(screen.getByTestId("experience")).toHaveTextContent("os");
   });
 
   it("setExperience switches to os mode", async () => {
@@ -58,17 +55,10 @@ describe("AppContext", () => {
     expect(localStorage.getItem("portfolio-experience")).toBe("os");
   });
 
-  it("setWallpaper updates wallpaper and persists", async () => {
+  it("toggleExperience flips website to os", async () => {
     const user = userEvent.setup();
     renderWithProvider();
-    await user.click(screen.getByText("set-dark-wallpaper"));
-    expect(screen.getByTestId("wallpaper")).toHaveTextContent("dark");
-    expect(localStorage.getItem("portfolio-wallpaper")).toBe("dark");
-  });
-
-  it("toggleExperience flips from website to os", async () => {
-    const user = userEvent.setup();
-    renderWithProvider();
+    await user.click(screen.getByText("set-website"));
     expect(screen.getByTestId("experience")).toHaveTextContent("website");
     await user.click(screen.getByText("toggle"));
     expect(screen.getByTestId("experience")).toHaveTextContent("os");
@@ -86,12 +76,6 @@ describe("AppContext", () => {
     localStorage.setItem("portfolio-experience", "os");
     renderWithProvider();
     expect(screen.getByTestId("experience")).toHaveTextContent("os");
-  });
-
-  it("restores wallpaper from localStorage on mount", () => {
-    localStorage.setItem("portfolio-wallpaper", "grid");
-    renderWithProvider();
-    expect(screen.getByTestId("wallpaper")).toHaveTextContent("grid");
   });
 
   it("useApp throws when used outside AppProvider", () => {

@@ -1,59 +1,9 @@
 import { ArrowUpRight, Award, BookOpen, Briefcase, Code2 } from "lucide-react";
 import { motion } from "framer-motion";
 import Footer from "@/components/sections/Footer";
+import { experiences } from "@/data/experience";
 
 // ─── Data ────────────────────────────────────────────────────────────────────
-
-const experiences = [
-  {
-    number: "01",
-    company: "RR Enterprise",
-    role: "Software Engineer",
-    period: "Jul 2024 — Dec 2024",
-    location: "India",
-    description:
-      "Built high-performance data pipelines and cloud-native applications, significantly improving operational efficiency and cross-team collaboration.",
-    achievements: [
-      "Built C++ S3 ingestion pipeline processing 10K records daily, reducing data latency by 85%",
-      "Developed React dashboard on AWS Amplify, cutting reporting turnaround from hours to seconds",
-      "Designed secure Node.js APIs on AWS EC2 with Swagger + JWT, boosting cross-team data access by 75%",
-      "Implemented structured logging and health checks with CloudWatch, cutting incident triage to ~10 minutes",
-    ],
-    technologies: ["C++", "React", "Node.js", "AWS EC2", "AWS S3", "CloudWatch", "JWT"],
-  },
-  {
-    number: "02",
-    company: "Nuance Media",
-    role: "Software Engineer",
-    period: "Sep 2023 — May 2024",
-    location: "Remote",
-    description:
-      "Delivered optimized web applications and automated deployment workflows for client campaigns under tight deadlines.",
-    achievements: [
-      "Delivered React applications on Vercel with code-splitting, improving campaign performance under high traffic",
-      "Reworked MongoDB schemas with compound indexes, reducing latency from 400ms to 180ms",
-      "Shipped 20+ production features across Agile sprints using Jira and Jest, maintaining delivery quality",
-      "Automated build and deployment with GitHub Actions, cutting release cycle time by 40%",
-    ],
-    technologies: ["React", "MongoDB", "GitHub Actions", "Vercel", "Jest", "Jira"],
-  },
-  {
-    number: "03",
-    company: "AIML Analytics Solutions",
-    role: "Software Engineer",
-    period: "May 2023 — Sep 2023",
-    location: "Remote",
-    description:
-      "Automated cross-cloud ML pipelines spanning Azure Databricks and AWS, eliminating manual model triggers for enterprise evaluation platforms.",
-    achievements: [
-      "Built Python + AWS Lambda pipeline to auto-trigger SageMaker batch inference on GB-scale client datasets",
-      "Coordinated 50+ Jira tickets across a 4-person cross-functional team over a 5-month Agile cycle",
-      "Reviewed PRs across React frontend and Python backend modules, catching integration mismatches before release",
-      "Bridged Azure Databricks ingestion to AWS processing (EC2, EBS, SageMaker) with CloudWatch monitoring",
-    ],
-    technologies: ["Python", "AWS Lambda", "SageMaker", "Azure Databricks", "EC2", "React", "Jira"],
-  },
-];
 
 const education = [
   {
@@ -61,7 +11,7 @@ const education = [
     short: "NJIT",
     degree: "Master of Science in Computer Science",
     period: "Jan 2025 — Dec 2026",
-    gpa: "4.0",
+    gpa: "3.94",
     location: "New York City, NY",
     coursework: [
       "Operating Systems",
@@ -107,17 +57,25 @@ const skillCategories = [
 
 const leadership = [
   {
-    role: "Team Lead",
-    org: "Qualcomm AI Hackathon, NYU",
-    year: "Sept 2025",
-    description: "Led a 4-member team to build an edge-based computer vision prototype with Qualcomm AI Stack.",
+    role: "1st Place · Team Lead",
+    org: "AG2 Hackathon (formerly Microsoft AutoGen)",
+    year: "2026",
+    description:
+      "Led the team behind Concord — a multi-agent observability and repair platform with sandboxed regression testing.",
   },
   {
-    role: "Event Coordinator",
-    org: "NJIT GDG, New York City",
-    year: "April 2025",
+    role: "1st Place · Team Lead",
+    org: "Claude Builder Club Hackathon",
+    year: "2026",
     description:
-      "Organized coding workshops and peer-learning sessions for 40+ students, fostering collaboration in emerging technologies.",
+      "Led the team behind Mean It — an AI writing companion with interview-based provenance tracking.",
+  },
+  {
+    role: "Finalist · Team Lead",
+    org: "Google × Columbia Business School Hackathon",
+    year: "2026",
+    description:
+      "Led the team behind CIMphony — a multi-agent M&A research platform with real-time voice interaction.",
   },
 ];
 
@@ -160,7 +118,7 @@ const About = () => {
           >
             <p>
               Currently pursuing my Master's in Computer Science at NJIT with a{" "}
-              <span className="text-foreground font-semibold">4.0 GPA</span>. I've spent the past few years obsessing
+              <span className="text-foreground font-semibold">3.94 GPA</span>. I've spent the past few years obsessing
               over distributed systems, event-driven architectures, and making things run faster and cheaper.
             </p>
             <p>
@@ -177,8 +135,8 @@ const About = () => {
             className="grid grid-cols-2 md:grid-cols-4 border-2 border-foreground hard-shadow-lg"
           >
             {[
-              { value: "4.0", label: "GPA at NJIT" },
-              { value: "1.5+", label: "Years Experience" },
+              { value: "3.94", label: "GPA at NJIT" },
+              { value: "3+", label: "Years Experience" },
               { value: "85%", label: "Latency Reduction" },
               { value: "10K", label: "Records / Day" },
             ].map((stat, i) => (
@@ -208,7 +166,7 @@ const About = () => {
           <div className="space-y-6">
             {experiences.map((exp, idx) => (
               <motion.div
-                key={exp.company}
+                key={exp.number}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}

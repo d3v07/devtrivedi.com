@@ -13,7 +13,7 @@ const experiences: ExperienceItem[] = [
   {
     number: "01",
     company: "RR Enterprise",
-    role: "Software Engineer Intern",
+    role: "Software Engineer",
     period: "Jul — Dec 2024",
     description: "Built event-driven systems and multi-tenant APIs for a vendor management platform.",
     highlights: [
@@ -36,9 +36,9 @@ const experiences: ExperienceItem[] = [
   },
   {
     number: "03",
-    company: "AIML Analytics Solutions",
-    role: "Software Engineer",
-    period: "May — Sep 2023",
+    company: "Nuance Media",
+    role: "Software Engineer Intern",
+    period: "May 2022 — Sep 2023",
     description: "Automated cross-cloud ML pipelines spanning Azure Databricks and AWS for enterprise evaluation platforms.",
     highlights: [
       "50+ Jira tickets coordinated",

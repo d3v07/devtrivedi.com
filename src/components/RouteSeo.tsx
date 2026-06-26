@@ -16,9 +16,9 @@ interface Meta {
 }
 
 const DEFAULT: Meta = {
-  title: "Dev Trivedi — Software Engineer | Full-Stack, Cloud & AI",
+  title: "Dev Trivedi — Software Engineer & AI Engineer | MS CS @ NJIT",
   description:
-    "Dev Trivedi is a software engineer building scalable, cloud-native systems and AI/LLM tools. MS Computer Science at NJIT. Full-stack, AWS, distributed systems.",
+    "Dev Trivedi is a software engineer and AI engineer, and an MS Computer Science student at NJIT — building agentic AI systems, full-stack products, and cloud-native infrastructure.",
 };
 
 const ROUTES: Record<string, Meta> = {
@@ -107,6 +107,25 @@ function setCanonical(href: string) {
   el.setAttribute("href", href);
 }
 
+/** Add/replace/remove a route-scoped JSON-LD block (e.g. per-post Article schema). */
+function setJsonLd(id: string, data: object | null) {
+  const existing = document.getElementById(id);
+  if (!data) {
+    existing?.remove();
+    return;
+  }
+  const json = JSON.stringify(data);
+  if (existing) {
+    existing.textContent = json;
+    return;
+  }
+  const el = document.createElement("script");
+  el.type = "application/ld+json";
+  el.id = id;
+  el.textContent = json;
+  document.head.appendChild(el);
+}
+
 export default function RouteSeo() {
   const { pathname } = useLocation();
 
@@ -123,6 +142,24 @@ export default function RouteSeo() {
     setMetaProp("og:url", url);
     setMetaName("twitter:title", meta.title);
     setMetaName("twitter:description", meta.description);
+
+    // Per-post Article schema → authorship attribution to Dev Trivedi (entity strength)
+    const slug = blog?.[1];
+    if (slug && BLOG[slug]) {
+      setJsonLd("route-jsonld", {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        headline: meta.title.replace(/ — Dev Trivedi$/, ""),
+        description: meta.description,
+        url,
+        author: { "@type": "Person", name: "Dev Trivedi", url: SITE },
+        publisher: { "@type": "Person", name: "Dev Trivedi", url: SITE },
+        mainEntityOfPage: url,
+        inLanguage: "en-US",
+      });
+    } else {
+      setJsonLd("route-jsonld", null);
+    }
   }, [pathname]);
 
   return null;

@@ -218,7 +218,7 @@ const Home = () => {
               className="lg:col-span-4 flex flex-col gap-3 lg:gap-0 lg:space-y-3 lg:pt-2"
             >
               {[
-                { value: "2× 1st", label: "Hackathon wins + finalist" },
+                { value: "3×", label: "Hackathon wins & finals" },
                 { value: "3+", label: "Years Experience" },
                 { value: "30+", label: "Projects Shipped" },
               ].map((stat) => (

@@ -42,7 +42,7 @@ describe("Home page", () => {
 
   it("shows stat cards (Hackathons, Experience, Projects)", () => {
     renderHome();
-    expect(screen.getByText("Hackathon wins + finalist")).toBeInTheDocument();
+    expect(screen.getByText("Hackathon wins & finals")).toBeInTheDocument();
     expect(screen.getByText("Years Experience")).toBeInTheDocument();
     expect(screen.getByText("Projects Shipped")).toBeInTheDocument();
   });

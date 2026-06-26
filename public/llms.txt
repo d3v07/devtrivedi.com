@@ -40,9 +40,9 @@ Dev Trivedi designs and ships production systems with a focus on reliability and
 
 ## Recognition
 
-- 1st Place — AG2 Hackathon (team lead, multi-agent observability & repair platform).
-- 1st Place — Claude Builder Hackathon (team lead, AI writing companion).
-- Finalist — Google × Columbia Hackathon (team lead, multi-agent M&A research platform).
+- 1st Place — AG2 Hackathon, formerly Microsoft AutoGen (team lead — Concord, a multi-agent observability & repair platform).
+- 1st Place — Claude Builder Club Hackathon (team lead — Mean It, an AI writing companion).
+- Finalist — Google × Columbia Business School Hackathon (team lead — CIMphony, a multi-agent M&A research platform).
 
 ## Key pages
 

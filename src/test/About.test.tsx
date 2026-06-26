@@ -75,8 +75,8 @@ describe("About page", () => {
   it("shows leadership section", () => {
     renderAbout();
     expect(screen.getByText(/Beyond the code/)).toBeInTheDocument();
-    expect(screen.getByText("Qualcomm AI Hackathon, NYU")).toBeInTheDocument();
-    expect(screen.getByText("NJIT GDG, New York City")).toBeInTheDocument();
+    expect(screen.getByText("AG2 Hackathon (formerly Microsoft AutoGen)")).toBeInTheDocument();
+    expect(screen.getByText("Claude Builder Club Hackathon")).toBeInTheDocument();
   });
 
   it("shows no blur orbs (no blur-3xl class in rendered output)", () => {

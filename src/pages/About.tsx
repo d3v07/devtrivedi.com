@@ -119,17 +119,25 @@ const skillCategories = [
 
 const leadership = [
   {
-    role: "Team Lead",
-    org: "Qualcomm AI Hackathon, NYU",
-    year: "Sept 2025",
-    description: "Led a 4-member team to build an edge-based computer vision prototype with Qualcomm AI Stack.",
+    role: "1st Place · Team Lead",
+    org: "AG2 Hackathon (formerly Microsoft AutoGen)",
+    year: "2026",
+    description:
+      "Led the team behind Concord — a multi-agent observability and repair platform with sandboxed regression testing.",
   },
   {
-    role: "Event Coordinator",
-    org: "NJIT GDG, New York City",
-    year: "April 2025",
+    role: "1st Place · Team Lead",
+    org: "Claude Builder Club Hackathon",
+    year: "2026",
     description:
-      "Organized coding workshops and peer-learning sessions for 40+ students, fostering collaboration in emerging technologies.",
+      "Led the team behind Mean It — an AI writing companion with interview-based provenance tracking.",
+  },
+  {
+    role: "Finalist · Team Lead",
+    org: "Google × Columbia Business School Hackathon",
+    year: "2026",
+    description:
+      "Led the team behind CIMphony — a multi-agent M&A research platform with real-time voice interaction.",
   },
 ];
 

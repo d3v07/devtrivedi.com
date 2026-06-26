@@ -31,6 +31,11 @@ Company: Nuance Media. Role: Software Engineer Intern. Period: May 2022 to Septe
 Description: Trained ML models and orchestrated cross-cloud inference pipelines for automated evaluation reporting.
 Key results: Trained SageMaker models to 91% accuracy; orchestrated AWS Lambda and Azure Databricks workflows over 80 GB datasets; coordinated 50 plus Jira tickets across a 4-person intern team.
 
+HACKATHONS AND AWARDS
+1st place at the AG2 Hackathon (formerly Microsoft AutoGen) as team lead, for Concord, a multi-agent observability and repair platform with sandboxed regression testing.
+1st place at the Claude Builder Club Hackathon as team lead, for Mean It, an AI writing companion with interview-based provenance tracking.
+Finalist at the Google and Columbia Business School Hackathon as team lead, for CIMphony, a multi-agent M&A research platform with real-time voice interaction.
+
 PROJECTS (30 plus total, organized by domain)
 
 AI DOMAIN PROJECTS:

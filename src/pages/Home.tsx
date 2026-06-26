@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 import ScrollReveal from "@/components/ScrollReveal";
+import { experiences } from "@/data/experience";
 import Footer from "@/components/sections/Footer";
 import { useApp } from "@/context/AppContext";
 
@@ -253,6 +254,59 @@ const Home = () => {
               </div>
             </ScrollReveal>
           ))}
+        </div>
+      </section>
+
+      {/* ── EXPERIENCE ─────────────────────────────────────────────────── */}
+      <section className="py-24 px-6 md:px-12 lg:px-24 border-t-2 border-foreground">
+        <div className="max-w-6xl mx-auto">
+          <ScrollReveal>
+            <div className="flex justify-between items-end mb-12">
+              <div>
+                <span className="font-mono-code text-xs tracking-widest uppercase text-primary block mb-3">
+                  Experience
+                </span>
+                <h2 className="font-display text-4xl md:text-5xl">Where I've worked</h2>
+              </div>
+              <Link
+                to="/about"
+                className="group font-body text-sm hidden sm:flex items-center gap-1.5 text-muted-foreground hover:text-primary transition-colors"
+              >
+                Full story <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
+              </Link>
+            </div>
+          </ScrollReveal>
+
+          <div className="border-2 border-foreground hard-shadow-lg">
+            {experiences.map((exp, i) => (
+              <ScrollReveal key={exp.number} delay={i * 0.05} direction="up">
+                <div
+                  className={`group grid md:grid-cols-12 gap-3 md:gap-6 p-5 md:p-7 ${i % 2 === 0 ? "bg-card" : "bg-background"} ${i < experiences.length - 1 ? "border-b-2 border-foreground" : ""} hover:bg-primary/5 transition-colors duration-150`}
+                >
+                  {/* Company · role · period */}
+                  <div className="md:col-span-4">
+                    <h3 className="font-display text-2xl md:text-3xl group-hover:text-primary transition-colors">
+                      {exp.company}
+                    </h3>
+                    <p className="font-mono-code text-xs text-primary mt-1">{exp.role}</p>
+                    <p className="font-mono-code text-xs text-muted-foreground mt-1">{exp.period}</p>
+                  </div>
+                  {/* Description + top achievements */}
+                  <div className="md:col-span-8">
+                    <p className="font-body text-sm text-muted-foreground mb-3">{exp.description}</p>
+                    <ul className="space-y-1.5">
+                      {exp.achievements.slice(0, 2).map((a) => (
+                        <li key={a} className="font-body text-xs text-foreground flex items-start gap-2">
+                          <span className="text-primary mt-0.5 shrink-0 font-mono-code">→</span>
+                          {a}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+              </ScrollReveal>
+            ))}
+          </div>
         </div>
       </section>
 

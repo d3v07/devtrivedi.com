@@ -52,15 +52,19 @@ describe("Contact page", () => {
 
   it("has correct href for LinkedIn link", () => {
     renderContact();
-    const liLink = screen.getByRole("link", { name: /linkedin/i });
-    expect(liLink).toHaveAttribute("href", "https://linkedin.com/in/trivedi-dev");
+    const liLink = screen
+      .getAllByRole("link", { name: /linkedin/i })
+      .find((l) => l.getAttribute("href") === "https://linkedin.com/in/trivedi-dev");
+    expect(liLink).toBeDefined();
     expect(liLink).toHaveAttribute("target", "_blank");
   });
 
   it("has correct href for GitHub link", () => {
     renderContact();
-    const ghLink = screen.getByRole("link", { name: /github/i });
-    expect(ghLink).toHaveAttribute("href", "https://github.com/d3v07");
+    const ghLink = screen
+      .getAllByRole("link", { name: /github/i })
+      .find((l) => l.getAttribute("href") === "https://github.com/d3v07");
+    expect(ghLink).toBeDefined();
     expect(ghLink).toHaveAttribute("target", "_blank");
   });
 

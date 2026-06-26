@@ -47,6 +47,11 @@ const ROUTES: Record<string, Meta> = {
     title: "Changelog — Dev Trivedi",
     description: "Recent updates and changes to Dev Trivedi's portfolio and projects.",
   },
+  "/media": {
+    title: "Press & Media Kit — Dev Trivedi",
+    description:
+      "Official media kit for Dev Trivedi — bio, headshot, and verified links (LinkedIn, GitHub, Medium, X, Devpost). Software engineer & AI engineer, MS CS @ NJIT.",
+  },
 };
 
 const BLOG: Record<string, Meta> = {

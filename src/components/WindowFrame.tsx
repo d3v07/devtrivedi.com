@@ -34,6 +34,8 @@ const ROUTE_TITLES: Record<string, string> = {
   "/projects":  "projects/",
   "/contact":   "contact.tsx",
   "/changelog": "CHANGELOG.md",
+  "/blog":      "blog.mdx",
+  "/media":     "media.mdx",
 };
 
 // ─── Geometry defaults ────────────────────────────────────────────────────────

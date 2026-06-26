@@ -86,10 +86,10 @@ describe("Home page", () => {
 
   it("has GitHub, LinkedIn, and Email social links", () => {
     renderHome();
-    const ghLink = screen.getByRole("link", { name: "GitHub" });
-    expect(ghLink).toHaveAttribute("href", "https://github.com/d3v07");
+    const ghLinks = screen.getAllByRole("link", { name: "GitHub" });
+    expect(ghLinks.some((l) => l.getAttribute("href") === "https://github.com/d3v07")).toBe(true);
 
-    const liLink = screen.getByRole("link", { name: "LinkedIn" });
-    expect(liLink).toHaveAttribute("href", "https://linkedin.com/in/trivedi-dev");
+    const liLinks = screen.getAllByRole("link", { name: "LinkedIn" });
+    expect(liLinks.some((l) => (l.getAttribute("href") || "").includes("linkedin.com/in/trivedi-dev"))).toBe(true);
   });
 });

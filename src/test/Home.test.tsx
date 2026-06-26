@@ -40,9 +40,9 @@ describe("Home page", () => {
     expect(screen.getAllByRole("link", { name: /Get in Touch/ }).length).toBeGreaterThan(0);
   });
 
-  it("shows stat cards (GPA, Experience, Projects)", () => {
+  it("shows stat cards (Hackathons, Experience, Projects)", () => {
     renderHome();
-    expect(screen.getByText("GPA at NJIT")).toBeInTheDocument();
+    expect(screen.getByText("Hackathon wins + finalist")).toBeInTheDocument();
     expect(screen.getByText("Years Experience")).toBeInTheDocument();
     expect(screen.getByText("Projects Shipped")).toBeInTheDocument();
   });

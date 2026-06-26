@@ -5,6 +5,7 @@ import About from "@/pages/About";
 import Projects from "@/pages/Projects";
 import Contact from "@/pages/Contact";
 import Changelog from "@/pages/Changelog";
+import Media from "@/pages/Media";
 import Blog from "@/pages/Blog";
 import BlogPost from "@/pages/BlogPost";
 import NotFound from "@/pages/NotFound";
@@ -69,6 +70,14 @@ const AnimatedRoutes = () => {
           element={
             <PageTransition>
               <BlogPost />
+            </PageTransition>
+          }
+        />
+        <Route
+          path="/media"
+          element={
+            <PageTransition>
+              <Media />
             </PageTransition>
           }
         />

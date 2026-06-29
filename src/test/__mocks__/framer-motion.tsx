@@ -45,5 +45,14 @@ export const useInView = () => true;
 export const useAnimation = () => ({ start: vi.fn(), stop: vi.fn() });
 export const useMotionValue = (initial: unknown) => ({ get: () => initial, set: vi.fn() });
 export const useTransform = () => ({ get: vi.fn() });
+export const useSpring = (value: unknown) => value;
+export const animate = (
+  _from: unknown,
+  to: unknown,
+  opts?: { onUpdate?: (v: unknown) => void },
+) => {
+  if (opts?.onUpdate) opts.onUpdate(typeof to === "number" ? to : _from);
+  return { stop: vi.fn() };
+};
 export const useDragControls = () => ({ start: vi.fn() });
 export const MotionConfig = ({ children }: { children: React.ReactNode }) => <>{children}</>;

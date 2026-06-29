@@ -1,14 +1,28 @@
 import { ArrowRight, Github, Linkedin, Mail, MapPin, Terminal } from "lucide-react";
 import { Link } from "react-router-dom";
-import { AnimatePresence, motion } from "framer-motion";
-import { useEffect, useRef, useState } from "react";
+import { motion } from "framer-motion";
+import { useEffect, useRef, useState, type MouseEvent as ReactMouseEvent } from "react";
 import ScrollReveal from "@/components/ScrollReveal";
+import CountUp from "@/components/CountUp";
+import Typewriter from "@/components/Typewriter";
+import MagneticButton from "@/components/MagneticButton";
+import ScrambleText from "@/components/ScrambleText";
+import BootSequence from "@/components/BootSequence";
 import { experiences } from "@/data/experience";
 import Footer from "@/components/sections/Footer";
 import { useApp } from "@/context/AppContext";
 
 const Home = () => {
   const { experience } = useApp();
+
+  const heroRef = useRef<HTMLElement>(null);
+  const handleHeroMove = (e: ReactMouseEvent<HTMLElement>) => {
+    const el = heroRef.current;
+    if (!el) return;
+    const r = el.getBoundingClientRect();
+    el.style.setProperty("--spot-x", `${e.clientX - r.left}px`);
+    el.style.setProperty("--spot-y", `${e.clientY - r.top}px`);
+  };
   const [prefersReducedMotion] = useState(
     () => typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches,
   );
@@ -66,10 +80,24 @@ const Home = () => {
 
   return (
     <main className="min-h-screen selection-accent">
+      <BootSequence />
 
       {/* ── HERO ────────────────────────────────────────────────────────── */}
-      <section className={`min-h-screen flex flex-col justify-center px-6 md:px-12 lg:px-24 ${experience === "os" ? "pt-10" : "pt-28"} pb-16`}>
-        <div className="max-w-6xl mx-auto w-full">
+      <section
+        ref={heroRef}
+        onMouseMove={handleHeroMove}
+        className={`relative overflow-hidden min-h-screen flex flex-col justify-center px-6 md:px-12 lg:px-24 ${experience === "os" ? "pt-10" : "pt-28"} pb-16`}
+      >
+        {/* Cursor-tracking spotlight */}
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0 z-0"
+          style={{
+            background:
+              "radial-gradient(480px circle at var(--spot-x, 72%) var(--spot-y, 24%), hsl(20 100% 48% / 0.13), transparent 60%)",
+          }}
+        />
+        <div className="relative z-10 max-w-6xl mx-auto w-full">
 
           {/* Visitor counter — PostHog humor */}
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.15 }} className="mb-8">
@@ -99,32 +127,10 @@ const Home = () => {
                 className="font-display text-[2.5rem] sm:text-[4.5rem] lg:text-[7.5rem] xl:text-[9rem] leading-[0.88] tracking-tight mb-6 h-[2em]"
               >
                 <span className="block h-[1em] overflow-visible">
-                  <AnimatePresence mode="wait">
-                    <motion.span
-                      key={topLine}
-                      className={topOutlined ? "text-stroke" : ""}
-                      initial={{ opacity: 0, y: 8 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: -8 }}
-                      transition={{ duration: 0.4, ease: "easeInOut" }}
-                    >
-                      {topLine || "\u00A0"}
-                    </motion.span>
-                  </AnimatePresence>
+                  <ScrambleText text={topLine} className={topOutlined ? "text-stroke" : ""} />
                 </span>
                 <span className="block h-[1em] overflow-visible">
-                  <AnimatePresence mode="wait">
-                    <motion.span
-                      key={bottomLine}
-                      className={bottomOutlined ? "text-stroke" : ""}
-                      initial={{ opacity: 0, y: 8 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: -8 }}
-                      transition={{ duration: 0.4, ease: "easeInOut" }}
-                    >
-                      {bottomLine || "\u00A0"}
-                    </motion.span>
-                  </AnimatePresence>
+                  <ScrambleText text={bottomLine} className={bottomOutlined ? "text-stroke" : ""} />
                 </span>
               </motion.h1>
 
@@ -138,7 +144,10 @@ const Home = () => {
                 <Terminal className="w-4 h-4 text-primary flex-shrink-0" />
                 <code className="font-mono-code text-[11px] sm:text-sm">
                   <span className="sm:hidden">$ open-to-work --now</span>
-                  <span className="hidden sm:inline">$ hire dev --start=asap --domain=systems --remote=yes</span>
+                  <Typewriter
+                    className="hidden sm:inline-block"
+                    text="$ hire dev --start=asap --domain=systems --remote=yes"
+                  />
                 </code>
                 <span className="font-mono-code text-primary cursor-blink select-none ml-auto sm:ml-0">|</span>
               </motion.div>
@@ -161,19 +170,23 @@ const Home = () => {
                 transition={{ delay: 0.48 }}
                 className="flex flex-wrap gap-3 mb-10"
               >
-                <Link
-                  to="/projects"
-                  className="group inline-flex items-center gap-2 font-body text-sm px-6 py-3 bg-foreground text-background border-2 border-foreground neo-btn-primary"
-                >
-                  View Projects
-                  <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
-                </Link>
-                <Link
-                  to="/contact"
-                  className="inline-flex items-center gap-2 font-body text-sm px-6 py-3 bg-background border-2 border-foreground neo-btn"
-                >
-                  Get in Touch
-                </Link>
+                <MagneticButton>
+                  <Link
+                    to="/projects"
+                    className="group inline-flex items-center gap-2 font-body text-sm px-6 py-3 bg-foreground text-background border-2 border-foreground neo-btn-primary"
+                  >
+                    View Projects
+                    <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
+                  </Link>
+                </MagneticButton>
+                <MagneticButton>
+                  <Link
+                    to="/contact"
+                    className="inline-flex items-center gap-2 font-body text-sm px-6 py-3 bg-background border-2 border-foreground neo-btn"
+                  >
+                    Get in Touch
+                  </Link>
+                </MagneticButton>
               </motion.div>
 
               {/* Socials */}
@@ -218,9 +231,9 @@ const Home = () => {
               className="lg:col-span-4 flex flex-col gap-3 lg:gap-0 lg:space-y-3 lg:pt-2"
             >
               {[
-                { value: "3×", label: "Hackathon wins & finals" },
-                { value: "3+", label: "Years Experience" },
-                { value: "30+", label: "Projects Shipped" },
+                { num: 3, suffix: "×", label: "Hackathon wins & finals" },
+                { num: 3, suffix: "+", label: "Years Experience" },
+                { num: 30, suffix: "+", label: "Projects Shipped" },
               ].map((stat) => (
                 <motion.div
                   key={stat.label}
@@ -229,7 +242,11 @@ const Home = () => {
                   whileTap={{ scale: 0.98 }}
                   transition={{ type: "spring", stiffness: 400, damping: 28 }}
                 >
-                  <span className="font-display text-2xl lg:text-5xl text-primary block">{stat.value}</span>
+                  <CountUp
+                    to={stat.num}
+                    suffix={stat.suffix}
+                    className="font-display text-2xl lg:text-5xl text-primary block"
+                  />
                   <p className="font-body text-xs lg:text-sm text-muted-foreground mt-0.5 lg:mt-1 leading-tight">{stat.label}</p>
                 </motion.div>
               ))}

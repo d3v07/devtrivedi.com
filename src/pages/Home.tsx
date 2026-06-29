@@ -1,17 +1,28 @@
 import { ArrowRight, Github, Linkedin, Mail, MapPin, Terminal } from "lucide-react";
 import { Link } from "react-router-dom";
-import { AnimatePresence, motion } from "framer-motion";
-import { useEffect, useRef, useState } from "react";
+import { motion } from "framer-motion";
+import { useEffect, useRef, useState, type MouseEvent as ReactMouseEvent } from "react";
 import ScrollReveal from "@/components/ScrollReveal";
 import CountUp from "@/components/CountUp";
 import Typewriter from "@/components/Typewriter";
 import MagneticButton from "@/components/MagneticButton";
+import ScrambleText from "@/components/ScrambleText";
+import BootSequence from "@/components/BootSequence";
 import { experiences } from "@/data/experience";
 import Footer from "@/components/sections/Footer";
 import { useApp } from "@/context/AppContext";
 
 const Home = () => {
   const { experience } = useApp();
+
+  const heroRef = useRef<HTMLElement>(null);
+  const handleHeroMove = (e: ReactMouseEvent<HTMLElement>) => {
+    const el = heroRef.current;
+    if (!el) return;
+    const r = el.getBoundingClientRect();
+    el.style.setProperty("--spot-x", `${e.clientX - r.left}px`);
+    el.style.setProperty("--spot-y", `${e.clientY - r.top}px`);
+  };
   const [prefersReducedMotion] = useState(
     () => typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches,
   );
@@ -69,10 +80,24 @@ const Home = () => {
 
   return (
     <main className="min-h-screen selection-accent">
+      <BootSequence />
 
       {/* ── HERO ────────────────────────────────────────────────────────── */}
-      <section className={`min-h-screen flex flex-col justify-center px-6 md:px-12 lg:px-24 ${experience === "os" ? "pt-10" : "pt-28"} pb-16`}>
-        <div className="max-w-6xl mx-auto w-full">
+      <section
+        ref={heroRef}
+        onMouseMove={handleHeroMove}
+        className={`relative overflow-hidden min-h-screen flex flex-col justify-center px-6 md:px-12 lg:px-24 ${experience === "os" ? "pt-10" : "pt-28"} pb-16`}
+      >
+        {/* Cursor-tracking spotlight */}
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0 z-0"
+          style={{
+            background:
+              "radial-gradient(480px circle at var(--spot-x, 72%) var(--spot-y, 24%), hsl(20 100% 48% / 0.13), transparent 60%)",
+          }}
+        />
+        <div className="relative z-10 max-w-6xl mx-auto w-full">
 
           {/* Visitor counter — PostHog humor */}
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.15 }} className="mb-8">
@@ -102,32 +127,10 @@ const Home = () => {
                 className="font-display text-[2.5rem] sm:text-[4.5rem] lg:text-[7.5rem] xl:text-[9rem] leading-[0.88] tracking-tight mb-6 h-[2em]"
               >
                 <span className="block h-[1em] overflow-visible">
-                  <AnimatePresence mode="wait">
-                    <motion.span
-                      key={topLine}
-                      className={topOutlined ? "text-stroke" : ""}
-                      initial={{ opacity: 0, y: 8 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: -8 }}
-                      transition={{ duration: 0.4, ease: "easeInOut" }}
-                    >
-                      {topLine || "\u00A0"}
-                    </motion.span>
-                  </AnimatePresence>
+                  <ScrambleText text={topLine} className={topOutlined ? "text-stroke" : ""} />
                 </span>
                 <span className="block h-[1em] overflow-visible">
-                  <AnimatePresence mode="wait">
-                    <motion.span
-                      key={bottomLine}
-                      className={bottomOutlined ? "text-stroke" : ""}
-                      initial={{ opacity: 0, y: 8 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: -8 }}
-                      transition={{ duration: 0.4, ease: "easeInOut" }}
-                    >
-                      {bottomLine || "\u00A0"}
-                    </motion.span>
-                  </AnimatePresence>
+                  <ScrambleText text={bottomLine} className={bottomOutlined ? "text-stroke" : ""} />
                 </span>
               </motion.h1>
 

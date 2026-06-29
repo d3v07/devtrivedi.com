@@ -3,6 +3,9 @@ import { Link } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 import ScrollReveal from "@/components/ScrollReveal";
+import CountUp from "@/components/CountUp";
+import Typewriter from "@/components/Typewriter";
+import MagneticButton from "@/components/MagneticButton";
 import { experiences } from "@/data/experience";
 import Footer from "@/components/sections/Footer";
 import { useApp } from "@/context/AppContext";
@@ -138,7 +141,10 @@ const Home = () => {
                 <Terminal className="w-4 h-4 text-primary flex-shrink-0" />
                 <code className="font-mono-code text-[11px] sm:text-sm">
                   <span className="sm:hidden">$ open-to-work --now</span>
-                  <span className="hidden sm:inline">$ hire dev --start=asap --domain=systems --remote=yes</span>
+                  <Typewriter
+                    className="hidden sm:inline-block"
+                    text="$ hire dev --start=asap --domain=systems --remote=yes"
+                  />
                 </code>
                 <span className="font-mono-code text-primary cursor-blink select-none ml-auto sm:ml-0">|</span>
               </motion.div>
@@ -161,19 +167,23 @@ const Home = () => {
                 transition={{ delay: 0.48 }}
                 className="flex flex-wrap gap-3 mb-10"
               >
-                <Link
-                  to="/projects"
-                  className="group inline-flex items-center gap-2 font-body text-sm px-6 py-3 bg-foreground text-background border-2 border-foreground neo-btn-primary"
-                >
-                  View Projects
-                  <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
-                </Link>
-                <Link
-                  to="/contact"
-                  className="inline-flex items-center gap-2 font-body text-sm px-6 py-3 bg-background border-2 border-foreground neo-btn"
-                >
-                  Get in Touch
-                </Link>
+                <MagneticButton>
+                  <Link
+                    to="/projects"
+                    className="group inline-flex items-center gap-2 font-body text-sm px-6 py-3 bg-foreground text-background border-2 border-foreground neo-btn-primary"
+                  >
+                    View Projects
+                    <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
+                  </Link>
+                </MagneticButton>
+                <MagneticButton>
+                  <Link
+                    to="/contact"
+                    className="inline-flex items-center gap-2 font-body text-sm px-6 py-3 bg-background border-2 border-foreground neo-btn"
+                  >
+                    Get in Touch
+                  </Link>
+                </MagneticButton>
               </motion.div>
 
               {/* Socials */}
@@ -218,9 +228,9 @@ const Home = () => {
               className="lg:col-span-4 flex flex-col gap-3 lg:gap-0 lg:space-y-3 lg:pt-2"
             >
               {[
-                { value: "3×", label: "Hackathon wins & finals" },
-                { value: "3+", label: "Years Experience" },
-                { value: "30+", label: "Projects Shipped" },
+                { num: 3, suffix: "×", label: "Hackathon wins & finals" },
+                { num: 3, suffix: "+", label: "Years Experience" },
+                { num: 30, suffix: "+", label: "Projects Shipped" },
               ].map((stat) => (
                 <motion.div
                   key={stat.label}
@@ -229,7 +239,11 @@ const Home = () => {
                   whileTap={{ scale: 0.98 }}
                   transition={{ type: "spring", stiffness: 400, damping: 28 }}
                 >
-                  <span className="font-display text-2xl lg:text-5xl text-primary block">{stat.value}</span>
+                  <CountUp
+                    to={stat.num}
+                    suffix={stat.suffix}
+                    className="font-display text-2xl lg:text-5xl text-primary block"
+                  />
                   <p className="font-body text-xs lg:text-sm text-muted-foreground mt-0.5 lg:mt-1 leading-tight">{stat.label}</p>
                 </motion.div>
               ))}
